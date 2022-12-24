@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Создание работы{% endblock %}
+
+{% block content %}
+    <form action="{% url 'create-work' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="name_hidden_works">Your name: </label>
+            <input id="name_hidden_works" type="text" class="form-control" name="name_hidden_works"
+                   placeholder="name@example.com">
+        </div>
+        <button type="submit" class="btn btn-primary">OK</button>
+    </form>
+{% endblock %}

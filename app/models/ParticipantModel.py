@@ -1,6 +1,7 @@
 from django.db import models
 from django.forms.models import model_to_dict
 
+
 class ParticipantModel(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True)
     surname = models.TextField()
