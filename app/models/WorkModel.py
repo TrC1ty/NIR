@@ -1,8 +1,8 @@
 from django.db import models
-from django.forms.models import model_to_dict
+from .BCARModel import BCARModel
 
 
-class ParticipantModel(models.Model):
+class WorkModel(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True)
     name_hidden_works = models.TextField()
     number_project_doc = models.TextField()
@@ -19,6 +19,7 @@ class ParticipantModel(models.Model):
     additional_information = models.TextField()
     number_instances = models.IntegerField()
     applications = models.TextField()
+    bcar = models.ManyToManyField(BCARModel)
 
     class Meta:
-        db_table = "work_model"
+        db_table = "Works"

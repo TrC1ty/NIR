@@ -9,3 +9,6 @@ class MaterialModel(models.Model):
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
     provider = models.ForeignKey(ParticipantModel, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "Materials"

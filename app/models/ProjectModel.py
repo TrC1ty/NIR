@@ -21,4 +21,4 @@ class ProjectModel(models.Model):
     number_document = models.DateField()
 
     class Meta:
-        db_table = "project_model"
+        db_table = "Projects"
