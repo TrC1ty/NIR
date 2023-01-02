@@ -1,17 +1,17 @@
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.views import View
 from django.shortcuts import render
-from ..forms.ParticipantForm import ParticipantForm
+from ..forms.ProjectForm import ProjectForm
 
 
-class ParticipantView(View):
+class ProjectView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
-        form = ParticipantForm()
+        form = ProjectForm()
 
-        return render(request, 'creation/participant.html', {'form': form})
+        return render(request, 'creation/project.html', {'form': form})
 
     def post(self, request: HttpRequest) -> HttpResponse:
-        form = ParticipantForm(request.POST)
+        form = ProjectForm(request.POST)
         if form.is_valid():
             # process the data in form.cleaned_data as required
             # ...

@@ -1,9 +1,9 @@
 {% extends 'base/base.html' %}
 
-{% block title %}Создание работы{% endblock %}
+{% block title %}Создание проекта{% endblock %}
 
 {% block content %}
-    <form action="{% url 'create-work' %}" method="post">
+    <form action="{% url 'create-material' %}" method="post">
         {% csrf_token %}
         {% for field in form %}
             <div class="form-group">

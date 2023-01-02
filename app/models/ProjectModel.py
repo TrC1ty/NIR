@@ -18,7 +18,7 @@ class ProjectModel(models.Model):
     name_project_documentation = models.TextField()
     building_address = models.TextField()
     date_act = models.DateField()
-    number_document = models.DateField()
+    number_document = models.TextField()
 
     class Meta:
         db_table = "Projects"
