@@ -3,6 +3,7 @@ from django.views import View
 from django.shortcuts import render
 from ..forms.MaterialForm import MaterialForm
 from ..models.MaterialModel import MaterialModel
+from ..models.ParticipantModel import ParticipantModel
 
 
 class MaterialView(View):

@@ -3,14 +3,26 @@
 {% block title %}Создание работы{% endblock %}
 
 {% block content %}
+<div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
+    <h1>Создание работы</h1>
+</div>
+<div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
     <form action="{% url 'create-work' %}" method="post">
         {% csrf_token %}
         {% for field in form %}
-            <div class="form-group">
-                {{ field.errors }}
-                {{ field.label_tag }} {{ field }}
+         <div class="form-group">
+            {{ field.errors }}
+            <div class="row mb-4 align-items-center">
+                <div class="col-12 col-md-3">
+                    <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                </div>
+                <div class="col-12 col-md-6">
+                    {{ field }}
+                </div>
             </div>
+        </div>
         {% endfor %}
         <button type="submit" class="btn btn-primary my-2">Сохранить</button>
     </form>
+</div>
 {% endblock %}

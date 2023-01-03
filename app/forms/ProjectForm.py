@@ -11,7 +11,8 @@ class ProjectForm(forms.Form):
         attrs={'class': 'form-control'}
     ))
     name_project_documentation = forms.CharField(label='Наименование проектной документации', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
+        attrs={'id': 'my_field',
+               'class': 'form-control'}
     ))
     building_address = forms.CharField(label='Адресс объекта строительства', widget=forms.TextInput(
         attrs={'class': 'form-control'}
