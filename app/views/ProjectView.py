@@ -31,7 +31,7 @@ class ProjectView(View):
                 number_document=number_document
             ).save()
 
-            return HttpResponseRedirect('projects/index')
+            return HttpResponseRedirect('index')
 
     @staticmethod
     def index(request: HttpRequest) -> HttpResponse:
