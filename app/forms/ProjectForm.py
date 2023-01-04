@@ -17,10 +17,6 @@ class ProjectForm(forms.Form):
     building_address = forms.CharField(label='Адресс объекта строительства', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))
-    date_act = forms.DateField(label='Дата составления акта', widget=forms.DateInput(
-        format='%d-%m-%Y',
-        attrs={'type': 'date', 'class': 'form-control'}
-    ))
     number_document = forms.CharField(label='Номер документа', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))
