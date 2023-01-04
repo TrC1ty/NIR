@@ -44,3 +44,9 @@ class ProjectView(View):
         project = ProjectModel.objects.get(id=value)
 
         return render(request, 'projects/project.html', {'project': project})
+
+    @staticmethod
+    def edit(request: HttpRequest, value) -> HttpResponse:
+        project = ProjectModel.objects.get(id=value)
+
+        return render(request, 'projects/edit.html', {'project': project})

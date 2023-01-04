@@ -1,36 +1,63 @@
 {% extends 'base/base.html' %}
-
+{% load static %}
 {% block title %}Проект № {{ project.id }}{% endblock %}
 
 {% block content %}
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
-    <h1>{{ project.name_project }}</h1>
+    <h1>Просмотр проекта</h1>
+    <form method="post">
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'project-edit' project.id %}">Редактировать</a>
+
+        <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить эту задачу?');" class="btn btn-outline-secondary btn-sm float-end" formaction="/Employee/Tasks/15716?handler=DeleteTask"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi">Удалить</button>
+    </form>
 </div>
- <form method="post">
-    {% csrf_token %}
-    <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
-        {% if field in form %}
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">№</th>
-                        <th scope="col">Название</th>
-                        <th scope="col">Дата создания</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                            <a href="{% url 'project-view' project.id %}">{{ project.id }}</a>
-                        </th>
-                        <td>{{ project.name_project }}</td>
-                        <td>{{ project.date }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        {% else %}
-            <div>(по текущему фильтру проектов не найдено)</div>
-        {% endif %}
-    </div>
-</form>
+<div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
+    <form method="post">
+        {% csrf_token %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Название проекта</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{project.name_project}}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Наименование проектной документации</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{project.name_project_documentation}}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Адресс объекта строительства</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{project.building_address}}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Дата создания проекта</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{project.date}}
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Номер документа</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{project.number_document}}
+            </div>
+        </div>
+    </form>
+</div>
 {% endblock %}

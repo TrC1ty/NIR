@@ -12,6 +12,7 @@ urlpatterns = [
 
     # for projects
     path('projects/create', ProjectView.as_view(), name='project-create'),
+    path('projects/edit/<int:value>', ProjectView.edit, name='project-edit'),
     path('projects/index', ProjectView.index, name='project-index'),
     path('projects/<int:value>', ProjectView.view, name='project-view'),
 
@@ -22,3 +23,4 @@ urlpatterns = [
     path('create-work', WorkView.as_view(), name='create-work'),
     path('create-material', MaterialView.as_view(), name='create-material'),
 ]
+
