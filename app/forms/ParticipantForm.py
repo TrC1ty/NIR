@@ -35,7 +35,7 @@ class ParticipantForm(forms.Form):
     inn = forms.IntegerField(label='ИНН', widget=forms.NumberInput(
         attrs={'class': 'form-control'}
     ))
-    address = forms.CharField(label='Адресс', widget=forms.TextInput(
+    address = forms.CharField(label='Адрес', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))
     phone = forms.CharField(label='Телефон', widget=forms.TextInput(
@@ -47,4 +47,10 @@ class ParticipantForm(forms.Form):
     # todo: забыл что значит это поле
     details_admin_doc = forms.CharField(label='', widget=forms.TextInput(
         attrs={'class': 'form-control'}
+    ))
+    project_id = forms.IntegerField(widget=forms.NumberInput(
+        attrs={'style': 'display: none'}
+    ))
+    project_field = forms.CharField(widget=forms.TextInput(
+        attrs={'style': 'display: none'}
     ))

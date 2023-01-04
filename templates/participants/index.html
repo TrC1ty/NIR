@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Список участников{% endblock %}
+
+{% block content %}
+<div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
+    <h1>Список участников</h1>
+</div>
+ <form method="post">
+    {% csrf_token %}
+    <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
+        {% if projects %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">Название</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for project in projects %}
+                        <tr>
+                            <th scope="row">
+                                <a href="{% url 'project-view' project.id %}">{{ project.id }}</a>
+                            </th>
+                            <td>{{ project.name_project }}</td>
+                            <td>{{ project.date }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div>(по текущему фильтру проектов не найдено)</div>
+        {% endif %}
+    </div>
+</form>
+{% endblock %}

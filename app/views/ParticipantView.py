@@ -1,19 +1,19 @@
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.views import View
 from django.shortcuts import render
+from ..models.ParticipantModel import ParticipantModel
 from ..forms.ParticipantForm import ParticipantForm
 
 
 class ParticipantView(View):
-    def get(self, request: HttpRequest) -> HttpResponse:
-        form = ParticipantForm()
+    @staticmethod
+    def get(request: HttpRequest) -> HttpResponse:
+        participants = ParticipantModel.objects.all()
 
-        return render(request, 'creation/participant.html', {'form': form})
+        return render(request, 'participants/index.html', {'participants': participants})
 
-    def post(self, request: HttpRequest) -> HttpResponse:
+    @staticmethod
+    def post(request: HttpRequest) -> HttpResponse:
         form = ParticipantForm(request.POST)
         if form.is_valid():
-            # process the data in form.cleaned_data as required
-            # ...
-            # redirect to a new URL:
-            return HttpResponseRedirect('/')
+            return render(request, 'participants/creation.html', {'form': form})
