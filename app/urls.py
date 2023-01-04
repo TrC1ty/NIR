@@ -15,6 +15,7 @@ urlpatterns = [
     path('projects/edit/<int:value>', ProjectView.edit, name='project-edit'),
     path('projects/index', ProjectView.index, name='project-index'),
     path('projects/<int:value>', ProjectView.view, name='project-view'),
+    path('projects/delete/<int:value>', ProjectView.delete, name='project-delete'),
 
     # for participants
     path('participants/index', ParticipantView.as_view(), name='participant-index'),

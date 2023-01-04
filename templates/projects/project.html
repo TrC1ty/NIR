@@ -7,8 +7,8 @@
     <h1>Просмотр проекта</h1>
     <form method="post">
         <a class="btn btn-outline-primary btn-sm" href="{% url 'project-edit' project.id %}">Редактировать</a>
-
-        <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить эту задачу?');" class="btn btn-outline-secondary btn-sm float-end" formaction="/Employee/Tasks/15716?handler=DeleteTask"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>
+        {% csrf_token %}
+        <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот проект?');" class="btn btn-outline-secondary btn-sm float-end" formaction="{% url 'project-delete' project.id %}"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>
     </form>
 </div>
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">

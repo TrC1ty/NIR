@@ -50,3 +50,11 @@ class ProjectView(View):
         project = ProjectModel.objects.get(id=value)
 
         return render(request, 'projects/edit.html', {'project': project})
+
+    @staticmethod
+    def delete(request: HttpRequest, value) -> HttpResponse:
+        project = ProjectModel.objects.get(id=value)
+        project.delete()
+        projects = ProjectModel.objects.all()
+
+        return render(request, 'projects/index.html', {'projects': projects})
