@@ -9,7 +9,7 @@
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
     <form action="{% url 'create-work' %}" method="post">
         {% csrf_token %}
-        {% for field in form %}
+        {% for field in form.visible_fields %}
          <div class="form-group">
             {{ field.errors }}
             <div class="row mb-4 align-items-center">

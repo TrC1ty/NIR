@@ -1,0 +1,36 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Список работ{% endblock %}
+
+{% block content %}
+<div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
+    <h1>Список работ</h1>
+</div>
+ <form method="post">
+    {% csrf_token %}
+    <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
+        {% if works %}
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">№</th>
+                        <th scope="col">Название</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for work in works %}
+                        <tr>
+                            <th scope="row">
+                                {{ project.id }}
+                            </th>
+                            <td>{{ work.name_hidden_works }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div>(по текущему фильтру проектов не найдено)</div>
+        {% endif %}
+    </div>
+</form>
+{% endblock %}

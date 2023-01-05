@@ -51,3 +51,4 @@ class WorkForm(forms.Form):
     applications = forms.CharField(label='Приложения', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))
+    project_id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
