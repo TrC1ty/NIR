@@ -29,10 +29,10 @@ class ParticipantForm(forms.Form):
                                                  widget=forms.NumberInput(
         attrs={'class': 'form-control'}
     ))
-    ogrn = forms.IntegerField(label='ОГРН', widget=forms.NumberInput(
+    ogrn = forms.CharField(label='ОГРН', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))
-    inn = forms.IntegerField(label='ИНН', widget=forms.NumberInput(
+    inn = forms.CharField(label='ИНН', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))
     address = forms.CharField(label='Адрес', widget=forms.TextInput(
@@ -48,9 +48,6 @@ class ParticipantForm(forms.Form):
     details_admin_doc = forms.CharField(label='', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))
-    project_id = forms.IntegerField(widget=forms.NumberInput(
-        attrs={'style': 'display: none'}
-    ))
-    project_field = forms.CharField(widget=forms.TextInput(
-        attrs={'style': 'display: none'}
-    ))
+
+    project_id = forms.IntegerField(widget=forms.HiddenInput(), required=False)
+    project_field = forms.CharField(widget=forms.HiddenInput(), required=False)

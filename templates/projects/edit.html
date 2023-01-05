@@ -9,22 +9,217 @@
 
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
 
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#participant">Участники</button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link " data-bs-toggle="tab" data-bs-target="#work">Работы</button>
-            </li>
-            <li class="nav-item">
-                <button class="nav-link " data-bs-toggle="tab" data-bs-target="#project">Информация о проекте</button>
-            </li>
-        </ul>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#participant">Участники</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link " data-bs-toggle="tab" data-bs-target="#work">Работы</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link " data-bs-toggle="tab" data-bs-target="#project">Информация о проекте</button>
+        </li>
+    </ul>
 
-        <div class="tab-content">
+    <div class="tab-content">
+        <div class="tab-pane active" id="participant">
+            <div class="p-3 bg-body rounded shadow-sm">
+                <div class="small mb-3">
+                    Люди, участвующие в данноме проекте:
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Застройщик</span>
+                    </div>
+                    {% if project.builder %}
+                    <div class="col-12 col-md-6">
+                        {{project.builder}}
+                    </div>
+                    {%else%}
+                    <div class="col-12 col-md-6">
+                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'builder' %}">Добавить участника</a>
+                    </div>
+                    {%endif%}
+
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Лицо, осуществляющее строительство</span>
+                    </div>
+                    {% if project.person_the_construction %}
+                    <div class="col-12 col-md-6">
+                        {{project.person_the_construction}}
+                    </div>
+                    {%else%}
+                    <div class="col-12 col-md-6">
+                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'person_the_construction' %}">Добавить участника</a>
+                    </div>
+                    {%endif%}
+                </div>
 
 
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Лицо, осуществляющее подготовку проектной документации</span>
+                    </div>
+                    {% if project.person_prepares_doc %}
+                    <div class="col-12 col-md-6">
+                        {{project.person_prepares_doc}}
+                    </div>
+                    {%else%}
+                    <div class="col-12 col-md-6">
+                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'person_prepares_doc' %}">Добавить участника</a>
+                    </div>
+                    {%endif%}
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Представитель застройщика</span>
+                    </div>
+                    {% if project.representative_builder %}
+                    <div class="col-12 col-md-6">
+                        {{project.representative_builder}}
+                    </div>
+                    {%else%}
+                    <div class="col-12 col-md-6">
+                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'representative_builder' %}">Добавить участника</a>
+                    </div>
+                    {%endif%}
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Представитель лица, осуществялющего строительство</span>
+                    </div>
+                    {% if project.representative_person_the_construction %}
+                    <div class="col-12 col-md-6">
+                        {{project.representative_person_the_construction}}
+                    </div>
+                    {%else%}
+                    <div class="col-12 col-md-6">
+                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'representative_person_the_construction' %}">Добавить участника</a>
+                    </div>
+                    {%endif%}
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Представитель лица, осуществляющего строительство, по вопросам
+                            строительного контроля</span>
+                    </div>
+                    {% if project.specialist_organization_construction %}
+
+                    <div class="col-12 col-md-6">
+                        {{project.specialist_organization_construction}}
+                    </div>
+                    {%else%}
+                    <div class="col-12 col-md-6">
+                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'specialist_organization_construction' %}">Добавить участника</a>
+                    </div>
+                    {%endif%}
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Представитель лица, осуществляющего подготовку
+                            проектной документации</span>
+                    </div>
+                    {% if project.representative_person_preparing_project_doc %}
+                    <div class="col-12 col-md-6">
+                        {{project.representative_person_preparing_project_doc}}
+                    </div>
+                    {%else%}
+                    <div class="col-12 col-md-6">
+                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'representative_person_preparing_project_doc' %}">Добавить участника</a>
+                    </div>
+                    {%endif%}
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Представитель лица, выполнившего работы, подлежащие
+                            освидетельствованию</span>
+                    </div>
+                    {% if project.representative_person_performed_examined %}
+                    <div class="col-12 col-md-6">
+                        {{project.representative_person_performed_examined}}
+                    </div>
+                    {%else%}
+                    <div class="col-12 col-md-6">
+                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'representative_person_performed_examined' %}">Добавить участника</a>
+                    </div>
+                    {%endif%}
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Иные представители лиц, участвующих
+                        в освидетельствовании</span>
+                    </div>
+                    {% if project.other_persons_participated_examination %}
+                    <div class="col-12 col-md-6">
+                        {{project.other_persons_participated_examination}}
+                    </div>
+                    {%else%}
+                    <div class="col-12 col-md-6">
+                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'other_persons_participated_examination' %}">Добавить участника</a>
+                    </div>
+                    {%endif%}
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="tab-pane" id="work">
+            <div class="p-3 bg-body rounded shadow-sm">
+                <div class="small">
+                    Работы, выполняемы на проекте.
+                </div>
+                {% for work in works%}
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Название работы</span>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        {{work.name_hidden_works}}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="tab-pane" id="project">
+            <div class="p-3 bg-body rounded shadow-sm">
+                <div class="small">
+                    Остальная информация о проекте.
+                </div>
+                <form action="{% url 'create-material' %}" method="post">
+                    {% csrf_token %}
+                    {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        {{ field.errors }}
+                        <div class="row mb-4 align-items-center">
+                            <div class="col-12 col-md-3">
+                                <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{ field }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary my-2">Сохранить</button>
+                </form>
+            </div>
         </div>
 
     </div>
+
+</div>
 {% endblock %}

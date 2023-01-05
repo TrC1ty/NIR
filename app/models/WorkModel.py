@@ -1,5 +1,6 @@
 from django.db import models
 from .BCARModel import BCARModel
+from .ProjectModel import ProjectModel
 
 
 class WorkModel(models.Model):
@@ -20,6 +21,8 @@ class WorkModel(models.Model):
     number_instances = models.IntegerField()
     applications = models.TextField()
     bcar = models.ManyToManyField(BCARModel)
+
+    project = models.ForeignKey(ProjectModel, on_delete=models.CASCADE)
 
     class Meta:
         db_table = "Works"

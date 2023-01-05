@@ -1,9 +1,10 @@
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.views import View
 from django.shortcuts import render
-from ..forms.ProjectForm import ProjectForm
+from ..forms.ProjectForm import ProjectForm, Project
 from ..forms.ParticipantForm import ParticipantForm
 from app.models.ProjectModel import ProjectModel
+from app.models.WorkModel import WorkModel
 from datetime import datetime
 
 
@@ -48,8 +49,18 @@ class ProjectView(View):
     @staticmethod
     def edit(request: HttpRequest, value) -> HttpResponse:
         project = ProjectModel.objects.get(id=value)
+        works = WorkModel.objects.filter(project=project)
 
-        return render(request, 'projects/edit.html', {'project': project})
+        form = Project(instance=project)
+        # form.name_project = project.name_project
+        # form.name_project_documentation = project.name_project_documentation
+        # form.building_address = project.building_address
+        # form.date = project.date
+        # form.number_document = project.number_document
+
+        return render(request, 'projects/edit.html', {'project': project,
+                                                      'works': works,
+                                                      'form': form})
 
     @staticmethod
     def delete(request: HttpRequest, value) -> HttpResponse:
