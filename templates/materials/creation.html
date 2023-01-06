@@ -9,6 +9,14 @@
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
     <form action="{% url 'material-create' work_id %}" method="post">
         {% csrf_token %}
+        {% if participants %}
+            <select class="form-select" aria-label="Default select example">
+            <option selected>Open this select menu</option>
+            {% for participant in participants %}
+                <option value="{{ participant.id }}">{{ participant.surname }} {{ participant.name }} {{ participant.patronymic }}</option>
+            {% endfor %}
+            </select>
+        {% endif %}
         {% for field in form %}
          <div class="form-group">
             {{ field.errors }}

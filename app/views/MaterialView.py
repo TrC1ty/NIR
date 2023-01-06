@@ -4,15 +4,20 @@ from django.shortcuts import render
 from ..forms.MaterialForm import MaterialForm
 from ..models.MaterialModel import MaterialModel
 from app.models.WorkModel import WorkModel
+from ..models.ParticipantModel import ParticipantModel
 
 
 class MaterialView(View):
-    def get(self, request: HttpRequest, work_id) -> HttpResponse:
+    @staticmethod
+    def get(request: HttpRequest, work_id) -> HttpResponse:
         form = MaterialForm()
+        participants = ParticipantModel.objects.filter(participant_type='SUP')
 
-        return render(request, 'materials/creation.html', {'form': form, 'work_id': work_id})
+        return render(request, 'materials/creation.html', {'form': form, 'work_id': work_id,
+                                                           'participants': participants})
 
-    def post(self, request: HttpRequest, work_id) -> HttpResponse:
+    @staticmethod
+    def post(request: HttpRequest, work_id) -> HttpResponse:
         form = MaterialForm(request.POST)
         work = WorkModel.objects.get(id=work_id)
         if form.is_valid():

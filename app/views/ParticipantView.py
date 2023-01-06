@@ -47,3 +47,9 @@ class ParticipantView(View):
         participants = ParticipantModel.objects.all()
 
         return render(request, 'participants/index.html', {'participants': participants})
+
+    @staticmethod
+    def view(request: HttpRequest, value) -> HttpResponse:
+        participant = ParticipantModel.objects.get(id=value)
+
+        return render(request, 'participant/participant.html', {'participant': participant})
