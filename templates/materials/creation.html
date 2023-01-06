@@ -9,16 +9,8 @@
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
     <form action="{% url 'material-create' work_id %}" method="post">
         {% csrf_token %}
-        {% if participants %}
-            <select class="form-select" aria-label="Default select example">
-            <option selected>Open this select menu</option>
-            {% for participant in participants %}
-                <option value="{{ participant.id }}">{{ participant.surname }} {{ participant.name }} {{ participant.patronymic }}</option>
-            {% endfor %}
-            </select>
-        {% endif %}
         {% for field in form %}
-         <div class="form-group">
+        <div class="form-group">
             {{ field.errors }}
             <div class="row mb-4 align-items-center">
                 <div class="col-12 col-md-3">
@@ -30,6 +22,22 @@
             </div>
         </div>
         {% endfor %}
+        {% if participants %}
+        <div class="row mb-4 align-items-center">
+            <div class="col-12 col-md-3">
+                <label class="col-form-label p-0" for="provider">Поставщик</label>
+            </div>
+            <div class="col-12 col-md-6">
+                <select class="form-select" aria-label="Default select example">
+                    <option selected></option>
+                    {% for participant in participants %}
+                    <option value="{{ participant.id }}">{{ participant.surname }} {{ participant.name }} {{ participant.patronymic }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        {% endif %}
         <button type="submit" class="btn btn-primary my-2">Сохранить</button>
     </form>
 </div>
