@@ -18,8 +18,8 @@ urlpatterns = [
     path('projects/delete/<int:value>', ProjectView.delete, name='project-delete'),
 
     # for participants
-    path('participants/index', ParticipantView.as_view(), name='participant-index'),
-    path('projects/<int:project_id>/add/<str:participant>', ParticipantView.create, name='participant-create'),
+    path('projects/<int:project_id>/add/<str:participant>', ParticipantView.as_view(), name='participant-create'),
+    path('participants/index', ParticipantView.index, name='participant-index'),
 
     # for works
     path('projects/<int:project_id>/add-work', WorkView.as_view(), name='work-create'),

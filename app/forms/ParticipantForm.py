@@ -20,7 +20,7 @@ class ParticipantForm(forms.Form):
     # todo: нужно сделать поле с выбором типа участника
     participant_type = forms.CharField(
         label='Тип участника',
-        max_length=2,
+        max_length=3,
         widget=forms.Select(choices=ParticipantType, attrs={'class': 'form-select'})
     )
     # todo: нужно сделать поле с выбором Типа объекта

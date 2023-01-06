@@ -1,5 +1,7 @@
 from django.db import models
 from .ParticipantModel import ParticipantModel
+from .WorkModel import WorkModel
+from .BCARModel import BCARModel
 
 
 class MaterialModel(models.Model):
@@ -9,6 +11,8 @@ class MaterialModel(models.Model):
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
     provider = models.ForeignKey(ParticipantModel, on_delete=models.CASCADE)
+    works = models.ManyToManyField(WorkModel)
+    bcar = models.ForeignKey(BCARModel, on_delete=models.SET_NULL, null=True)
 
     class Meta:
         db_table = "Materials"

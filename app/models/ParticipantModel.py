@@ -1,8 +1,19 @@
 from django.db import models
-from app.models.Enums import ParticipantType, SubjectType
 
 
 class ParticipantModel(models.Model):
+    SubjectType = (
+        ('ЮЛ', 'Юридическое лицо'),
+        ('ФЛ', 'Физическое лицо'),
+        ('ИП', 'Индивидуальный предприниматель'),
+        ('СО', 'Саморегулируемая организация'),
+    )
+    ParticipantType = (
+        ('SUP', 'Поставщик'),
+        ('DEV', 'Разработчик'),
+        ('REP', 'Представитель'),
+        ('OTH', 'Другое'),
+    )
     id = models.BigAutoField(auto_created=True, primary_key=True)
     surname = models.TextField()
     name = models.TextField()
@@ -18,13 +29,11 @@ class ParticipantModel(models.Model):
     details_admin_doc = models.TextField()
     participant_type = models.CharField(
         max_length=3,
-        choices=ParticipantType.choices,
-        default=ParticipantType.OTHER,
+        choices=ParticipantType,
     )
     subject_type = models.CharField(
         max_length=2,
-        choices=SubjectType.choices,
-        default=SubjectType.NATURAL_PERSON,
+        choices=SubjectType,
     )
 
     class Meta:

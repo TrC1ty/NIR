@@ -8,27 +8,19 @@ from ..models.ProjectModel import ProjectModel
 
 class ParticipantView(View):
     @staticmethod
-    def get(request: HttpRequest) -> HttpResponse:
-        participants = ParticipantModel.objects.all()
-
-        return render(request, 'participants/index.html', {'participants': participants})
-
-    @staticmethod
-    def create(request: HttpRequest, project_id, participant) -> HttpResponse:
+    def get(request: HttpRequest, project_id, participant) -> HttpResponse:
         form = ParticipantForm()
-        form.project_id = project_id
-        form.project_field = participant
 
-        return render(request, 'participants/creation.html', {'form': form})
+        return render(request, 'participants/creation.html', {'form': form, 'project_id': project_id,
+                                                              'participant': participant})
 
     @staticmethod
-    def post(request: HttpRequest) -> HttpResponse:
+    def post(request: HttpRequest, project_id, participant) -> HttpResponse:
         form = ParticipantForm(request.POST)
         if form.is_valid():
-            project_id = form.cleaned_data["project_id"]
             project = ProjectModel.objects.get(id=project_id)
 
-            participant = ParticipantModel.objects.create(
+            participant_new = ParticipantModel.objects.create(
                 participant_type=form.cleaned_data["participant_type"],
                 subject_type=form.cleaned_data["subject_type"],
                 surname=form.cleaned_data["surname"],
@@ -44,9 +36,15 @@ class ParticipantView(View):
                 legal_name=form.cleaned_data["legal_name"],
                 details_admin_doc=form.cleaned_data["details_admin_doc"]
             )
-            participant.save()
-            project_field = form.cleaned_data['project_field']
-            project[f"{project_field}"] = participant
+            participant_new.save()
+
+            project[f"{participant}"] = participant_new
             project.save()
 
-            return render(request, 'participants/creation.html', {'form': form})
+            return render(request, 'home/home.html')
+
+    @staticmethod
+    def index(request: HttpRequest) -> HttpResponse:
+        participants = ParticipantModel.objects.all()
+
+        return render(request, 'participants/index.html', {'participants': participants})
