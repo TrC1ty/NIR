@@ -7,7 +7,7 @@
     <h1>Создание материала</h1>
 </div>
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
-    <form action="{% url 'create-material' %}" method="post">
+    <form action="{% url 'material-create' work_id %}" method="post">
         {% csrf_token %}
         {% for field in form %}
          <div class="form-group">

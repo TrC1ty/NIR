@@ -200,7 +200,7 @@
                 <div class="small">
                     Остальная информация о проекте.
                 </div>
-                <form action="{% url 'material-create' %}" method="post">
+                <form action="{% url 'project-create' %}" method="post">
                     {% csrf_token %}
                     {% for field in form.visible_fields %}
                     <div class="form-group">

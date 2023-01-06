@@ -28,7 +28,7 @@ urlpatterns = [
     path('works/edit/<int:value>', WorkView.edit, name='work-edit'),
 
     # for materials
-    path('create-material', MaterialView.as_view(), name='material-create'),
+    path('works/<int:work_id>/material/create', MaterialView.as_view(), name='material-create'),
     path('materials/index', MaterialView.index, name='material-index'),
 ]
 
