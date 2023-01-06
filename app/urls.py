@@ -25,6 +25,7 @@ urlpatterns = [
     path('projects/<int:project_id>/add-work', WorkView.as_view(), name='work-create'),
     path('works/index', WorkView.index, name='work-index'),
     path('works/<int:value>', WorkView.view, name='work-view'),
+    path('works/edit/<int:value>', WorkView.edit, name='work-edit'),
 
     path('create-material', MaterialView.as_view(), name='create-material'),
 ]

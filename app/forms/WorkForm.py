@@ -1,4 +1,24 @@
 from django import forms
+from app.models.WorkModel import WorkModel
+from django.forms import ModelForm, Textarea, TextInput
+
+class Work(ModelForm):
+    class Meta:
+        model = WorkModel
+        fields = ['name_hidden_works', 'number_project_doc', 'number_working_doc', 'other_details_project_drawing']
+        # widgets = {
+        #     'name_project': TextInput(attrs={'class': 'form-control'}),
+        #     'name_project_documentation': TextInput(attrs={'class': 'form-control'}),
+        #     'building_address': TextInput(attrs={'class': 'form-control'}),
+        #     'number_document': TextInput(attrs={'class': 'form-control'}),
+        # }
+        #
+        # labels = {
+        #     "name_project": "Название проекта",
+        #     "name_project_documentation": "Наименование проектной документации",
+        #     "building_address": "Адресс объекта строительства",
+        #     "number_document": "Номер документа",
+        # }
 
 
 class WorkForm(forms.Form):

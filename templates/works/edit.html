@@ -1,0 +1,58 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Работа № {{ work.id }}{% endblock %}
+
+{% block content %}
+<div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
+    <h1>Редактирование работы</h1>
+</div>
+
+<div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#information">Информация о работе</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link " data-bs-toggle="tab" data-bs-target="#materials">Материалы</button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="information">
+            <div class="p-3 bg-body rounded shadow-sm">
+                <div class="small mb-3">
+                    Информация о работе:
+                </div>
+
+                <div class="col-4">
+                    <a style = "float: right;" class="btn btn-outline-primary btn-sm" href="{%url 'work-create' project.id %}">Добавить работу</a>
+                </div>
+                {% for work in works%}
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Название работы</span>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        {{work.name_hidden_works}}
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+        <div class="tab-pane" id="materials">
+            <div class="row p-3 bg-body rounded shadow-sm">
+                <div class="small col-8">
+                    Материалы для работы.
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

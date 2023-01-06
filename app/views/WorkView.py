@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.views import View
 from django.shortcuts import render
-from ..forms.WorkForm import WorkForm
+from ..forms.WorkForm import WorkForm, Work
 from app.models.WorkModel import WorkModel
 from app.models.ProjectModel import ProjectModel
 
@@ -53,3 +53,22 @@ class WorkView(View):
         work = WorkModel.objects.get(id=value)
 
         return render(request, 'works/work.html', {'work': work})
+
+    @staticmethod
+    def edit(request: HttpRequest, value) -> HttpResponse:
+        project = ProjectModel.objects.get(id=value)
+        works = WorkModel.objects.filter(project=project)
+
+        work = WorkModel.objects.get(id=value)
+        # projects = ProjectModel.objects.filter()
+
+        form = Work(instance=work)
+        # form.name_project = project.name_project
+        # form.name_project_documentation = project.name_project_documentation
+        # form.building_address = project.building_address
+        # form.date = project.date
+        # form.number_document = project.number_document
+
+        return render(request, 'projects/edit.html', {'project': project,
+                                                      'works': works,
+                                                      'form': form})

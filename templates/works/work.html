@@ -6,7 +6,7 @@
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
     <h1>Просмотр работы</h1>
     <form method="post">
-        <a class="btn btn-outline-primary btn-sm" >Редактировать</a>
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'work-edit' work.id %}">Редактировать</a>
         <a class="btn btn-outline-primary btn-sm" href="{% url 'project-view' work.project.id %}" >Перейти к проекту</a>
         {% csrf_token %}
     </form>
