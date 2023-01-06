@@ -22,9 +22,9 @@
                     {% for project in projects %}
                         <tr>
                             <th scope="row">
-                                <a href="{% url 'project-view' project.id %}">{{ project.id }}</a>
+                                {{ project.id }}
                             </th>
-                            <td>{{ project.name_project }}</td>
+                            <td><a href="{% url 'project-view' project.id %}">{{ project.name_project }}</a></td>
                             <td>{{ project.date }}</td>
                         </tr>
                     {% endfor %}

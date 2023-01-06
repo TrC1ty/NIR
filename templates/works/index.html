@@ -15,15 +15,17 @@
                     <tr>
                         <th scope="col">№</th>
                         <th scope="col">Название</th>
+                        <th scope="col">Дата начала работ</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for work in works %}
                         <tr>
                             <th scope="row">
-                                {{ project.id }}
+                                {{ work.id }}
                             </th>
-                            <td>{{ work.name_hidden_works }}</td>
+                            <td><a href="{% url 'work-view' work.id %}">{{ work.name_hidden_works }}</td>
+                            <td>{{ work.start_date_work }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>

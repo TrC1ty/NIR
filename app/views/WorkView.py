@@ -40,10 +40,16 @@ class WorkView(View):
             )
             work.save()
 
-            return render(request, '')
+            return HttpResponseRedirect(f'/works/{work.id}')
 
     @staticmethod
     def index(request: HttpRequest) -> HttpResponse:
         works = WorkModel.objects.all()
 
         return render(request, 'works/index.html', {'works': works})
+
+    @staticmethod
+    def view(request: HttpRequest, value) -> HttpResponse:
+        work = WorkModel.objects.get(id=value)
+
+        return render(request, 'works/work.html', {'work': work})

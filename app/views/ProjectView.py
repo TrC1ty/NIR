@@ -10,6 +10,18 @@ from datetime import datetime
 
 class ProjectView(View):
     @staticmethod
+    def index(request: HttpRequest) -> HttpResponse:
+        projects = ProjectModel.objects.all()
+
+        return render(request, 'projects/index.html', {'projects': projects})
+
+    @staticmethod
+    def view(request: HttpRequest, value) -> HttpResponse:
+        project = ProjectModel.objects.get(id=value)
+
+        return render(request, 'projects/project.html', {'project': project})
+
+    @staticmethod
     def get(request: HttpRequest) -> HttpResponse:
         form = ProjectForm()
 
@@ -33,18 +45,6 @@ class ProjectView(View):
             ).save()
 
             return HttpResponseRedirect('index')
-
-    @staticmethod
-    def index(request: HttpRequest) -> HttpResponse:
-        projects = ProjectModel.objects.all()
-
-        return render(request, 'projects/index.html', {'projects': projects})
-
-    @staticmethod
-    def view(request: HttpRequest, value) -> HttpResponse:
-        project = ProjectModel.objects.get(id=value)
-
-        return render(request, 'projects/project.html', {'project': project})
 
     @staticmethod
     def edit(request: HttpRequest, value) -> HttpResponse:
