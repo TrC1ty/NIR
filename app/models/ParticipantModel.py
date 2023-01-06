@@ -1,23 +1,8 @@
-import enum
-from enum import Enum
-from enumchoicefield import EnumChoiceField
 from django.db import models
+from app.models.Enums import ParticipantType, SubjectType
 
 
 class ParticipantModel(models.Model):
-    @enum.unique
-    class ParticipantType(Enum):
-        SUPPLIER = 1
-        DEVELOPER = 2
-        REPRESENTATIVE = 3
-        OTHER = 4
-
-    @enum.unique
-    class SubjectType(Enum):
-        LEGAL_ENTITY = 1
-        NATURAL_PERSON = 2
-        INDIVIDUAL_ENTREPRENEUR = 3
-
     id = models.BigAutoField(auto_created=True, primary_key=True)
     surname = models.TextField()
     name = models.TextField()
@@ -31,13 +16,15 @@ class ParticipantModel(models.Model):
     phone = models.TextField()
     legal_name = models.TextField()
     details_admin_doc = models.TextField()
-    participant_type = EnumChoiceField(
-        ParticipantType,
-        default=ParticipantType.OTHER
+    participant_type = models.CharField(
+        max_length=3,
+        choices=ParticipantType.choices,
+        default=ParticipantType.OTHER,
     )
-    subject_type = EnumChoiceField(
-        SubjectType,
-        default=SubjectType.NATURAL_PERSON
+    subject_type = models.CharField(
+        max_length=2,
+        choices=SubjectType.choices,
+        default=SubjectType.NATURAL_PERSON,
     )
 
     class Meta:

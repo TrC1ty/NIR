@@ -180,6 +180,9 @@
                 <div class="small">
                     Работы, выполняемы на проекте.
                 </div>
+                <div class="col-4">
+                    <a style = "float: right;" class="btn btn-outline-primary btn-sm" href="{%url 'work-create' project.id %}">Добавить работу</a>
+                </div>
                 {% for work in works%}
                 <div class="row mb-3">
                     <div class="col-12 col-md-4">

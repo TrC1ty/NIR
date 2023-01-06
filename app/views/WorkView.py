@@ -8,23 +8,16 @@ from app.models.ProjectModel import ProjectModel
 
 class WorkView(View):
     @staticmethod
-    def get(request: HttpRequest) -> HttpResponse:
-        works = WorkModel.objects.all()
-
-        return render(request, 'works/index.html', {'works': works})
-
-    @staticmethod
-    def create(request: HttpRequest, project_id) -> HttpResponse:
+    def get(request: HttpRequest, project_id) -> HttpResponse:
         form = WorkForm()
         form.project_id = project_id
 
-        return render(request, 'works/creation.html', {'form': form})
+        return render(request, 'works/creation.html', {'form': form, 'project_id': project_id})
 
     @staticmethod
-    def post(request: HttpRequest) -> HttpResponse:
+    def post(request: HttpRequest, project_id) -> HttpResponse:
         form = WorkForm(request.POST)
         if form.is_valid():
-            project_id = form.cleaned_data["project_id"]
             project = ProjectModel.objects.get(id=project_id)
 
             work = WorkModel.objects.create(
@@ -48,3 +41,9 @@ class WorkView(View):
             work.save()
 
             return render(request, '')
+
+    @staticmethod
+    def index(request: HttpRequest) -> HttpResponse:
+        works = WorkModel.objects.all()
+
+        return render(request, 'works/index.html', {'works': works})

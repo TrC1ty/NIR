@@ -22,8 +22,8 @@ urlpatterns = [
     path('projects/<int:project_id>/add/<str:participant>', ParticipantView.create, name='participant-create'),
 
     # for works
-    path('works/index', WorkView.as_view(), name='work-index'),
-    path('projects/<int:project_id>/add/work', WorkView.create, name='work-create'),
+    path('projects/<int:project_id>/add-work', WorkView.as_view(), name='work-create'),
+    path('works/index', WorkView.index, name='work-index'),
 
     path('create-material', MaterialView.as_view(), name='create-material'),
 ]

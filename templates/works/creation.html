@@ -7,7 +7,7 @@
     <h1>Создание работы</h1>
 </div>
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
-    <form action="{% url 'create-work' %}" method="post">
+    <form action="{% url 'work-create' project_id %}" method="post">
         {% csrf_token %}
         {% for field in form.visible_fields %}
          <div class="form-group">
