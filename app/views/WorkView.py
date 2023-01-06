@@ -56,11 +56,9 @@ class WorkView(View):
 
     @staticmethod
     def edit(request: HttpRequest, value) -> HttpResponse:
-        project = ProjectModel.objects.get(id=value)
-        works = WorkModel.objects.filter(project=project)
 
         work = WorkModel.objects.get(id=value)
-        # projects = ProjectModel.objects.filter()
+
 
         form = Work(instance=work)
         # form.name_project = project.name_project
@@ -69,6 +67,5 @@ class WorkView(View):
         # form.date = project.date
         # form.number_document = project.number_document
 
-        return render(request, 'projects/edit.html', {'project': project,
-                                                      'works': works,
-                                                      'form': form})
+        return render(request, 'works/edit.html', {'work': work,
+                                                    'form': form})

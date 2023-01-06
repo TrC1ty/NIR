@@ -1,25 +1,50 @@
 from django import forms
 from app.models.WorkModel import WorkModel
-from django.forms import ModelForm, Textarea, TextInput
+from django.forms import ModelForm, Textarea, TextInput, NumberInput, DateInput
+
 
 class Work(ModelForm):
     class Meta:
         model = WorkModel
-        fields = ['name_hidden_works', 'number_project_doc', 'number_working_doc', 'other_details_project_drawing']
-        # widgets = {
-        #     'name_project': TextInput(attrs={'class': 'form-control'}),
-        #     'name_project_documentation': TextInput(attrs={'class': 'form-control'}),
-        #     'building_address': TextInput(attrs={'class': 'form-control'}),
-        #     'number_document': TextInput(attrs={'class': 'form-control'}),
-        # }
-        #
-        # labels = {
-        #     "name_project": "Название проекта",
-        #     "name_project_documentation": "Наименование проектной документации",
-        #     "building_address": "Адресс объекта строительства",
-        #     "number_document": "Номер документа",
-        # }
+        fields = ['name_hidden_works', 'number_project_doc', 'number_working_doc', 'other_details_project_drawing',
+                  'other_details_working_drawing', 'name_project_doc', 'name_working_doc',
+                  'information_persons_prepare_doc', 'submitted_doc', 'start_date_work', 'regulatory_acts',
+                  'permitted_works', 'additional_information', 'number_instances', 'applications']
+        widgets = {
+            'name_hidden_works': TextInput(attrs={'class': 'form-control'}),
+            'number_project_doc': TextInput(attrs={'class': 'form-control'}),
+            'number_working_doc': TextInput(attrs={'class': 'form-control'}),
+            'other_details_project_drawing': TextInput(attrs={'class': 'form-control'}),
+            'other_details_working_drawing': TextInput(attrs={'class': 'form-control'}),
+            'name_project_doc': TextInput(attrs={'class': 'form-control'}),
+            'name_working_doc': TextInput(attrs={'class': 'form-control'}),
+            'information_persons_prepare_doc': TextInput(attrs={'class': 'form-control'}),
+            'submitted_doc': TextInput(attrs={'class': 'form-control'}),
+            'start_date_work': DateInput(attrs={'class': 'form-control'}),
+            'regulatory_acts': TextInput(attrs={'class': 'form-control'}),
+            'permitted_works': TextInput(attrs={'class': 'form-control'}),
+            'additional_information': TextInput(attrs={'class': 'form-control'}),
+            'number_instances': NumberInput(attrs={'class': 'form-control'}),
+            'applications': TextInput(attrs={'class': 'form-control'}),
+        }
 
+        labels = {
+            'name_hidden_works': 'Наименование скрытых работ',
+            'number_project_doc': 'Номер проектной документации',
+            'number_working_doc': 'Номер рабочей документации',
+            'other_details_project_drawing': 'Другие реквизиты проектного чертежа',
+            'other_details_working_drawing': 'Другие реквизиты рабочего чертежа',
+            'name_project_doc': 'Наименование проектной документации',
+            'name_working_doc': 'Наименование рабочей документации',
+            'information_persons_prepare_doc': 'Сведения о лицах, осуществялющих подготовку раздела документации',
+            'submitted_doc': 'Предоставленные документы',
+            'start_date_work': 'Дата начала работ',
+            'regulatory_acts': 'Нормативные акты',
+            'permitted_works': 'Разрешенные работы',
+            'additional_information': 'Дополнительная информация',
+            'number_instances': 'Количество экземпляров',
+            'applications': 'Приложения',
+        }
 
 class WorkForm(forms.Form):
     name_hidden_works = forms.CharField(label='Наименование скрытых работ', widget=forms.TextInput(
@@ -36,7 +61,7 @@ class WorkForm(forms.Form):
         attrs={'class': 'form-control'}
     ))
     # todo: что это за поле вообще, какой его смысл
-    other_details_working_drawing = forms.CharField(label='Другие реквизиты проектного чертежа', widget=forms.TextInput(
+    other_details_working_drawing = forms.CharField(label='Другие реквизиты рабочего чертежа', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))
     name_project_doc = forms.CharField(label='Наименование проектной документации', widget=forms.TextInput(
