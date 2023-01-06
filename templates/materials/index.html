@@ -1,37 +1,37 @@
 {% extends 'base/base.html' %}
 
-{% block title %}Список участников{% endblock %}
+{% block title %}Список материалов{% endblock %}
 
 {% block content %}
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
-    <h1>Список участников</h1>
+    <h1>Список материалов</h1>
 </div>
  <form method="post">
     {% csrf_token %}
     <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
-        {% if participants %}
+        {% if materials %}
             <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">№</th>
                         <th scope="col">Название</th>
-                        <th scope="col">Тип участника</th>
+                        <th scope="col">Дата начала</th>
+                        <th scope="col">Дата конца</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for participant in participants %}
+                    {% for material in materials %}
                         <tr>
-                            <th scope="row">
-                                <a href="">{{ participant.id }}</a>
-                            </th>
-                            <td>{{ participant.name }}</td>
-                            <td>{{ participant.participant_type }}</td>
+                            <th scope="row">{{ material.id }}</th>
+                            <td><a href="">{{ material.name }}</a></td>
+                            <td>{{ material.date_start }}</td>
+                            <td>{{ material.date_end }}</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         {% else %}
-            <div>(по текущему фильтру участников не найдено)</div>
+            <div>(по текущему фильтру материалов не найдено)</div>
         {% endif %}
     </div>
 </form>

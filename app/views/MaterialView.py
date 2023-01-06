@@ -3,14 +3,13 @@ from django.views import View
 from django.shortcuts import render
 from ..forms.MaterialForm import MaterialForm
 from ..models.MaterialModel import MaterialModel
-from ..models.ParticipantModel import ParticipantModel
 
 
 class MaterialView(View):
     def get(self, request: HttpRequest) -> HttpResponse:
         form = MaterialForm()
 
-        return render(request, 'creation/material.html', {'form': form})
+        return render(request, 'materials/creation.html', {'form': form})
 
     def post(self, request: HttpRequest) -> HttpResponse:
         form = MaterialForm(request.POST)
@@ -28,3 +27,9 @@ class MaterialView(View):
             new_material.save()
 
             return HttpResponseRedirect('/')
+
+    @staticmethod
+    def index(request: HttpRequest) -> HttpResponse:
+        materials = MaterialModel.objects.all()
+
+        return render(request, 'materials/index.html', {'materials': materials})

@@ -30,3 +30,26 @@ class ProjectModel(models.Model):
 
     class Meta:
         db_table = "Projects"
+
+    def change_participant(self, participant, column):
+        match column:
+            case "builder":
+                self.builder = participant
+            case "person_the_construction":
+                self.person_the_construction = participant
+            case "person_prepares_doc":
+                self.person_prepares_doc = participant
+            case "representative_builder":
+                self.representative_builder = participant
+            case "representative_person_the_construction":
+                self.representative_person_the_construction = participant
+            case "specialist_organization_construction":
+                self.specialist_organization_construction = participant
+            case "representative_person_preparing_project_doc":
+                self.representative_person_preparing_project_doc = participant
+            case "representative_person_performed_examined":
+                self.representative_person_performed_examined = participant
+            case "other_persons_participated_examination":
+                self.other_persons_participated_examination = participant
+
+        self.save()

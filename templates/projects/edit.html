@@ -34,7 +34,7 @@
                     </div>
                     {% if project.builder %}
                     <div class="col-12 col-md-6">
-                        {{project.builder}}
+                        {{project.builder.name}}
                     </div>
                     {%else%}
                     <div class="col-12 col-md-6">
@@ -50,7 +50,7 @@
                     </div>
                     {% if project.person_the_construction %}
                     <div class="col-12 col-md-6">
-                        {{project.person_the_construction}}
+                        {{project.person_the_construction.name}}
                     </div>
                     {%else%}
                     <div class="col-12 col-md-6">
@@ -66,7 +66,7 @@
                     </div>
                     {% if project.person_prepares_doc %}
                     <div class="col-12 col-md-6">
-                        {{project.person_prepares_doc}}
+                        {{project.person_prepares_doc.name}}
                     </div>
                     {%else%}
                     <div class="col-12 col-md-6">
@@ -81,7 +81,7 @@
                     </div>
                     {% if project.representative_builder %}
                     <div class="col-12 col-md-6">
-                        {{project.representative_builder}}
+                        {{project.representative_builder.name}}
                     </div>
                     {%else%}
                     <div class="col-12 col-md-6">
@@ -92,11 +92,11 @@
 
                 <div class="row mb-3">
                     <div class="col-12 col-md-4">
-                        <span class="col-form-label p-0">Представитель лица, осуществялющего строительство</span>
+                        <span class="col-form-label p-0">Представитель лица, осуществляющего строительство</span>
                     </div>
                     {% if project.representative_person_the_construction %}
                     <div class="col-12 col-md-6">
-                        {{project.representative_person_the_construction}}
+                        {{project.representative_person_the_construction.name}}
                     </div>
                     {%else%}
                     <div class="col-12 col-md-6">
@@ -113,7 +113,7 @@
                     {% if project.specialist_organization_construction %}
 
                     <div class="col-12 col-md-6">
-                        {{project.specialist_organization_construction}}
+                        {{project.specialist_organization_construction.name}}
                     </div>
                     {%else%}
                     <div class="col-12 col-md-6">
@@ -129,7 +129,7 @@
                     </div>
                     {% if project.representative_person_preparing_project_doc %}
                     <div class="col-12 col-md-6">
-                        {{project.representative_person_preparing_project_doc}}
+                        {{project.representative_person_preparing_project_doc.name}}
                     </div>
                     {%else%}
                     <div class="col-12 col-md-6">
@@ -145,7 +145,7 @@
                     </div>
                     {% if project.representative_person_performed_examined %}
                     <div class="col-12 col-md-6">
-                        {{project.representative_person_performed_examined}}
+                        {{project.representative_person_performed_examined.name}}
                     </div>
                     {%else%}
                     <div class="col-12 col-md-6">
@@ -161,7 +161,7 @@
                     </div>
                     {% if project.other_persons_participated_examination %}
                     <div class="col-12 col-md-6">
-                        {{project.other_persons_participated_examination}}
+                        {{project.other_persons_participated_examination.name}}
                     </div>
                     {%else%}
                     <div class="col-12 col-md-6">

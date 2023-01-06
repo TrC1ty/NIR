@@ -37,11 +37,10 @@ class ParticipantView(View):
                 details_admin_doc=form.cleaned_data["details_admin_doc"]
             )
             participant_new.save()
+            print(participant_new.SubjectType[0])
+            project.change_participant(participant_new, participant)
 
-            project[f"{participant}"] = participant_new
-            project.save()
-
-            return render(request, 'home/home.html')
+            return HttpResponseRedirect(f'/projects/edit/{project_id}')
 
     @staticmethod
     def index(request: HttpRequest) -> HttpResponse:
