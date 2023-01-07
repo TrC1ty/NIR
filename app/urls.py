@@ -12,15 +12,16 @@ urlpatterns = [
 
     # for projects
     path('projects/create', ProjectView.as_view(), name='project-create'),
-    path('projects/edit/<int:value>', ProjectView.edit, name='project-edit'),
     path('projects/index', ProjectView.index, name='project-index'),
     path('projects/<int:value>', ProjectView.view, name='project-view'),
+    path('projects/edit/<int:value>', ProjectView.edit, name='project-edit'),
     path('projects/delete/<int:value>', ProjectView.delete, name='project-delete'),
 
     # for participants
     path('projects/<int:project_id>/add/<str:participant>', ParticipantView.as_view(), name='participant-create'),
     path('participants/index', ParticipantView.index, name='participant-index'),
     path('participants/<int:value>', ParticipantView.view, name='participant-view'),
+    path('participants/edit/<int:value>', ParticipantView.edit, name='participant-edit'),
     path('participants/delete/<int:value>', ParticipantView.delete, name='participant-delete'),
 
     # for works

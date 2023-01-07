@@ -45,7 +45,7 @@ class WorkView(View):
 
     @staticmethod
     def index(request: HttpRequest) -> HttpResponse:
-        works = WorkModel.objects.all()
+        works = WorkModel.objects.all().order_by('-id')
 
         return render(request, 'works/index.html', {'works': works})
 

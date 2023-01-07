@@ -6,7 +6,7 @@
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
     <h1>Просмотр участника</h1>
     <form method="post">
-        <a class="btn btn-outline-primary btn-sm" href="">Редактировать</a>
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'participant-edit' participant.id %}">Редактировать</a>
         {% csrf_token %}
         <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этого участника?');" class="btn btn-outline-secondary btn-sm float-end" formaction="{% url 'participant-delete' participant.id %}"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>
     </form>

@@ -11,7 +11,7 @@ from datetime import datetime
 class ProjectView(View):
     @staticmethod
     def index(request: HttpRequest) -> HttpResponse:
-        projects = ProjectModel.objects.all()
+        projects = ProjectModel.objects.all().order_by('-id')
 
         return render(request, 'projects/index.html', {'projects': projects})
 
