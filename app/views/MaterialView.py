@@ -68,6 +68,8 @@ class MaterialView(View):
                 material.date_end = form.cleaned_data['date_end']
                 material.save()
 
+                return render(request, 'materials/material.html', {'material': material})
+
         form = Material(instance=material)
 
         return render(request, 'materials/edit.html', {'material': material,

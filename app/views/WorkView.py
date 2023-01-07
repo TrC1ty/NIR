@@ -78,6 +78,8 @@ class WorkView(View):
                 work.applications = form.cleaned_data["applications"]
                 work.save()
 
+                return render(request, 'works/work.html', {'work': work})
+
         form = Work(instance=work)
 
         return render(request, 'works/edit.html', {'work': work,
