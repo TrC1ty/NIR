@@ -5,6 +5,7 @@ from app.views.HomeView import HomeView
 from app.views.ProjectView import ProjectView
 from app.views.WorkView import WorkView
 from app.views.MaterialView import MaterialView
+from app.views.BCARView import BCARView
 
 
 urlpatterns = [
@@ -37,5 +38,8 @@ urlpatterns = [
     path('materials/<int:value>', MaterialView.view, name='material-view'),
     path('materials/edit/<int:value>', MaterialView.edit, name='material-edit'),
     path('materials/delete/<int:value>', MaterialView.delete, name='material-delete'),
+
+    # for bcars
+    path('material/<int:material_id>/bcar/create', BCARView.as_view(), name='bcar-create'),
 ]
 

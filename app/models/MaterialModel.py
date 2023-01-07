@@ -11,7 +11,7 @@ class MaterialModel(models.Model):
     date_start = models.DateTimeField()
     date_end = models.DateTimeField()
     provider = models.ForeignKey(ParticipantModel, on_delete=models.CASCADE)
-    bcar = models.ForeignKey(BCARModel, on_delete=models.SET_NULL, null=True)
+    bcars = models.ManyToManyField(BCARModel)
 
     class Meta:
         db_table = "Materials"

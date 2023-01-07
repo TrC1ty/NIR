@@ -11,7 +11,6 @@ class WorkView(View):
     @staticmethod
     def get(request: HttpRequest, project_id) -> HttpResponse:
         form = WorkForm()
-        form.project_id = project_id
 
         return render(request, 'works/creation.html', {'form': form, 'project_id': project_id})
 

@@ -22,6 +22,7 @@ class Material(ModelForm):
             "date_end": "Дата конца",
         }
 
+
 class MaterialForm(forms.Form):
     name = forms.CharField(label='Название', widget=forms.TextInput(
         attrs={'class': 'form-control'}

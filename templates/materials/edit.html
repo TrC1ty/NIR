@@ -53,19 +53,19 @@
                 </div>
 
                 <div class="col-4">
-                    <a style = "float: right;" class="btn btn-outline-primary btn-sm" href="">Добавить сертификат</a>
+                    <a style = "float: right;" class="btn btn-outline-primary btn-sm" href="{% url 'bcar-create' material.id %}">Добавить сертификат</a>
                 </div>
 
-                {% for bca in material.bcar.all %}
-                <div class="row mb-3">
-                    <div class="col-12 col-md-4">
-                        <span class="col-form-label p-0">Название сертификата</span>
-                    </div>
+                {% for bca in material.bcars.all %}
+                    <div class="row mb-3">
+                        <div class="col-12 col-md-4">
+                            <span class="col-form-label p-0">Название сертификата</span>
+                        </div>
 
-                    <div class="col-12 col-md-6">
-                        {{bca.name}}
+                        <div class="col-12 col-md-6">
+                            {{bca.name}}
+                        </div>
                     </div>
-                </div>
                 {% endfor %}
 
             </div>
