@@ -52,4 +52,12 @@ class ParticipantView(View):
     def view(request: HttpRequest, value) -> HttpResponse:
         participant = ParticipantModel.objects.get(id=value)
 
-        return render(request, 'participant/participant.html', {'participant': participant})
+        return render(request, 'participants/participant.html', {'participant': participant})
+
+    @staticmethod
+    def delete(request: HttpRequest, value) -> HttpResponse:
+        participant = ParticipantModel.objects.get(id=value)
+        participant.delete()
+        participants = ParticipantModel.objects.all()
+
+        return render(request, 'participants/index.html', {'participants': participants})

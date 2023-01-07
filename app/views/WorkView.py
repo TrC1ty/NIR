@@ -56,16 +56,37 @@ class WorkView(View):
 
     @staticmethod
     def edit(request: HttpRequest, value) -> HttpResponse:
-
         work = WorkModel.objects.get(id=value)
 
+        if request.method == 'POST':
+            form = WorkForm(request.POST)
+            if form.is_valid():
+                work.name_hidden_works = form.cleaned_data["name_hidden_works"]
+                work.number_project_doc = form.cleaned_data["number_project_doc"]
+                work.number_working_doc = form.cleaned_data["number_working_doc"]
+                work.other_details_project_drawing = form.cleaned_data["other_details_project_drawing"]
+                work.other_details_working_drawing = form.cleaned_data["other_details_working_drawing"]
+                work.name_project_doc = form.cleaned_data["name_project_doc"]
+                work.name_working_doc = form.cleaned_data["name_working_doc"]
+                work.information_persons_prepare_doc = form.cleaned_data["information_persons_prepare_doc"]
+                work.submitted_doc = form.cleaned_data["submitted_doc"]
+                work.start_date_work = form.cleaned_data["start_date_work"]
+                work.regulatory_acts = form.cleaned_data["regulatory_acts"]
+                work.permitted_works = form.cleaned_data["permitted_works"]
+                work.additional_information = form.cleaned_data["additional_information"]
+                work.number_instances = form.cleaned_data["number_instances"]
+                work.applications = form.cleaned_data["applications"]
+                work.save()
 
         form = Work(instance=work)
-        # form.name_project = project.name_project
-        # form.name_project_documentation = project.name_project_documentation
-        # form.building_address = project.building_address
-        # form.date = project.date
-        # form.number_document = project.number_document
 
         return render(request, 'works/edit.html', {'work': work,
-                                                    'form': form})
+                                                   'form': form})
+
+    @staticmethod
+    def delete(request: HttpRequest, value) -> HttpResponse:
+        work = WorkModel.objects.get(id=value)
+        work.delete()
+        works = WorkModel.objects.all()
+
+        return render(request, 'works/index.html', {'works': works})

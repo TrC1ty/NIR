@@ -22,7 +22,7 @@
                     {% for participant in participants %}
                         <tr>
                             <th scope="row">
-                                <a href="">{{ participant.id }}</a>
+                                <a href="{% url 'participant-view' participant.id %}">{{ participant.id }}</a>
                             </th>
                             <td>{{ participant.name }}</td>
                             <td>{{ participant.participant_type }}</td>

@@ -33,13 +33,23 @@
                         <span class="col-form-label p-0">Застройщик</span>
                     </div>
                     {% if project.builder %}
-                    <div class="col-12 col-md-6">
-                        {{project.builder.name}}
-                    </div>
+                        {% if project.builder.SubjectType == 'ФЛ' %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.builder.id %}">
+                                    {{project.builder.surname}} {{project.builder.name}} {{project.builder.patronymic}}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.builder.id %}">
+                                    {{project.builder.legal_name}}
+                                </a>
+                            </div>
+                        {% endif %}
                     {%else%}
-                    <div class="col-12 col-md-6">
-                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'builder' %}">Добавить участника</a>
-                    </div>
+                        <div class="col-12 col-md-6">
+                            <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'builder' %}">Добавить участника</a>
+                        </div>
                     {%endif%}
 
                 </div>
@@ -49,13 +59,23 @@
                         <span class="col-form-label p-0">Лицо, осуществляющее строительство</span>
                     </div>
                     {% if project.person_the_construction %}
-                    <div class="col-12 col-md-6">
-                        {{project.person_the_construction.name}}
-                    </div>
+                        {% if project.person_the_construction.SubjectType == 'ФЛ' %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.person_the_construction.id %}">
+                                    {{project.person_the_construction.surname}} {{project.person_the_construction.name}} {{project.person_the_construction.patronymic}}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.person_the_construction.id %}">
+                                    {{project.person_the_construction.legal_name}}
+                                </a>
+                            </div>
+                        {% endif %}
                     {%else%}
-                    <div class="col-12 col-md-6">
-                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'person_the_construction' %}">Добавить участника</a>
-                    </div>
+                        <div class="col-12 col-md-6">
+                            <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'person_the_construction' %}">Добавить участника</a>
+                        </div>
                     {%endif%}
                 </div>
 
@@ -65,13 +85,23 @@
                         <span class="col-form-label p-0">Лицо, осуществляющее подготовку проектной документации</span>
                     </div>
                     {% if project.person_prepares_doc %}
-                    <div class="col-12 col-md-6">
-                        {{project.person_prepares_doc.name}}
-                    </div>
+                        {% if project.person_prepares_doc.SubjectType == 'ФЛ' %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.person_prepares_doc.id %}">
+                                    {{project.person_prepares_doc.surname}} {{project.person_prepares_doc.name}} {{project.person_prepares_doc.patronymic}}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.person_prepares_doc.id %}">
+                                    {{project.person_prepares_doc.legal_name}}
+                                </a>
+                            </div>
+                        {% endif %}
                     {%else%}
-                    <div class="col-12 col-md-6">
-                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'person_prepares_doc' %}">Добавить участника</a>
-                    </div>
+                        <div class="col-12 col-md-6">
+                            <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'person_prepares_doc' %}">Добавить участника</a>
+                        </div>
                     {%endif%}
                 </div>
 
@@ -80,13 +110,23 @@
                         <span class="col-form-label p-0">Представитель застройщика</span>
                     </div>
                     {% if project.representative_builder %}
-                    <div class="col-12 col-md-6">
-                        {{project.representative_builder.name}}
-                    </div>
+                        {% if project.representative_builder.SubjectType == 'ФЛ' %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.representative_builder.id %}">
+                                    {{project.representative_builder.surname}} {{project.representative_builder.name}} {{project.representative_builder.patronymic}}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.representative_builder.id %}">
+                                    {{project.representative_builder.legal_name}}
+                                </a>
+                            </div>
+                        {% endif %}
                     {%else%}
-                    <div class="col-12 col-md-6">
-                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'representative_builder' %}">Добавить участника</a>
-                    </div>
+                        <div class="col-12 col-md-6">
+                            <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'representative_builder' %}">Добавить участника</a>
+                        </div>
                     {%endif%}
                 </div>
 
@@ -95,13 +135,23 @@
                         <span class="col-form-label p-0">Представитель лица, осуществляющего строительство</span>
                     </div>
                     {% if project.representative_person_the_construction %}
-                    <div class="col-12 col-md-6">
-                        {{project.representative_person_the_construction.name}}
-                    </div>
+                        {% if project.representative_person_the_construction.SubjectType == 'ФЛ' %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.representative_person_the_construction.id %}">
+                                    {{project.representative_person_the_construction.surname}} {{project.representative_person_the_construction.name}} {{project.representative_person_the_construction.patronymic}}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.representative_person_the_construction.id %}">
+                                    {{project.representative_person_the_construction.legal_name}}
+                                </a>
+                            </div>
+                        {% endif %}
                     {%else%}
-                    <div class="col-12 col-md-6">
-                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'representative_person_the_construction' %}">Добавить участника</a>
-                    </div>
+                        <div class="col-12 col-md-6">
+                            <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'representative_person_the_construction' %}">Добавить участника</a>
+                        </div>
                     {%endif%}
                 </div>
 
@@ -111,14 +161,23 @@
                             строительного контроля</span>
                     </div>
                     {% if project.specialist_organization_construction %}
-
-                    <div class="col-12 col-md-6">
-                        {{project.specialist_organization_construction.name}}
-                    </div>
+                        {% if project.specialist_organization_construction.SubjectType == 'ФЛ' %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.specialist_organization_construction.id %}">
+                                    {{project.specialist_organization_construction.surname}} {{project.specialist_organization_construction.name}} {{project.specialist_organization_construction.patronymic}}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.specialist_organization_construction.id %}">
+                                    {{project.specialist_organization_construction.legal_name}}
+                                </a>
+                            </div>
+                        {% endif %}
                     {%else%}
-                    <div class="col-12 col-md-6">
-                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'specialist_organization_construction' %}">Добавить участника</a>
-                    </div>
+                        <div class="col-12 col-md-6">
+                            <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'specialist_organization_construction' %}">Добавить участника</a>
+                        </div>
                     {%endif%}
                 </div>
 
@@ -128,13 +187,23 @@
                             проектной документации</span>
                     </div>
                     {% if project.representative_person_preparing_project_doc %}
-                    <div class="col-12 col-md-6">
-                        {{project.representative_person_preparing_project_doc.name}}
-                    </div>
+                        {% if project.representative_person_preparing_project_doc.SubjectType == 'ФЛ' %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.representative_person_preparing_project_doc.id %}">
+                                    {{project.representative_person_preparing_project_doc.surname}} {{project.representative_person_preparing_project_doc.name}} {{project.representative_person_preparing_project_doc.patronymic}}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.representative_person_preparing_project_doc.id %}">
+                                    {{project.representative_person_preparing_project_doc.legal_name}}
+                                </a>
+                            </div>
+                        {% endif %}
                     {%else%}
-                    <div class="col-12 col-md-6">
-                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'representative_person_preparing_project_doc' %}">Добавить участника</a>
-                    </div>
+                        <div class="col-12 col-md-6">
+                            <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'representative_person_preparing_project_doc' %}">Добавить участника</a>
+                        </div>
                     {%endif%}
                 </div>
 
@@ -144,13 +213,23 @@
                             освидетельствованию</span>
                     </div>
                     {% if project.representative_person_performed_examined %}
-                    <div class="col-12 col-md-6">
-                        {{project.representative_person_performed_examined.name}}
-                    </div>
+                        {% if project.representative_person_performed_examined.SubjectType == 'ФЛ' %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.representative_person_performed_examined.id %}">
+                                    {{project.representative_person_performed_examined.surname}} {{project.representative_person_performed_examined.name}} {{project.representative_person_performed_examined.patronymic}}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.representative_person_performed_examined.id %}">
+                                    {{project.representative_person_performed_examined.legal_name}}
+                                </a>
+                            </div>
+                        {% endif %}
                     {%else%}
-                    <div class="col-12 col-md-6">
-                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'representative_person_performed_examined' %}">Добавить участника</a>
-                    </div>
+                        <div class="col-12 col-md-6">
+                            <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'representative_person_performed_examined' %}">Добавить участника</a>
+                        </div>
                     {%endif%}
                 </div>
 
@@ -160,9 +239,19 @@
                         в освидетельствовании</span>
                     </div>
                     {% if project.other_persons_participated_examination %}
-                    <div class="col-12 col-md-6">
-                        {{project.other_persons_participated_examination.name}}
-                    </div>
+                        {% if project.other_persons_participated_examination.SubjectType == 'ФЛ' %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.other_persons_participated_examination.id %}">
+                                    {{project.other_persons_participated_examination.surname}} {{project.other_persons_participated_examination.name}} {{project.other_persons_participated_examination.patronymic}}
+                                </a>
+                            </div>
+                        {% else %}
+                            <div class="col-12 col-md-6">
+                                <a href="{% url 'participant-view' project.other_persons_participated_examination.id %}">
+                                    {{project.other_persons_participated_examination.legal_name}}
+                                </a>
+                            </div>
+                        {% endif %}
                     {%else%}
                     <div class="col-12 col-md-6">
                         <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'other_persons_participated_examination' %}">Добавить участника</a>
@@ -188,7 +277,9 @@
                     </div>
 
                     <div class="col-12 col-md-6">
-                        {{work.name_hidden_works}}
+                        <a href="{% url 'work-view' work.id %}">
+                            {{work.name_hidden_works}}
+                        </a>
                     </div>
                 </div>
                 {% endfor %}
@@ -200,7 +291,7 @@
                 <div class="small">
                     Остальная информация о проекте.
                 </div>
-                <form action="{% url 'project-create' %}" method="post">
+                <form action="{% url 'project-edit' project.id %}" method="post">
                     {% csrf_token %}
                     {% for field in form.visible_fields %}
                     <div class="form-group">

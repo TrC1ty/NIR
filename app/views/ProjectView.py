@@ -49,14 +49,18 @@ class ProjectView(View):
     @staticmethod
     def edit(request: HttpRequest, value) -> HttpResponse:
         project = ProjectModel.objects.get(id=value)
-        works = WorkModel.objects.filter(project=project)
 
+        if request.method == 'POST':
+            form = ProjectForm(request.POST)
+            if form.is_valid():
+                project.name_project = form.cleaned_data['name_project']
+                project.name_project_documentation = form.cleaned_data['name_project_documentation']
+                project.building_address = form.cleaned_data['building_address']
+                project.number_document = form.cleaned_data['number_document']
+                project.save()
+
+        works = WorkModel.objects.filter(project=project)
         form = Project(instance=project)
-        # form.name_project = project.name_project
-        # form.name_project_documentation = project.name_project_documentation
-        # form.building_address = project.building_address
-        # form.date = project.date
-        # form.number_document = project.number_document
 
         return render(request, 'projects/edit.html', {'project': project,
                                                       'works': works,

@@ -25,7 +25,7 @@
                     Информация о работе:
                 </div>
 
-                <form action="{% url 'work-create' work.project.id %}" method="post">
+                <form action="{% url 'work-edit' work.id %}" method="post">
                     {% csrf_token %}
                     {% for field in form.visible_fields %}
                     <div class="form-group">
