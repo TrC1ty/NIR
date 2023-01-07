@@ -57,15 +57,15 @@
                 </div>
 
                 {% for material in work.materials.all %}
-                <div class="row mb-3">
-                    <div class="col-12 col-md-4">
-                        <span class="col-form-label p-0">Название материала</span>
-                    </div>
+                    <div class="row mb-3">
+                        <div class="col-12 col-md-4">
+                            <span class="col-form-label p-0">Название материала</span>
+                        </div>
 
-                    <div class="col-12 col-md-6">
-                        {{material.name}}
+                        <div class="col-12 col-md-6">
+                            {{material.name}}
+                        </div>
                     </div>
-                </div>
                 {% endfor %}
 
             </div>

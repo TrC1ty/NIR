@@ -1,6 +1,7 @@
 from django.db import models
 from .BCARModel import BCARModel
 from .ProjectModel import ProjectModel
+from .MaterialModel import MaterialModel
 
 
 class WorkModel(models.Model):
@@ -21,6 +22,7 @@ class WorkModel(models.Model):
     additional_information = models.TextField()
     number_instances = models.IntegerField()
     applications = models.TextField()
+    materials = models.ManyToManyField(MaterialModel)
 
     project = models.ForeignKey(ProjectModel, on_delete=models.CASCADE)
 

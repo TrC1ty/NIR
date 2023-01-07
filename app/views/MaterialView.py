@@ -5,6 +5,7 @@ from ..forms.MaterialForm import MaterialForm
 from ..models.MaterialModel import MaterialModel
 from app.models.WorkModel import WorkModel
 from ..models.ParticipantModel import ParticipantModel
+from app.forms.WorkForm import Work
 
 
 class MaterialView(View):
@@ -27,7 +28,6 @@ class MaterialView(View):
             date_end = form.cleaned_data['date_end']
             provider_id = request.POST['provider']
             provider = ParticipantModel.objects.get(id=provider_id)
-            print(provider)
             new_material = MaterialModel.objects.create(
                 name=name,
                 certificate=certificate,
@@ -36,10 +36,12 @@ class MaterialView(View):
                 provider=provider,
             )
             new_material.save()
-            new_material.works.add(work)
-            new_material.save()
+            work.materials.add(new_material)
+            work.save()
 
-            return HttpResponseRedirect('/materials/index')
+        form = Work(instance=work)
+
+        return render(request, 'works/edit.html', {'work': work, 'form': form})
 
     @staticmethod
     def index(request: HttpRequest) -> HttpResponse:
