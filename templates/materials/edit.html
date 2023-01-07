@@ -1,0 +1,77 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Материал № {{ material.id }}{% endblock %}
+
+{% block content %}
+<div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
+    <h1>Редактирование материала</h1>
+</div>
+
+<div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#information">Информация о материале</button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link " data-bs-toggle="tab" data-bs-target="#bcars">Сертификаты</button>
+        </li>
+    </ul>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="information">
+            <div class="p-3 bg-body rounded shadow-sm">
+                <div class="small mb-3">
+                    Информация о материале:
+                </div>
+
+                <form action="{% url 'material-edit' material.id %}" method="post">
+                    {% csrf_token %}
+                    {% for field in form.visible_fields %}
+                    <div class="form-group">
+                        {{ field.errors }}
+                        <div class="row mb-4 align-items-center">
+                            <div class="col-12 col-md-3">
+                                <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{ field }}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary my-2">Сохранить</button>
+                </form>
+
+            </div>
+        </div>
+
+        <div class="tab-pane" id="bcars">
+            <div class="row p-3 bg-body rounded shadow-sm">
+                <div class="small col-8">
+                    Сертификаты для материала.
+                </div>
+
+                <div class="col-4">
+                    <a style = "float: right;" class="btn btn-outline-primary btn-sm" href="">Добавить сертификат</a>
+                </div>
+
+                {% for bca in material.bcar.all %}
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Название сертификата</span>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        {{bca.name}}
+                    </div>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

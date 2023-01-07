@@ -23,7 +23,7 @@
                     {% for material in materials %}
                         <tr>
                             <th scope="row">{{ material.id }}</th>
-                            <td><a href="">{{ material.name }}</a></td>
+                            <td><a href="{% url 'material-view' material.id %}">{{ material.name }}</a></td>
                             <td>{{ material.date_start }}</td>
                             <td>{{ material.date_end }}</td>
                         </tr>

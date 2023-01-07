@@ -1,7 +1,7 @@
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.views import View
 from django.shortcuts import render
-from ..forms.MaterialForm import MaterialForm
+from ..forms.MaterialForm import MaterialForm, Material
 from ..models.MaterialModel import MaterialModel
 from app.models.WorkModel import WorkModel
 from ..models.ParticipantModel import ParticipantModel
@@ -16,6 +16,12 @@ class MaterialView(View):
 
         return render(request, 'materials/creation.html', {'form': form, 'work_id': work_id,
                                                            'participants': participants})
+
+    @staticmethod
+    def view(request: HttpRequest, value) -> HttpResponse:
+        material = MaterialModel.objects.get(id=value)
+
+        return render(request, 'materials/material.html', {'material': material})
 
     @staticmethod
     def post(request: HttpRequest, work_id) -> HttpResponse:
@@ -45,6 +51,32 @@ class MaterialView(View):
 
     @staticmethod
     def index(request: HttpRequest) -> HttpResponse:
+        materials = MaterialModel.objects.all()
+
+        return render(request, 'materials/index.html', {'materials': materials})
+
+    @staticmethod
+    def edit(request: HttpRequest, value) -> HttpResponse:
+        material = MaterialModel.objects.get(id=value)
+
+        if request.method == 'POST':
+            form = MaterialForm(request.POST)
+            if form.is_valid():
+                material.name = form.cleaned_data['name_project']
+                material.certificate = form.cleaned_data['name_project_documentation']
+                material.date_start = form.cleaned_data['building_address']
+                material.date_end = form.cleaned_data['number_document']
+                material.save()
+
+        form = Material(instance=material)
+
+        return render(request, 'materials/edit.html', {'material': material,
+                                                       'form': form})
+
+    @staticmethod
+    def delete(request: HttpRequest, value) -> HttpResponse:
+        material = MaterialModel.objects.get(id=value)
+        material.delete()
         materials = MaterialModel.objects.all()
 
         return render(request, 'materials/index.html', {'materials': materials})
