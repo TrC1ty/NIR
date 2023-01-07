@@ -25,16 +25,21 @@ class MaterialView(View):
             certificate = form.cleaned_data['certificate']
             date_start = form.cleaned_data['date_start']
             date_end = form.cleaned_data['date_end']
+            provider_id = request.POST['provider']
+            provider = ParticipantModel.objects.get(id=provider_id)
+            print(provider)
             new_material = MaterialModel.objects.create(
                 name=name,
                 certificate=certificate,
                 date_start=date_start,
                 date_end=date_end,
-                # works=work,
+                provider=provider,
             )
             new_material.save()
+            new_material.works.add(work)
+            new_material.save()
 
-            return HttpResponseRedirect('index')
+            return HttpResponseRedirect('/materials/index')
 
     @staticmethod
     def index(request: HttpRequest) -> HttpResponse:

@@ -4,6 +4,7 @@ from django.shortcuts import render
 from ..forms.WorkForm import WorkForm, Work
 from app.models.WorkModel import WorkModel
 from app.models.ProjectModel import ProjectModel
+from ..models.MaterialModel import MaterialModel
 
 
 class WorkView(View):

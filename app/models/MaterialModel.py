@@ -1,7 +1,8 @@
 from django.db import models
 from .ParticipantModel import ParticipantModel
-from .WorkModel import WorkModel
+
 from .BCARModel import BCARModel
+from .WorkModel import WorkModel
 
 
 class MaterialModel(models.Model):

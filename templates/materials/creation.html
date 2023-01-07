@@ -28,7 +28,7 @@
                 <label class="col-form-label p-0" for="provider">Поставщик</label>
             </div>
             <div class="col-12 col-md-6">
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" aria-label="Default select example" name="provider">
                     <option selected></option>
                     {% for participant in participants %}
                     <option value="{{ participant.id }}">{{ participant.surname }} {{ participant.name }} {{ participant.patronymic }}</option>
