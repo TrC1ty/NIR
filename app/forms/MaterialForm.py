@@ -12,7 +12,7 @@ class Material(ModelForm):
             'name': TextInput(attrs={'class': 'form-control'}),
             'certificate': TextInput(attrs={'class': 'form-control'}),
             'date_start': DateInput(attrs={'class': 'form-control'}),
-            'date_end': TextInput(attrs={'class': 'form-control'}),
+            'date_end': DateInput(attrs={'class': 'form-control'}),
         }
 
         labels = {

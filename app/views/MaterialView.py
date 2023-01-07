@@ -62,10 +62,10 @@ class MaterialView(View):
         if request.method == 'POST':
             form = MaterialForm(request.POST)
             if form.is_valid():
-                material.name = form.cleaned_data['name_project']
-                material.certificate = form.cleaned_data['name_project_documentation']
-                material.date_start = form.cleaned_data['building_address']
-                material.date_end = form.cleaned_data['number_document']
+                material.name = form.cleaned_data['name']
+                material.certificate = form.cleaned_data['certificate']
+                material.date_start = form.cleaned_data['date_start']
+                material.date_end = form.cleaned_data['date_end']
                 material.save()
 
         form = Material(instance=material)
