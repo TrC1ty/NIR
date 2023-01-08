@@ -31,6 +31,7 @@ urlpatterns = [
     path('works/<int:value>', WorkView.view, name='work-view'),
     path('works/edit/<int:value>', WorkView.edit, name='work-edit'),
     path('works/delete/<int:value>', WorkView.delete, name='work-delete'),
+    path('works/create_doc/<int:value>', WorkView.create_doc, name='work-create-doc'),
 
     # for materials
     path('works/<int:work_id>/material/create', MaterialView.as_view(), name='material-create'),

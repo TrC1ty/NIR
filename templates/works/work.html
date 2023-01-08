@@ -8,6 +8,7 @@
     <form method="post">
         <a class="btn btn-outline-primary btn-sm" href="{% url 'work-edit' work.id %}">Редактировать</a>
         <a class="btn btn-outline-primary btn-sm" href="{% url 'project-view' work.project.id %}" >Перейти к проекту</a>
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'work-create-doc' work.id %}" >Создать акт</a>
         {% csrf_token %}
         <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить эту работу?');" class="btn btn-outline-secondary btn-sm float-end" formaction="{% url 'work-delete' work.id %}"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>
     </form>
