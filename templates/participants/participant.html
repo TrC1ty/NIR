@@ -15,157 +15,206 @@
     <form method="post">
         {% csrf_token %}
         {% if participant.legal_name %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">Наименование</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.legal_name}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Наименование</span>
             </div>
+            <div class="col-12 col-md-6">
+                {{participant.legal_name}}
+            </div>
+        </div>
         {% endif %}
 
         {% if participant.surname %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">Фамилия</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.surname}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Фамилия</span>
             </div>
+            <div class="col-12 col-md-6">
+                {{participant.surname}}
+            </div>
+        </div>
         {% endif %}
 
         {% if participant.surname %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">Имя</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.name}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Имя</span>
             </div>
+            <div class="col-12 col-md-6">
+                {{participant.name}}
+            </div>
+        </div>
         {% endif %}
 
         {% if participant.patronymic %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">Отчество</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.patronymic}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Отчество</span>
             </div>
+            <div class="col-12 col-md-6">
+                {{participant.patronymic}}
+            </div>
+        </div>
         {% endif %}
 
         {% if participant.post %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">Должность</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.post}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Должность</span>
             </div>
+            <div class="col-12 col-md-6">
+                {{participant.post}}
+            </div>
+        </div>
         {% endif %}
 
         {% if participant.passport_data %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">Паспортные данные</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.passport_data}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Паспортные данные</span>
             </div>
+            <div class="col-12 col-md-6">
+                {{participant.passport_data}}
+            </div>
+        </div>
         {% endif %}
 
         {% if participant.register_of_specialists %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">Номер регистрации</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.register_of_specialists}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Номер регистрации</span>
             </div>
+            <div class="col-12 col-md-6">
+                {{participant.register_of_specialists}}
+            </div>
+        </div>
         {% endif %}
 
         {% if participant.ogrn %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">ОГРН</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.ogrn}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">ОГРН</span>
             </div>
+            <div class="col-12 col-md-6">
+                {{participant.ogrn}}
+            </div>
+        </div>
         {% endif %}
 
         {% if participant.inn %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">ИНН</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.inn}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">ИНН</span>
             </div>
+            <div class="col-12 col-md-6">
+                {{participant.inn}}
+            </div>
+        </div>
         {% endif %}
 
         {% if participant.address %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">Адрес</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.address}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Адрес</span>
             </div>
+            <div class="col-12 col-md-6">
+                {{participant.address}}
+            </div>
+        </div>
         {% endif %}
 
         {% if participant.phone %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">Номер телефона</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.phone}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Номер телефона</span>
             </div>
+            <div class="col-12 col-md-6">
+                {{participant.phone}}
+            </div>
+        </div>
         {% endif %}
 
         {% if participant.details_admin_doc %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">Детали административных документов</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.details_admin_doc}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Детали административных документов</span>
             </div>
+            <div class="col-12 col-md-6">
+                {{participant.details_admin_doc}}
+            </div>
+        </div>
         {% endif %}
 
         {% if participant.participant_type %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">Вид участника</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.participant_type}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Вид участника</span>
             </div>
+            {% if participant.participant_type == "SUP" %}
+                <div class="col-12 col-md-6">
+                    Поставщик
+                </div>
+            {%endif%}
+
+            {% if participant.participant_type == "DEV" %}
+                <div class="col-12 col-md-6">
+                    Разработчик
+                </div>
+            {%endif%}
+
+            {% if participant.participant_type == "DEV" %}
+                <div class="col-12 col-md-6">
+                    Разработчик
+                </div>
+            {%endif%}
+
+            {% if participant.participant_type == "REP" %}
+                <div class="col-12 col-md-6">
+                    Представитель
+                </div>
+            {%endif%}
+
+            {% if participant.participant_type == "OTH" %}
+                <div class="col-12 col-md-6">
+                    Другое
+                </div>
+            {%endif%}
+
+        </div>
         {% endif %}
 
         {% if participant.subject_type %}
-            <div class="row mb-3">
-                <div class="col-12 col-md-3">
-                    <span class="col-form-label p-0">Тип участника</span>
-                </div>
-                <div class="col-12 col-md-6">
-                    {{participant.subject_type}}
-                </div>
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Тип участника</span>
             </div>
+
+            {% if participant.subject_type == "ЮЛ" %}
+            <div class="col-12 col-md-6">
+                Юридическое лицо
+            </div>
+            {% endif %}
+
+            {% if participant.subject_type == "ФЛ" %}
+            <div class="col-12 col-md-6">
+                Физическое лицо
+            </div>
+            {% endif %}
+
+            {% if participant.subject_type == "ИП" %}
+            <div class="col-12 col-md-6">
+                Индивидуальный предприниматель
+            </div>
+            {% endif %}
+
+            {% if participant.subject_type == "СО" %}
+            <div class="col-12 col-md-6">
+                Саморегулируемая организация
+            </div>
+            {% endif %}
+
+        </div>
         {% endif %}
     </form>
 </div>

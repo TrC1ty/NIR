@@ -25,7 +25,23 @@
                                 <a href="{% url 'participant-view' participant.id %}">{{ participant.id }}</a>
                             </th>
                             <td>{{ participant.name }}</td>
-                            <td>{{ participant.participant_type }}</td>
+
+                            {% if participant.participant_type == "SUP" %}
+                                <td>Поставщик</td>
+                            {% endif %}
+
+                            {% if participant.participant_type == "DEV" %}
+                                <td>Разработчик</td>
+                            {% endif %}
+
+                            {% if participant.participant_type == "REP" %}
+                                <td>Представитель</td>
+                            {% endif %}
+
+                            {% if participant.participant_type == "OTH" %}
+                                <td>Другое</td>
+                            {% endif %}
+
                         </tr>
                     {% endfor %}
                 </tbody>
