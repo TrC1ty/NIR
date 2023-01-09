@@ -1,7 +1,11 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from app.models.ParticipantModel import ParticipantModel
 from django.forms.models import model_to_dict
 
+def validate_name_project(name_project):
+    if name_project != "1":
+        return ValidationError('Не один')
 
 class ProjectModel(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True)
@@ -35,6 +39,14 @@ class ProjectModel(models.Model):
 
     class Meta:
         db_table = "Projects"
+
+    def clean_name(self):
+        name_project = self.name_project
+        print(name_project)
+        if name_project != "1":
+            raise ValidationError("Не 1")
+
+        return name_project
 
     def change_participant(self, participant, column):
         match column:

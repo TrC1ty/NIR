@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.views import View
 from django.shortcuts import render
@@ -30,6 +31,7 @@ class ProjectView(View):
     @staticmethod
     def post(request: HttpRequest) -> HttpResponse:
         form = ProjectForm(request.POST)
+
         if form.is_valid():
             name_project = form.cleaned_data['name_project']
             name_project_documentation = form.cleaned_data['name_project_documentation']
@@ -45,6 +47,7 @@ class ProjectView(View):
             ).save()
 
             return HttpResponseRedirect('index')
+
 
     @staticmethod
     def edit(request: HttpRequest, value) -> HttpResponse:

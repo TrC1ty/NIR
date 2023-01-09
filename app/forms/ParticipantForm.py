@@ -87,8 +87,8 @@ class ParticipantForm(forms.Form):
     )
     # todo: забыл что значит это поле
     details_admin_doc = forms.CharField(
-        label='Реквизиты распорядительного документа',
-        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'details_admin_doc'}),
+        label='',
+        widget=forms.TextInput(attrs={'class': 'form-control'}),
         required=False,
     )
 

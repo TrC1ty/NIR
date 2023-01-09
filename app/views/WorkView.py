@@ -112,6 +112,9 @@ class WorkView(View):
 
 
 def create_documentation(work_id):
+    months = {'1': 'января', '2': 'февраля', '3': 'марта', '4': 'апреля', '5': 'мая', '6': 'июня', '7': 'июля',
+              '8': 'августа', '9': 'сентября', '10': 'октября', '11': 'ноября', '12': 'декабря'}
+
     base_path = Path(__file__).resolve().parent.parent.parent
     path = os.path.join(base_path, 'documentation/akt.docx')
     doc = DocxTemplate(path)
@@ -185,7 +188,9 @@ def create_documentation(work_id):
     # добавление даты, названия и номера работы
     context['number'] = work.id
     context['name_project'] = project.name_project
-    context['date'] = datetime.date.today()
+    context['date_day'] = datetime.date.today().day
+    context['date_month'] = months[str(datetime.date.today().month)]
+    context['date_year'] = datetime.date.today().year
 
     # добавление представителя застройщика
     if project.representative_builder:
@@ -281,7 +286,9 @@ def create_documentation(work_id):
     context['submitted_doc'] = work.submitted_doc
 
     # добавление начала работ
-    context['start_date_work'] = work.start_date_work
+    context['start_date_work_day'] = work.start_date_work.day
+    context['start_date_work_month'] = months[str(work.start_date_work.month)]
+    context['start_date_work_year'] = work.start_date_work.year
 
     # добавление разрешенных работ
     context['permitted_works'] = work.permitted_works
@@ -297,37 +304,65 @@ def create_documentation(work_id):
 
     # добавление инициалов представителя застройщика
     if project.representative_builder:
-        context['representative_builder_name'] = f"{project.representative_builder.surname} " \
-                                                 f"{project.representative_builder.name[0]}." \
-                                                 f"{project.representative_builder.patronymic[0]}."
+        if project.representative_builder.patronymic == "":
+            context['representative_builder_name'] = f"{project.representative_builder.surname} " \
+                                                     f"{project.representative_builder.name[0]}."
+        else:
+            context['representative_builder_name'] = f"{project.representative_builder.surname} " \
+                                                     f"{project.representative_builder.name[0]}." \
+                                                     f"{project.representative_builder.patronymic[0]}."
 
     # добавление инициалов представителя лица, осуществляющего строительство
     if project.representative_person_the_construction:
-        context['representative_person_the_construction_name'] = f"{project.representative_person_the_construction.surname} " \
-                                                                 f"{project.representative_person_the_construction.name[0]}." \
-                                                                 f"{project.representative_person_the_construction.patronymic[0]}."
+        if project.representative_person_the_construction.patronymic == "":
+            context['representative_person_the_construction_name'] = f"{project.representative_person_the_construction.surname} " \
+                                                                     f"{project.representative_person_the_construction.name[0]}."
+        else:
+            context[
+                'representative_person_the_construction_name'] = f"{project.representative_person_the_construction.surname} " \
+                                                                 f"{project.representative_person_the_construction.name[0]}."\
+                                                                 f"{project.representative_builder.patronymic[0]}."
+
 
     # добавление инициалов специалиста по организации строительства
     if project.specialist_organization_construction:
-        context['specialist_organization_construction_name'] = f"{project.specialist_organization_construction.surname} " \
+        if project.specialist_organization_construction.patronymic == "":
+            context['specialist_organization_construction_name'] = f"{project.specialist_organization_construction.surname} " \
+                                                                   f"{project.specialist_organization_construction.name[0]}."
+        else:
+            context['specialist_organization_construction_name'] = f"{project.specialist_organization_construction.surname} " \
                                                                f"{project.specialist_organization_construction.name[0]}." \
                                                                f"{project.specialist_organization_construction.patronymic[0]}."
 
+
     # добавление инициалов представителя лица, осуществляющего подготовку проектной документации
     if project.representative_person_preparing_project_doc:
-        context['representative_person_preparing_project_doc_name'] = f"{project.representative_person_preparing_project_doc.surname} " \
+        if project.representative_person_preparing_project_doc.patronymic == "":
+            context['representative_person_preparing_project_doc_name'] = f"{project.representative_person_preparing_project_doc.surname} " \
+                                                                          f"{project.representative_person_preparing_project_doc.name[0]}."
+        else:
+            context['representative_person_preparing_project_doc_name'] = f"{project.representative_person_preparing_project_doc.surname} " \
                                                                       f"{project.representative_person_preparing_project_doc.name[0]}." \
                                                                       f"{project.representative_person_preparing_project_doc.patronymic[0]}."
 
+
     # добавление инициалов представителя лица, выполнившего работы, подлежащие освидетельствованию
     if project.representative_person_performed_examined:
-        context['representative_person_performed_examined_name'] = f"{project.representative_person_performed_examined.surname} " \
+        if project.representative_person_performed_examined.patronymic == "":
+            context['representative_person_performed_examined_name'] = f"{project.representative_person_performed_examined.surname} " \
+                                                                       f"{project.representative_person_performed_examined.name[0]}."
+        else:
+            context['representative_person_performed_examined_name'] = f"{project.representative_person_performed_examined.surname} " \
                                                                    f"{project.representative_person_performed_examined.name[0]}." \
                                                                    f"{project.representative_person_performed_examined.patronymic[0]}."
 
     # добавление инициалов представителей иных лиц
     if project.other_persons_participated_examination:
-        context['other_persons_participated_examination_name'] = f"{project.other_persons_participated_examination.surname} " \
+        if project.other_persons_participated_examination.patronymic == "":
+            context['other_persons_participated_examination_name'] = f"{project.other_persons_participated_examination.surname} " \
+                                                                     f"{project.other_persons_participated_examination.name[0]}."
+        else:
+            context['other_persons_participated_examination_name'] = f"{project.other_persons_participated_examination.surname} " \
                                                                  f"{project.other_persons_participated_examination.name[0]}." \
                                                                  f"{project.other_persons_participated_examination.patronymic[0]}."
 
