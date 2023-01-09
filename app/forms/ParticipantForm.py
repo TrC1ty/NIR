@@ -94,25 +94,40 @@ class ParticipantForm(forms.Form):
 
 
 class Participant(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['surname'].required = False
+        self.fields['name'].required = False
+        self.fields['patronymic'].required = False
+        self.fields['passport_data'].required = False
+        self.fields['register_of_specialists'].required = False
+        self.fields['ogrn'].required = False
+        self.fields['inn'].required = False
+        self.fields['address'].required = False
+        self.fields['phone'].required = False
+        self.fields['legal_name'].required = False
+        self.fields['details_admin_doc'].required = False
+
     class Meta:
         model = ParticipantModel
         fields = ['surname', 'name', 'patronymic', 'post', 'passport_data', 'register_of_specialists', 'ogrn', 'inn',
                   'address', 'phone', 'legal_name', 'details_admin_doc', 'participant_type', 'subject_type']
         widgets = {
             'surname': TextInput(attrs={'class': 'form-control', 'id': 'surname'}),
-            'name': TextInput(attrs={'class': 'form-control'}),
-            'patronymic': TextInput(attrs={'class': 'form-control'}),
-            'post': TextInput(attrs={'class': 'form-control'}),
-            'passport_data': TextInput(attrs={'class': 'form-control'}),
-            'register_of_specialists': NumberInput(attrs={'class': 'form-control'}),
-            'ogrn': TextInput(attrs={'class': 'form-control'}),
-            'inn': TextInput(attrs={'class': 'form-control'}),
-            'address': TextInput(attrs={'class': 'form-control'}),
-            'phone': DateInput(attrs={'class': 'form-control'}),
-            'legal_name': TextInput(attrs={'class': 'form-control'}),
-            'details_admin_doc': TextInput(attrs={'class': 'form-control'}),
-            'participant_type': Select(choices=ParticipantType, attrs={'class': 'form-select'}),
-            'subject_type': Select(choices=SubjectType, attrs={'class': 'form-select'}),
+            'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
+            'patronymic': TextInput(attrs={'class': 'form-control', 'id': 'patronymic'}),
+            'post': TextInput(attrs={'class': 'form-control', 'id': 'post'}),
+            'passport_data': TextInput(attrs={'class': 'form-control', 'id': 'passport_data'}),
+            'register_of_specialists': NumberInput(attrs={'class': 'form-control', 'id': 'register_of_specialists'}),
+            'ogrn': TextInput(attrs={'class': 'form-control', 'id': 'ogrn'}),
+            'inn': TextInput(attrs={'class': 'form-control', 'id': 'inn'}),
+            'address': TextInput(attrs={'class': 'form-control', 'id': 'address'}),
+            'phone': DateInput(attrs={'class': 'form-control', 'id': 'phone'}),
+            'legal_name': TextInput(attrs={'class': 'form-control', 'id': 'legal_name'}),
+            'details_admin_doc': TextInput(attrs={'class': 'form-control', 'id': 'details_admin_doc'}),
+            'participant_type': Select(choices=ParticipantType, attrs={'class': 'form-select',
+                                                                       'id': 'participant_type'}),
+            'subject_type': Select(choices=SubjectType, attrs={'class': 'form-select', 'id': 'subject_type'}),
         }
 
         labels = {
@@ -127,7 +142,7 @@ class Participant(ModelForm):
             'address': 'Адрес',
             'phone': 'Номер телефона',
             'legal_name': 'Юридическое название',
-            'details_admin_doc': '',
+            'details_admin_doc': 'Реквизиты распорядительного документа',
             'participant_type': 'Тип участника',
             'subject_type': 'Тип объекта',
         }
