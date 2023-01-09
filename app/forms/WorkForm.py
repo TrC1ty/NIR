@@ -1,6 +1,16 @@
 from django import forms
 from app.models.WorkModel import WorkModel
 from django.forms import ModelForm, Textarea, TextInput, NumberInput, DateInput
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+
+
+def validate_even(value):
+    if value < 1:
+        raise ValidationError(
+            _('%(value)s is not an even number'),
+            params={'value': value},
+        )
 
 
 class Work(ModelForm):
@@ -45,6 +55,7 @@ class Work(ModelForm):
             'number_instances': 'Количество экземпляров',
             'applications': 'Приложения',
         }
+
 
 class WorkForm(forms.Form):
     name_hidden_works = forms.CharField(label='Наименование скрытых работ', widget=forms.TextInput(
@@ -92,7 +103,7 @@ class WorkForm(forms.Form):
     ))
     number_instances = forms.IntegerField(label='Количество экземпляров', widget=forms.NumberInput(
         attrs={'class': 'form-control'}
-    ))
+    ), validators=[validate_even])
     applications = forms.CharField(label='Приложения', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))
