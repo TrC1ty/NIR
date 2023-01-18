@@ -6,7 +6,6 @@ SubjectType = (
     ('ЮЛ', 'Юридическое лицо'),
     ('ФЛ', 'Физическое лицо'),
     ('ИП', 'Индивидуальный предприниматель'),
-    ('СО', 'Саморегулируемая организация'),
 )
 
 ParticipantType = (
@@ -85,10 +84,24 @@ class ParticipantForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'legal_name'}),
         required=False,
     )
-    # todo: забыл что значит это поле
     details_admin_doc = forms.CharField(
         label='Реквизиты распорядительного документа',
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'details_admin_doc'}),
+        required=False,
+    )
+    sro_name = forms.CharField(
+        label='Наименование СРО',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'sro_name'}),
+        required=False,
+    )
+    sro_inn = forms.CharField(
+        label='ИНН СРО',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'sro_inn'}),
+        required=False,
+    )
+    sro_ogrn = forms.CharField(
+        label='ОГРН СРО',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'sro_ogrn'}),
         required=False,
     )
 
@@ -107,11 +120,15 @@ class Participant(ModelForm):
         self.fields['phone'].required = False
         self.fields['legal_name'].required = False
         self.fields['details_admin_doc'].required = False
+        self.fields['sro_name'].required = False
+        self.fields['sro_inn'].required = False
+        self.fields['sro_ogrn'].required = False
 
     class Meta:
         model = ParticipantModel
         fields = ['surname', 'name', 'patronymic', 'post', 'passport_data', 'register_of_specialists', 'ogrn', 'inn',
-                  'address', 'phone', 'legal_name', 'details_admin_doc', 'participant_type', 'subject_type']
+                  'address', 'phone', 'legal_name', 'details_admin_doc', 'participant_type', 'subject_type', 'sro_name',
+                  'sro_inn', 'sro_ogrn']
         widgets = {
             'surname': TextInput(attrs={'class': 'form-control', 'id': 'surname'}),
             'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
@@ -128,6 +145,9 @@ class Participant(ModelForm):
             'participant_type': Select(choices=ParticipantType, attrs={'class': 'form-select',
                                                                        'id': 'participant_type'}),
             'subject_type': Select(choices=SubjectType, attrs={'class': 'form-select', 'id': 'subject_type'}),
+            'sro_name': TextInput(attrs={'class': 'form-control', 'id': 'sro_name'}),
+            'sro_inn': TextInput(attrs={'class': 'form-control', 'id': 'sro_inn'}),
+            'sro_ogrn': TextInput(attrs={'class': 'form-control', 'id': 'sro_ogrn'}),
         }
 
         labels = {
@@ -145,4 +165,7 @@ class Participant(ModelForm):
             'details_admin_doc': 'Реквизиты распорядительного документа',
             'participant_type': 'Тип участника',
             'subject_type': 'Тип объекта',
+            'sro_name': 'Наименование СРО',
+            'sro_inn': 'СРО ИНН',
+            'sro_ogrn': 'СРО ОГРН'
         }

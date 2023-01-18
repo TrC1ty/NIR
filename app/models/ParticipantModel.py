@@ -6,7 +6,6 @@ class ParticipantModel(models.Model):
         ('ЮЛ', 'Юридическое лицо'),
         ('ФЛ', 'Физическое лицо'),
         ('ИП', 'Индивидуальный предприниматель'),
-        ('СО', 'Саморегулируемая организация'),
     )
     ParticipantType = (
         ('SUP', 'Поставщик'),
@@ -27,6 +26,9 @@ class ParticipantModel(models.Model):
     phone = models.TextField()
     legal_name = models.TextField()
     details_admin_doc = models.TextField()
+    sro_name = models.TextField(null=True)
+    sro_inn = models.TextField(null=True)
+    sro_ogrn = models.TextField(null=True)
     participant_type = models.CharField(
         max_length=3,
         choices=ParticipantType,

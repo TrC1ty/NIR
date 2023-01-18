@@ -18,8 +18,8 @@ class Work(ModelForm):
         model = WorkModel
         fields = ['name_hidden_works', 'number_project_doc', 'number_working_doc', 'other_details_project_drawing',
                   'other_details_working_drawing', 'name_project_doc', 'name_working_doc',
-                  'information_persons_prepare_doc', 'submitted_doc', 'start_date_work', 'regulatory_acts',
-                  'permitted_works', 'additional_information', 'number_instances', 'applications']
+                  'information_persons_prepare_doc', 'submitted_doc', 'start_date_work', 'end_date_work',
+                  'regulatory_acts', 'permitted_works', 'additional_information', 'number_instances', 'applications']
         widgets = {
             'name_hidden_works': TextInput(attrs={'class': 'form-control'}),
             'number_project_doc': TextInput(attrs={'class': 'form-control'}),
@@ -31,6 +31,7 @@ class Work(ModelForm):
             'information_persons_prepare_doc': TextInput(attrs={'class': 'form-control'}),
             'submitted_doc': TextInput(attrs={'class': 'form-control'}),
             'start_date_work': DateInput(attrs={'class': 'form-control'}),
+            'end_date_work': DateInput(attrs={'class': 'form-control'}),
             'regulatory_acts': TextInput(attrs={'class': 'form-control'}),
             'permitted_works': TextInput(attrs={'class': 'form-control'}),
             'additional_information': TextInput(attrs={'class': 'form-control'}),
@@ -49,6 +50,7 @@ class Work(ModelForm):
             'information_persons_prepare_doc': 'Сведения о лицах, осуществялющих подготовку раздела документации',
             'submitted_doc': 'Предоставленные документы',
             'start_date_work': 'Дата начала работ',
+            'end_date_work': 'Дата окончания работ',
             'regulatory_acts': 'Нормативные акты',
             'permitted_works': 'Разрешенные работы',
             'additional_information': 'Дополнительная информация',
@@ -89,6 +91,10 @@ class WorkForm(forms.Form):
         attrs={'class': 'form-control'}
     ))
     start_date_work = forms.DateField(label='Дата начала работ', widget=forms.DateInput(
+        format='%d-%m-%Y',
+        attrs={'type': 'date', 'class': 'form-control'}
+    ))
+    end_date_work = forms.DateField(label='Дата окончания работ', widget=forms.DateInput(
         format='%d-%m-%Y',
         attrs={'type': 'date', 'class': 'form-control'}
     ))
