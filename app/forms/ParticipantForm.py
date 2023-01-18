@@ -20,7 +20,7 @@ class ParticipantForm(forms.Form):
     # todo: нужно сделать поле с выбором типа участника
     participant_type = forms.CharField(
         label='Тип участника',
-        max_length=3,
+        max_length=6,
         widget=forms.Select(choices=ParticipantType, attrs={'class': 'form-select', 'id': 'participant_type'})
     )
     # todo: нужно сделать поле с выбором Типа объекта
@@ -135,7 +135,7 @@ class Participant(ModelForm):
             'patronymic': TextInput(attrs={'class': 'form-control', 'id': 'patronymic'}),
             'post': TextInput(attrs={'class': 'form-control', 'id': 'post'}),
             'passport_data': TextInput(attrs={'class': 'form-control', 'id': 'passport_data'}),
-            'register_of_specialists': NumberInput(attrs={'class': 'form-control', 'id': 'register_of_specialists'}),
+            'register_of_specialists': TextInput(attrs={'class': 'form-control', 'id': 'register_of_specialists'}),
             'ogrn': TextInput(attrs={'class': 'form-control', 'id': 'ogrn'}),
             'inn': TextInput(attrs={'class': 'form-control', 'id': 'inn'}),
             'address': TextInput(attrs={'class': 'form-control', 'id': 'address'}),
@@ -164,7 +164,7 @@ class Participant(ModelForm):
             'legal_name': 'Юридическое название',
             'details_admin_doc': 'Реквизиты распорядительного документа',
             'participant_type': 'Тип участника',
-            'subject_type': 'Тип объекта',
+            'subject_type': 'Статус участника',
             'sro_name': 'Наименование СРО',
             'sro_inn': 'СРО ИНН',
             'sro_ogrn': 'СРО ОГРН'

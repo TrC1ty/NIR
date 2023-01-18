@@ -3,9 +3,6 @@ from django.db import models
 from app.models.ParticipantModel import ParticipantModel
 from django.forms.models import model_to_dict
 
-def validate_name_project(name_project):
-    if name_project != "1":
-        return ValidationError('Не один')
 
 class ProjectModel(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True)

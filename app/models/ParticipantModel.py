@@ -9,7 +9,7 @@ class ParticipantModel(models.Model):
     )
     ParticipantType = (
         ('SUP', 'Поставщик'),
-        ('DEV', 'Разработчик'),
+        ('CONSTR', 'Участник строительства'),
         ('REP', 'Представитель'),
         ('OTH', 'Другое'),
     )
@@ -30,7 +30,7 @@ class ParticipantModel(models.Model):
     sro_inn = models.TextField(null=True)
     sro_ogrn = models.TextField(null=True)
     participant_type = models.CharField(
-        max_length=3,
+        max_length=6,
         choices=ParticipantType,
     )
     subject_type = models.CharField(
