@@ -123,6 +123,7 @@ class Participant(ModelForm):
         self.fields['sro_name'].required = False
         self.fields['sro_inn'].required = False
         self.fields['sro_ogrn'].required = False
+        self.fields['post'].required = False
 
     class Meta:
         model = ParticipantModel

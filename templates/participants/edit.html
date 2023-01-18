@@ -71,17 +71,6 @@
                 $("#phone").parent().parent().parent().hide();
                 $("#legal_name").parent().parent().parent().hide();
             }
-            else {
-                $("#surname").parent().parent().parent().hide();
-                $("#name").parent().parent().parent().hide();
-                $("#patronymic").parent().parent().parent().hide();
-                $("#passport_data").parent().parent().parent().hide();
-                $("#ogrn").parent().parent().parent().show();
-                $("#inn").parent().parent().parent().show();
-                $("#address").parent().parent().parent().hide();
-                $("#phone").parent().parent().parent().hide();
-                $("#legal_name").parent().parent().parent().show();
-            }
         });
         subject_type.trigger("change");
 
@@ -91,10 +80,12 @@
             if (e.value === 'REP') {
                 $("#register_of_specialists").parent().parent().parent().show();
                 $("#details_admin_doc").parent().parent().parent().show();
+                $("#post").parent().parent().parent().show();
             }
             else {
                 $("#register_of_specialists").parent().parent().parent().hide();
                 $("#details_admin_doc").parent().parent().parent().hide();
+                $("#post").parent().parent().parent().hide();
             }
         });
         participant_type.trigger("change");
