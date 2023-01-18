@@ -7,6 +7,13 @@
     <h1>Создание участника</h1>
 </div>
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
+    <div class="small mb-3">
+        {% if participant == 'other_persons_participated_examination' %}
+            Информация об <b>{{ participant_name }}</b>
+        {% else %}
+            Информация о <b>{{ participant_name }}</b>
+        {% endif %}
+    </div>
     <form action="{% url 'participant-create' project_id participant %}" method="post">
         {% csrf_token %}
         {% for field in form.visible_fields %}

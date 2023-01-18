@@ -10,9 +10,11 @@ class ParticipantView(View):
     @staticmethod
     def get(request: HttpRequest, project_id, participant) -> HttpResponse:
         form = ParticipantForm()
+        participant_name = get_participant_name(participant)
 
         return render(request, 'participants/creation.html', {'form': form, 'project_id': project_id,
-                                                              'participant': participant})
+                                                              'participant': participant,
+                                                              'participant_name': participant_name})
 
     @staticmethod
     def post(request: HttpRequest, project_id, participant) -> HttpResponse:
@@ -34,7 +36,10 @@ class ParticipantView(View):
                 address=form.cleaned_data["address"],
                 phone=form.cleaned_data["phone"],
                 legal_name=form.cleaned_data["legal_name"],
-                details_admin_doc=form.cleaned_data["details_admin_doc"]
+                details_admin_doc=form.cleaned_data["details_admin_doc"],
+                sro_name=form.cleaned_data["sro_name"],
+                sro_inn=form.cleaned_data["sro_inn"],
+                sro_ogrn=form.cleaned_data["sro_ogrn"]
             )
             participant_new.save()
             print(participant_new.SubjectType[0])
@@ -83,6 +88,9 @@ class ParticipantView(View):
                 participant.phone = form.cleaned_data["phone"]
                 participant.legal_name = form.cleaned_data["legal_name"]
                 participant.details_admin_doc = form.cleaned_data["details_admin_doc"]
+                participant.sro_name = form.cleaned_data["sro_name"]
+                participant.sro_inn = form.cleaned_data["sro_inn"]
+                participant.sro_ogrn = form.cleaned_data["sro_ogrn"]
                 participant.save()
 
                 return render(request, 'participants/participant.html', {'participant': participant})
@@ -90,3 +98,29 @@ class ParticipantView(View):
         form = Participant(instance=participant)
 
         return render(request, 'participants/edit.html', {'participant': participant, 'form': form})
+
+
+def get_participant_name(column):
+    participant_name = ""
+
+    match column:
+        case "builder":
+            participant_name = "Застройщике"
+        case "person_the_construction":
+            participant_name = "Лице, осуществляющем строительство"
+        case "person_prepares_doc":
+            participant_name = "Лице, осуществляющем подготовку проектной документации"
+        case "representative_builder":
+            participant_name = "Представителе застройщика по вопросам строительного контроля"
+        case "representative_person_the_construction":
+            participant_name = "Представителе лица, осуществляющего строительство"
+        case "specialist_organization_construction":
+            participant_name = "Представителе лица, осуществляющего строительство, по вопросам строительного контроля"
+        case "representative_person_preparing_project_doc":
+            participant_name = "Представителе лица, осуществляющего подготовку проектной документации"
+        case "representative_person_performed_examined":
+            participant_name = "Представителе лица, выполнившего работы, подлежащие освидетельствованию"
+        case "other_persons_participated_examination":
+            participant_name = "Иных представителях лиц, участвующих в освидетельствовании"
+
+    return participant_name
