@@ -35,6 +35,7 @@ class WorkView(View):
                 information_persons_prepare_doc=form.cleaned_data["information_persons_prepare_doc"],
                 submitted_doc=form.cleaned_data["submitted_doc"],
                 start_date_work=form.cleaned_data["start_date_work"],
+                end_date_work=form.cleaned_data["end_date_work"],
                 regulatory_acts=form.cleaned_data["regulatory_acts"],
                 permitted_works=form.cleaned_data["permitted_works"],
                 additional_information=form.cleaned_data["additional_information"],
@@ -75,6 +76,7 @@ class WorkView(View):
                 work.information_persons_prepare_doc = form.cleaned_data["information_persons_prepare_doc"]
                 work.submitted_doc = form.cleaned_data["submitted_doc"]
                 work.start_date_work = form.cleaned_data["start_date_work"]
+                work.end_date_work = form.cleaned_data["end_date_work"]
                 work.regulatory_acts = form.cleaned_data["regulatory_acts"]
                 work.permitted_works = form.cleaned_data["permitted_works"]
                 work.additional_information = form.cleaned_data["additional_information"]
@@ -142,8 +144,14 @@ def create_documentation(work_id):
                 row = f"{project.builder.surname} {project.builder.name} {project.builder.patronymic} " \
                       f"{project.builder.address} {project.builder.ogrn} {project.builder.inn} "
 
-    if project.builder_so:
-        row += f"{project.builder_so.legal_name} {project.builder_so.ogrn} {project.builder_so.inn}"
+    if project.builder.sro_name:
+        row += f"{project.builder.sro_name}"
+
+    if project.builder.sro_inn:
+        row += f"{project.builder.sro_inn}"
+
+    if project.builder.sro_ogrn:
+        row += f"{project.builder.sro_ogrn}"
 
     context['builder'] = row
 
@@ -160,9 +168,14 @@ def create_documentation(work_id):
                       f"{project.person_the_construction.patronymic} {project.person_the_construction.address} " \
                       f"{project.person_the_construction.ogrn} {project.person_the_construction.inn} "
 
-    if project.person_the_construction_so:
-        row += f"{project.person_the_construction_so.legal_name} {project.person_the_construction_so.ogrn} " \
-               f"{project.person_the_construction_so.inn}"
+    if project.person_the_construction.sro_name:
+        row += f"{project.person_the_construction.sro_name}"
+
+    if project.person_the_construction.sro_inn:
+        row += f"{project.person_the_construction.sro_inn}"
+
+    if project.person_the_construction.sro_ogrn:
+        row += f"{project.person_the_construction.sro_ogrn}"
 
     context['person_the_construction'] = row
 
@@ -179,9 +192,14 @@ def create_documentation(work_id):
                       f"{project.person_prepares_doc.patronymic} {project.person_prepares_doc.address} " \
                       f"{project.person_prepares_doc.ogrn} {project.person_prepares_doc.inn} "
 
-    if project.person_prepares_doc_so:
-        row += f"{project.person_prepares_doc_so.legal_name} {project.person_prepares_doc_so.ogrn} " \
-               f"{project.person_prepares_doc_so.inn}"
+    if project.person_prepares_doc.sro_name:
+        row += f"{project.person_prepares_doc.sro_name}"
+
+    if project.person_prepares_doc.sro_inn:
+        row += f"{project.person_prepares_doc.sro_inn}"
+
+    if project.person_prepares_doc.sro_ogrn:
+        row += f"{project.person_prepares_doc.sro_ogrn}"
 
     context['person_prepares_doc'] = row
 
@@ -290,6 +308,11 @@ def create_documentation(work_id):
     context['start_date_work_day'] = work.start_date_work.day
     context['start_date_work_month'] = months[str(work.start_date_work.month)]
     context['start_date_work_year'] = work.start_date_work.year
+
+    # добавление окончания работ
+    context['end_date_work_day'] = work.end_date_work.day
+    context['end_date_work_month'] = months[str(work.end_date_work.month)]
+    context['end_date_work_year'] = work.end_date_work.year
 
     # добавление разрешенных работ
     context['permitted_works'] = work.permitted_works
