@@ -13,9 +13,6 @@
         <li class="nav-item">
             <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#information">Информация о материале</button>
         </li>
-        <li class="nav-item">
-            <button class="nav-link " data-bs-toggle="tab" data-bs-target="#bcars">Сертификаты</button>
-        </li>
     </ul>
 
     <div class="tab-content">
@@ -45,32 +42,6 @@
 
             </div>
         </div>
-
-        <div class="tab-pane" id="bcars">
-            <div class="row p-3 bg-body rounded shadow-sm">
-                <div class="small col-8">
-                    Сертификаты для материала.
-                </div>
-
-                <div class="col-4">
-                    <a style = "float: right;" class="btn btn-outline-primary btn-sm" href="{% url 'bcar-create' material.id %}">Добавить сертификат</a>
-                </div>
-
-                {% for bca in material.bcars.all %}
-                    <div class="row mb-3">
-                        <div class="col-12 col-md-4">
-                            <span class="col-form-label p-0">Название сертификата</span>
-                        </div>
-
-                        <div class="col-12 col-md-6">
-                            {{bca.name}}
-                        </div>
-                    </div>
-                {% endfor %}
-
-            </div>
-        </div>
-
     </div>
 
 </div>

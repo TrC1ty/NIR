@@ -24,6 +24,7 @@ class WorkModel(models.Model):
     number_instances = models.IntegerField()
     applications = models.TextField()
     materials = models.ManyToManyField(MaterialModel)
+    bcars = models.ManyToManyField(BCARModel)
 
     project = models.ForeignKey(ProjectModel, on_delete=models.CASCADE)
 
