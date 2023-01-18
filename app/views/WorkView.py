@@ -133,7 +133,7 @@ def create_documentation(work_id):
     # добавление застройщика
     row = ""
     if project.builder:
-        match project.builder.SubjectType:
+        match project.builder.subject_type:
             case "ЮЛ":
                 row = f"{project.builder.legal_name} {project.builder.ogrn} {project.builder.inn} " \
                       f"{project.builder.address} {project.builder.phone} "
@@ -158,7 +158,7 @@ def create_documentation(work_id):
     # добавление лица, осуществляющего строительство
     row = ""
     if project.person_the_construction:
-        match project.person_the_construction.SubjectType:
+        match project.person_the_construction.subject_type:
             case "ЮЛ":
                 row = f"{project.person_the_construction.legal_name} {project.person_the_construction.ogrn} " \
                       f"{project.person_the_construction.inn} {project.person_the_construction.address} " \
@@ -177,12 +177,13 @@ def create_documentation(work_id):
     if project.person_the_construction.sro_ogrn:
         row += f"{project.person_the_construction.sro_ogrn}"
 
+
     context['person_the_construction'] = row
 
     # добавление лица, осуществляющего подготовку проектной документации
     row = ""
     if project.person_prepares_doc:
-        match project.person_prepares_doc.SubjectType:
+        match project.person_prepares_doc.subject_type:
             case "ЮЛ":
                 row = f"{project.person_prepares_doc.legal_name} {project.person_prepares_doc.ogrn} " \
                       f"{project.person_prepares_doc.inn} {project.person_prepares_doc.address} " \
