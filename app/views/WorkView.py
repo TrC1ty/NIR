@@ -259,7 +259,8 @@ def create_documentation(work_id):
         context['other_persons_participated_examination'] = row
 
     # добавление названия субъекта, которое осуществляло строительство
-    context['person_the_construction_name'] = project.builder.legal_name
+    if project.builder:
+        context['person_the_construction_name'] = project.builder.legal_name
 
     # добавление названия работ
     context['name_hidden_works'] = work.name_hidden_works
