@@ -17,7 +17,7 @@ class WorkModel(models.Model):
     information_persons_prepare_doc = models.TextField()
     submitted_doc = models.TextField()
     start_date_work = models.DateField()
-    end_date_work = models.DateField()
+    end_date_work = models.DateField(null=True)
     regulatory_acts = models.TextField()
     permitted_works = models.TextField()
     additional_information = models.TextField()
