@@ -10,8 +10,8 @@ SubjectType = (
 
 ParticipantType = (
     ('SUP', 'Поставщик'),
-    ('DEV', 'Разработчик'),
-    ('REP', 'Представитель'),
+    ('DEV', 'Участник'),
+    ('REP', 'Представитель участника'),
     ('OTH', 'Другое'),
 )
 
@@ -25,7 +25,7 @@ class ParticipantForm(forms.Form):
     )
     # todo: нужно сделать поле с выбором Типа объекта
     subject_type = forms.CharField(
-        label='Тип объекта',
+        label='Статус участника',
         max_length=2,
         widget=forms.Select(choices=SubjectType, attrs={'class': 'form-select', 'id': 'subject_type'})
     )
@@ -80,7 +80,7 @@ class ParticipantForm(forms.Form):
         required=False,
     )
     legal_name = forms.CharField(
-        label='Юридическое название',
+        label='Наименование юридического лица',
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'legal_name'}),
         required=False,
     )
@@ -162,7 +162,7 @@ class Participant(ModelForm):
             'inn': 'ИНН',
             'address': 'Адрес',
             'phone': 'Номер телефона',
-            'legal_name': 'Юридическое название',
+            'legal_name': 'Наименование юридического лица',
             'details_admin_doc': 'Реквизиты распорядительного документа',
             'participant_type': 'Тип участника',
             'subject_type': 'Статус участника',

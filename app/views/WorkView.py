@@ -144,13 +144,13 @@ def create_documentation(work_id):
                 row = f"{project.builder.surname} {project.builder.name} {project.builder.patronymic} " \
                       f"{project.builder.address} {project.builder.ogrn} {project.builder.inn} "
 
-    if project.builder.sro_name:
-        row += f"{project.builder.sro_name}"
+    if project.builder:
+        row += f"{project.builder.sro_name} "
 
-    if project.builder.sro_inn:
-        row += f"{project.builder.sro_inn}"
+    if project.builder:
+        row += f"{project.builder.sro_inn} "
 
-    if project.builder.sro_ogrn:
+    if project.builder:
         row += f"{project.builder.sro_ogrn}"
 
     context['builder'] = row
@@ -168,13 +168,13 @@ def create_documentation(work_id):
                       f"{project.person_the_construction.patronymic} {project.person_the_construction.address} " \
                       f"{project.person_the_construction.ogrn} {project.person_the_construction.inn} "
 
-    if project.person_the_construction.sro_name:
+    if project.person_the_construction:
         row += f"{project.person_the_construction.sro_name}"
 
-    if project.person_the_construction.sro_inn:
+    if project.person_the_construction:
         row += f"{project.person_the_construction.sro_inn}"
 
-    if project.person_the_construction.sro_ogrn:
+    if project.person_the_construction:
         row += f"{project.person_the_construction.sro_ogrn}"
 
 
@@ -193,13 +193,13 @@ def create_documentation(work_id):
                       f"{project.person_prepares_doc.patronymic} {project.person_prepares_doc.address} " \
                       f"{project.person_prepares_doc.ogrn} {project.person_prepares_doc.inn} "
 
-    if project.person_prepares_doc.sro_name:
+    if project.person_prepares_doc:
         row += f"{project.person_prepares_doc.sro_name}"
 
-    if project.person_prepares_doc.sro_inn:
+    if project.person_prepares_doc:
         row += f"{project.person_prepares_doc.sro_inn}"
 
-    if project.person_prepares_doc.sro_ogrn:
+    if project.person_prepares_doc:
         row += f"{project.person_prepares_doc.sro_ogrn}"
 
     context['person_prepares_doc'] = row

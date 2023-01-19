@@ -17,9 +17,10 @@ class Project(ModelForm):
         labels = {
             "name_project": "Название проекта",
             "name_project_documentation": "Наименование проектной документации",
-            "building_address": "Адресс объекта строительства",
+            "building_address": "Адрес объекта строительства",
             "number_document": "Номер документа",
         }
+
 
 class ProjectForm(forms.Form):
     # todo: как я понял, нужно тут вытаскивать из базы данных челов, сделать из них список и сделать поле с выбором?
@@ -34,7 +35,7 @@ class ProjectForm(forms.Form):
         attrs={'id': 'my_field',
                'class': 'form-control'}
     ))
-    building_address = forms.CharField(label='Адресс объекта строительства', widget=forms.TextInput(
+    building_address = forms.CharField(label='Адрес объекта строительства', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))
     number_document = forms.CharField(label='Номер документа', widget=forms.TextInput(
