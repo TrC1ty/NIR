@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm, TextInput, DateInput
+from django.forms import ModelForm, TextInput, DateInput, NumberInput
 
 from app.models.MaterialModel import MaterialModel
 
@@ -7,12 +7,13 @@ from app.models.MaterialModel import MaterialModel
 class Material(ModelForm):
     class Meta:
         model = MaterialModel
-        fields = ['name', 'certificate', 'date_start', 'date_end']
+        fields = ['name', 'certificate', 'date_start', 'date_end', 'count']
         widgets = {
             'name': TextInput(attrs={'class': 'form-control'}),
             'certificate': TextInput(attrs={'class': 'form-control'}),
             'date_start': DateInput(attrs={'class': 'form-control'}),
             'date_end': DateInput(attrs={'class': 'form-control'}),
+            'count': NumberInput(attrs={'class': 'form-control'}),
         }
 
         labels = {
@@ -20,6 +21,7 @@ class Material(ModelForm):
             "certificate": "Сертификат",
             "date_start": "Дата начала",
             "date_end": "Дата конца",
+            "count": "Количество",
         }
 
 
@@ -38,6 +40,13 @@ class MaterialForm(forms.Form):
         format='%d-%m-%Y',
         attrs={'type': 'date', 'class': 'form-control'}
     ))
+    count = forms.CharField(
+        label='Количество',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        ),
+        required=False,
+    )
 
     # def __init__(self, *args, **kwargs):
     #     super(MaterialForm, self).__init__(*args, **kwargs)  # Call to ModelForm constructor
