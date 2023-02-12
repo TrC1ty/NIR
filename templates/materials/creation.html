@@ -34,10 +34,13 @@
                     <option value="{{ participant.id }}">{{ participant.surname }} {{ participant.name }} {{ participant.patronymic }}</option>
                     {% endfor %}
                 </select>
+
+                {% endif %}
+                <div class="form-text mt-0">
+                    <button type="button" class="btn btn-link" style="text-decoration: underline dashed">+ добавить</button>
+                </div>
             </div>
         </div>
-
-        {% endif %}
         <button type="submit" class="btn btn-primary my-2">Сохранить</button>
     </form>
 </div>
