@@ -36,7 +36,6 @@ class WorkView(View):
                 submitted_doc=form.cleaned_data["submitted_doc"],
                 start_date_work=form.cleaned_data["start_date_work"],
                 end_date_work=form.cleaned_data["end_date_work"],
-                regulatory_acts=form.cleaned_data["regulatory_acts"],
                 permitted_works=form.cleaned_data["permitted_works"],
                 additional_information=form.cleaned_data["additional_information"],
                 number_instances=form.cleaned_data["number_instances"],
@@ -77,7 +76,6 @@ class WorkView(View):
                 work.submitted_doc = form.cleaned_data["submitted_doc"]
                 work.start_date_work = form.cleaned_data["start_date_work"]
                 work.end_date_work = form.cleaned_data["end_date_work"]
-                work.regulatory_acts = form.cleaned_data["regulatory_acts"]
                 work.permitted_works = form.cleaned_data["permitted_works"]
                 work.additional_information = form.cleaned_data["additional_information"]
                 work.number_instances = form.cleaned_data["number_instances"]

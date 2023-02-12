@@ -2,6 +2,7 @@ from django.db import models
 from .BCARModel import BCARModel
 from .ProjectModel import ProjectModel
 from .MaterialModel import MaterialModel
+from .LegalActModel import LegalActModel
 
 
 class WorkModel(models.Model):
@@ -18,13 +19,13 @@ class WorkModel(models.Model):
     submitted_doc = models.TextField()
     start_date_work = models.DateField()
     end_date_work = models.DateField(null=True)
-    regulatory_acts = models.TextField()
     permitted_works = models.TextField()
     additional_information = models.TextField()
     number_instances = models.IntegerField()
     applications = models.TextField()
     materials = models.ManyToManyField(MaterialModel)
     bcars = models.ManyToManyField(BCARModel)
+    acts = models.ManyToManyField(LegalActModel)
 
     project = models.ForeignKey(ProjectModel, on_delete=models.CASCADE)
 
