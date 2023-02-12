@@ -37,7 +37,7 @@ class MaterialView(View):
             if request.POST.get("participant") != "":
                 provider = ParticipantModel.objects.create(
                     participant_type="SUP",
-                    subject_type="ФЛ",
+                    subject_type="ИП",
                     legal_name=request.POST.get("participant"),
                 )
                 provider.save()
