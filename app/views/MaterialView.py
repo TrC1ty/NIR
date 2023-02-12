@@ -1,7 +1,9 @@
+from django.core.mail.backends import console
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.views import View
 from django.shortcuts import render
 from ..forms.MaterialForm import MaterialForm, Material
+from ..forms.ParticipantForm import ParticipantForm, Participant
 from ..models.MaterialModel import MaterialModel
 from app.models.WorkModel import WorkModel
 from ..models.ParticipantModel import ParticipantModel
@@ -11,10 +13,10 @@ from app.forms.WorkForm import Work
 class MaterialView(View):
     @staticmethod
     def get(request: HttpRequest, work_id) -> HttpResponse:
-        form = MaterialForm()
+        form_material = MaterialForm()
         participants = ParticipantModel.objects.filter(participant_type='SUP')
 
-        return render(request, 'materials/creation.html', {'form': form, 'work_id': work_id,
+        return render(request, 'materials/creation.html', {'form_material': form_material, 'work_id': work_id,
                                                            'participants': participants})
 
     @staticmethod
@@ -32,8 +34,17 @@ class MaterialView(View):
             certificate = form.cleaned_data['certificate']
             date_start = form.cleaned_data['date_start']
             date_end = form.cleaned_data['date_end']
-            provider_id = request.POST['provider']
-            provider = ParticipantModel.objects.get(id=provider_id)
+            if request.POST.get("participant") != "":
+                provider = ParticipantModel.objects.create(
+                    participant_type="SUP",
+                    subject_type="ФЛ",
+                    legal_name=request.POST.get("participant"),
+                )
+                provider.save()
+            else:
+                provider_id = request.POST['provider']
+                provider = ParticipantModel.objects.get(id=provider_id)
+
             new_material = MaterialModel.objects.create(
                 name=name,
                 certificate=certificate,
