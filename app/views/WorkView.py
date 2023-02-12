@@ -1,3 +1,5 @@
+import re
+
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.views import View
 from django.shortcuts import render
@@ -5,6 +7,7 @@ from ..forms.WorkForm import WorkForm, Work
 from app.models.WorkModel import WorkModel
 from app.models.ProjectModel import ProjectModel
 from ..models.MaterialModel import MaterialModel
+from app.models.LegalActModel import LegalActModel
 from docxtpl import DocxTemplate
 from pathlib import Path
 import os
@@ -23,6 +26,15 @@ class WorkView(View):
         form = WorkForm(request.POST)
         if form.is_valid():
             project = ProjectModel.objects.get(id=project_id)
+            actForm = request.POST.dict()
+            actNames = re.findall(r'act\d+', ", ".join(actForm.keys()))
+            acts = []
+            for actName in actNames:
+                act = LegalActModel.objects.create(
+                    name=actForm[actName],
+                )
+                act.save()
+                acts.append(act)
 
             work = WorkModel.objects.create(
                 name_hidden_works=form.cleaned_data["name_hidden_works"],
@@ -39,9 +51,9 @@ class WorkView(View):
                 permitted_works=form.cleaned_data["permitted_works"],
                 additional_information=form.cleaned_data["additional_information"],
                 number_instances=form.cleaned_data["number_instances"],
-                applications=form.cleaned_data["applications"],
                 project=project
             )
+            work.acts.add(*acts)
             work.save()
 
             return HttpResponseRedirect(f'/works/{work.id}')
@@ -79,7 +91,6 @@ class WorkView(View):
                 work.permitted_works = form.cleaned_data["permitted_works"]
                 work.additional_information = form.cleaned_data["additional_information"]
                 work.number_instances = form.cleaned_data["number_instances"]
-                work.applications = form.cleaned_data["applications"]
                 work.save()
 
                 return render(request, 'works/work.html', {'work': work})
@@ -321,9 +332,6 @@ def create_documentation(work_id):
 
     # добавление количества экземпляров
     context['number_instances'] = work.number_instances
-
-    # добавление приложения
-    context['applications'] = work.applications
 
     # добавление инициалов представителя застройщика
     if project.representative_builder:

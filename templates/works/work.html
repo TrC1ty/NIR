@@ -117,15 +117,6 @@
 
         <div class="row mb-3">
             <div class="col-12 col-md-3">
-                <span class="col-form-label p-0">Нормативные акты</span>
-            </div>
-            <div class="col-12 col-md-6">
-                {{work.regulatory_acts}}
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-12 col-md-3">
                 <span class="col-form-label p-0">Разрешенные работы</span>
             </div>
             <div class="col-12 col-md-6">
@@ -151,14 +142,16 @@
             </div>
         </div>
 
-        <div class="row mb-3">
-            <div class="col-12 col-md-3">
-                <span class="col-form-label p-0">Приложения</span>
+        {% for act in work.acts.all %}
+            <div class="row mb-3">
+                <div class="col-12 col-md-3">
+                    <span class="col-form-label p-0">Нормативный акт</span>
+                </div>
+                <div class="col-12 col-md-6">
+                    {{act.name}}
+                </div>
             </div>
-            <div class="col-12 col-md-6">
-                {{work.applications}}
-            </div>
-        </div>
+        {% endfor %}
 
         <div class="row mb-3">
             <div class="col-12 col-md-3">
@@ -168,8 +161,6 @@
                 надо заполнять
             </div>
         </div>
-
-
     </form>
 </div>
 {% endblock %}

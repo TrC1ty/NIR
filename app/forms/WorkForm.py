@@ -19,7 +19,7 @@ class Work(ModelForm):
         fields = ['name_hidden_works', 'number_project_doc', 'number_working_doc', 'other_details_project_drawing',
                   'other_details_working_drawing', 'name_project_doc', 'name_working_doc',
                   'information_persons_prepare_doc', 'submitted_doc', 'start_date_work', 'end_date_work',
-                  'permitted_works', 'additional_information', 'number_instances', 'applications']
+                  'permitted_works', 'additional_information', 'number_instances']
         widgets = {
             'name_hidden_works': TextInput(attrs={'class': 'form-control'}),
             'number_project_doc': TextInput(attrs={'class': 'form-control'}),
@@ -35,7 +35,6 @@ class Work(ModelForm):
             'permitted_works': TextInput(attrs={'class': 'form-control'}),
             'additional_information': TextInput(attrs={'class': 'form-control'}),
             'number_instances': NumberInput(attrs={'class': 'form-control'}),
-            'applications': TextInput(attrs={'class': 'form-control'}),
         }
 
         labels = {
@@ -53,7 +52,6 @@ class Work(ModelForm):
             'permitted_works': 'Разрешенные работы',
             'additional_information': 'Дополнительная информация',
             'number_instances': 'Количество экземпляров',
-            'applications': 'Приложения',
         }
 
 
@@ -105,6 +103,3 @@ class WorkForm(forms.Form):
     number_instances = forms.IntegerField(label='Количество экземпляров', widget=forms.NumberInput(
         attrs={'class': 'form-control'}
     ), validators=[validate_even])
-    applications = forms.CharField(label='Приложения', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
-    ))

@@ -24,7 +24,7 @@
                             <th scope="row">
                                 {{ work.id }}
                             </th>
-                            <td><a href="{% url 'work-view' work.id %}">{{ work.name_hidden_works }}</td>
+                            <td><a href="{% url 'work-view' work.id %}">{{ work.name_hidden_works }}</a></td>
                             <td>{{ work.start_date_work }}</td>
                         </tr>
                     {% endfor %}
