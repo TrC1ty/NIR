@@ -41,6 +41,6 @@ urlpatterns = [
     path('materials/delete/<int:value>', MaterialView.delete, name='material-delete'),
 
     # for bcars
-    path('material/<int:material_id>/bcar/create', BCARView.as_view(), name='bcar-create'),
+    path('work/<int:work_id>/bcar/create', BCARView.as_view(), name='bcar-create'),
 ]
 

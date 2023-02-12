@@ -3,20 +3,20 @@ from django.views import View
 from django.shortcuts import render
 from ..forms.BCARForm import BCARForm
 from app.models.BCARModel import BCARModel
-from ..models.MaterialModel import MaterialModel
-from app.forms.MaterialForm import Material
+from ..models.WorkModel import WorkModel
+from app.forms.WorkForm import Work
 
 
 class BCARView(View):
     @staticmethod
-    def get(request: HttpRequest, material_id) -> HttpResponse:
+    def get(request: HttpRequest, work_id) -> HttpResponse:
         form = BCARForm()
 
-        return render(request, 'bcars/creation.html', {'form': form, 'material_id': material_id})
+        return render(request, 'bcars/creation.html', {'form': form, 'work_id': work_id})
 
     @staticmethod
-    def post(request: HttpRequest, material_id) -> HttpResponse:
-        material = MaterialModel.objects.get(id=material_id)
+    def post(request: HttpRequest, work_id) -> HttpResponse:
+        work = WorkModel.objects.get(id=work_id)
         form = BCARForm(request.POST)
         if form.is_valid():
             bcar = BCARModel.objects.create(
@@ -24,9 +24,9 @@ class BCARView(View):
                 name=form.cleaned_data["name"],
             )
             bcar.save()
-            material.bcars.add(bcar)
-            material.save()
+            work.bcars.add(bcar)
+            work.save()
 
-        form = Material(instance=material)
+        form = Work(instance=work)
 
-        return render(request, 'materials/edit.html', {'material': material, 'form': form})
+        return render(request, 'works/edit.html', {'work': work, 'form': form})

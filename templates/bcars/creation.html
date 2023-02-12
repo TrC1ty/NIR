@@ -1,13 +1,13 @@
 {% extends 'base/base.html' %}
 
-{% block title %}Создание сертификата{% endblock %}
+{% block title %}Создание bcar{% endblock %}
 
 {% block content %}
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
-    <h1>Создание сертификата</h1>
+    <h1>Создание bcar</h1>
 </div>
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
-    <form action="{% url 'bcar-create' material_id %}" method="post">
+    <form action="{% url 'bcar-create' work_id %}" method="post">
         {% csrf_token %}
         {% for field in form %}
         <div class="form-group">
