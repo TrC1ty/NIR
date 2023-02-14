@@ -51,7 +51,7 @@ class WorkView(View):
                 permitted_works=form.cleaned_data["permitted_works"],
                 additional_information=form.cleaned_data["additional_information"],
                 number_instances=form.cleaned_data["number_instances"],
-                project=project
+                project=project,
             )
             work.acts.add(*acts)
             work.save()
@@ -77,6 +77,17 @@ class WorkView(View):
         if request.method == 'POST':
             form = WorkForm(request.POST)
             if form.is_valid():
+                actForm = request.POST.dict()
+                print(f"!!!!!!!!!!!!!!{actForm}!!!!!!!!!!!")
+                actNames = re.findall(r'act\d+', ", ".join(actForm.keys()))
+                print(f"!!!!!!!!!!!!!!{actNames}!!!!!!!!!!!")
+                acts = []
+                for actName in actNames:
+                    act = LegalActModel.objects.create(
+                        name=actForm[actName],
+                    )
+                    act.save()
+                    acts.append(act)
                 work.name_hidden_works = form.cleaned_data["name_hidden_works"]
                 work.number_project_doc = form.cleaned_data["number_project_doc"]
                 work.number_working_doc = form.cleaned_data["number_working_doc"]
@@ -91,6 +102,9 @@ class WorkView(View):
                 work.permitted_works = form.cleaned_data["permitted_works"]
                 work.additional_information = form.cleaned_data["additional_information"]
                 work.number_instances = form.cleaned_data["number_instances"]
+
+                work.acts.clear()
+                work.acts.add(*acts)
                 work.save()
 
                 return render(request, 'works/work.html', {'work': work})

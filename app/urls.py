@@ -1,5 +1,6 @@
 from django.urls import path
 
+from app.views.LegalActView import LegalActView
 from app.views.ParticipantView import ParticipantView
 from app.views.HomeView import HomeView
 from app.views.ProjectView import ProjectView
@@ -30,6 +31,7 @@ urlpatterns = [
     path('works/index', WorkView.index, name='work-index'),
     path('works/<int:value>', WorkView.view, name='work-view'),
     path('works/edit/<int:value>', WorkView.edit, name='work-edit'),
+    path('works/editacts/<int:value>', LegalActView.editacts, name='work-editacts'),
     path('works/delete/<int:value>', WorkView.delete, name='work-delete'),
     path('works/create_doc/<int:value>', WorkView.create_doc, name='work-create-doc'),
 
@@ -42,7 +44,10 @@ urlpatterns = [
 
     # for bcars
     path('work/<int:work_id>/bcar/create', BCARView.as_view(), name='bcar-create'),
-    path('work/<int:work_id>/bcar/delete', BCARView.as_view(), name='bcar-delete'),
+    path('work/<int:work_id>/bcar/<int:bcar_id>/delete', BCARView.delete, name='bcar-delete'),
+
+    # for bcars
+
 
 ]
 

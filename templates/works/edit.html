@@ -19,6 +19,9 @@
         <li class="nav-item">
             <button class="nav-link " data-bs-toggle="tab" data-bs-target="#bcars">BCAR</button>
         </li>
+        <li class="nav-item">
+            <button class="nav-link " data-bs-toggle="tab" data-bs-target="#acts">Нормативные акты</button>
+        </li>
     </ul>
 
     <div class="tab-content">
@@ -43,6 +46,7 @@
                         </div>
                     </div>
                     {% endfor %}
+
                     <button type="submit" class="btn btn-primary my-2">Сохранить</button>
                 </form>
 
@@ -77,34 +81,67 @@
         </div>
 
         <div class="tab-pane" id="bcars">
-                <div class="row p-3 bg-body rounded shadow-sm">
-                    <div class="small col-8">
-                        BCARs
+            <div class="row p-3 bg-body rounded shadow-sm">
+                <div class="small col-8">
+                    BCARs(СНИПы)
+                </div>
+
+                <div class="col-4">
+                    <a style = "float: right;" class="btn btn-outline-primary btn-sm" href="{%url 'bcar-create' work.id %}">Добавить bcar</a>
+                </div>
+
+                {% for bcar in work.bcars.all %}
+                <div class="row mb-3">
+                    <div class="col-12 col-md-2">
+                        <span class="col-form-label p-0">BCAR</span>
                     </div>
 
-                    <div class="col-4">
-                        <a style = "float: right;" class="btn btn-outline-primary btn-sm" href="{%url 'bcar-create' work.id %}">Добавить bcar</a>
+                    <div class="col-12 col-md-4">
+                        {{ bcar.code_of_rules_number }} {{ bcar.name }}
                     </div>
 
-                    {% for bcar in work.bcars.all %}
-                        <div class="row mb-3">
-                            <div class="col-12 col-md-4">
-                                <span class="col-form-label p-0">BCAR</span>
-                            </div>
-
-                            <div class="col-12 col-md-6">
-                                {{ bcar.code_of_rules_number }} {{ bcar.name }}
-                            </div>
-
-                            <form method="post">
-                                {% csrf_token %}
-                            </form>
-
-                        </div>
-                    {% endfor %}
+                    <div class="col-12 col-md-2">
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этого участника?');" class="btn btn-outline-secondary btn-sm float-end" formaction="{% url 'bcar-delete' work.id bcar.id  %}" ><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>
+                        </form>
+                    </div>
 
                 </div>
+                {% endfor %}
+
             </div>
+        </div>
+
+         <div class="tab-pane" id="acts">
+            <div class="row p-3 bg-body rounded shadow-sm">
+                <div class="small col-8">
+                    Норативно правовые акты:
+                </div>
+
+                <div class="col-4">
+                    <a style = "float: right;" class="btn btn-outline-primary btn-sm" href="{%url 'material-create' work.id %}">Добавить материал</a>
+                </div>
+
+                <form action="{% url 'work-editacts' work.id %}" method="post">
+                    {% csrf_token %}
+                    {% for act in work.acts.all %}
+                    <div class="form-group">
+                        <div class="row mb-4 align-items-center">
+                            <div class="col-12 col-md-3">
+                                <label class="col-form-label p-0" for="id_act{{act.id}}">Нормативный акт</label>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <input class="form-control" name="act{{act.id}}" id="id_act{{act.id}}" value={{act.name}}>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary my-2">Сохранить</button>
+                </form>
+
+            </div>
+        </div>
 
     </div>
 
