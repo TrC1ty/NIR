@@ -147,3 +147,13 @@
 
 </div>
 {% endblock %}
+{% block scripts %}
+    <script>
+        let start = $("#start")[0].getAttribute("value");
+        let end = $("#end")[0].getAttribute("value");
+        let dateStart = start.split(".")
+        let dateEnd = end.split(".")
+        document.getElementById('start').valueAsDate = new Date(dateStart[2] + "-" + dateStart[1] + "-" + dateStart[0]);
+        document.getElementById('end').valueAsDate = new Date(dateEnd[2] + "-" + dateEnd[1] + "-" + dateEnd[0]);
+    </script>
+{% endblock %}

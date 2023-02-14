@@ -35,6 +35,7 @@ class MaterialView(View):
             certificate = form.cleaned_data['certificate']
             date_start = form.cleaned_data['date_start']
             date_end = form.cleaned_data['date_end']
+            count = form.cleaned_data['count']
             if request.POST.get("participant") is not None:
                 provider = ParticipantModel.objects.create(
                     participant_type="SUP",
@@ -46,13 +47,13 @@ class MaterialView(View):
                 provider_id = request.POST['provider']
                 provider = ParticipantModel.objects.get(id=provider_id)
 
-
             new_material = MaterialModel.objects.create(
                 name=name,
                 certificate=certificate,
                 date_start=date_start,
                 date_end=date_end,
                 provider=provider,
+                count=count,
             )
             new_material.save()
             work.materials.add(new_material)
@@ -79,6 +80,7 @@ class MaterialView(View):
                 material.certificate = form.cleaned_data['certificate']
                 material.date_start = form.cleaned_data['date_start']
                 material.date_end = form.cleaned_data['date_end']
+                material.count = form.cleaned_data['count']
                 material.save()
 
                 return render(request, 'materials/material.html', {'material': material})

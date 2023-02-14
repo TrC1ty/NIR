@@ -11,9 +11,9 @@ class Material(ModelForm):
         widgets = {
             'name': TextInput(attrs={'class': 'form-control'}),
             'certificate': TextInput(attrs={'class': 'form-control'}),
-            'date_start': DateInput(attrs={'class': 'form-control'}),
-            'date_end': DateInput(attrs={'class': 'form-control'}),
-            'count': NumberInput(attrs={'class': 'form-control'}),
+            'date_start': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'start'}),
+            'date_end': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'end'}),
+            'count': TextInput(attrs={'class': 'form-control'}),
         }
 
         labels = {
