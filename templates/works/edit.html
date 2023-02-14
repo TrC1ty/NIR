@@ -95,6 +95,11 @@
                             <div class="col-12 col-md-6">
                                 {{ bcar.code_of_rules_number }} {{ bcar.name }}
                             </div>
+
+                            <form method="post">
+                                {% csrf_token %}
+                            </form>
+
                         </div>
                     {% endfor %}
 

@@ -30,3 +30,11 @@ class BCARView(View):
         form = Work(instance=work)
 
         return render(request, 'works/edit.html', {'work': work, 'form': form})
+
+    @staticmethod
+    def delete(request: HttpRequest, value) -> HttpResponse:
+        bcar = BCARModel.objects.get(id=value)
+        bcar.delete()
+        materials = BCARModel.objects.all()
+
+        return render(request, 'materials/index.html', {'materials': materials})

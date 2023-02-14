@@ -1,17 +1,15 @@
 import re
+from pathlib import Path
 
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
-from django.views import View
 from django.shortcuts import render
-from ..forms.WorkForm import WorkForm, Work
-from app.models.WorkModel import WorkModel
-from app.models.ProjectModel import ProjectModel
-from ..models.MaterialModel import MaterialModel
-from app.models.LegalActModel import LegalActModel
+from django.views import View
 from docxtpl import DocxTemplate
-from pathlib import Path
-import os
-import datetime
+
+from app.models.LegalActModel import LegalActModel
+from app.models.ProjectModel import ProjectModel
+from app.models.WorkModel import WorkModel
+from ..forms.WorkForm import WorkForm, Work
 
 
 class WorkView(View):
@@ -325,6 +323,14 @@ def create_documentation(work_id):
     context['end_date_work_day'] = work.end_date_work.day
     context['end_date_work_month'] = months[str(work.end_date_work.month)]
     context['end_date_work_year'] = work.end_date_work.year
+
+    # работы выполнены в соответствии с...(добавление СНИПОВ)
+    row = ""
+    for bcar in work.bcars.all():
+        row += f"{bcar.name}, "
+
+    # [:-2] Для удаления лишней запятой и пробела
+    context['bcars'] = row[:-2]
 
     # добавление разрешенных работ
     context['permitted_works'] = work.permitted_works

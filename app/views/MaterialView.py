@@ -29,21 +29,23 @@ class MaterialView(View):
     def post(request: HttpRequest, work_id) -> HttpResponse:
         form = MaterialForm(request.POST)
         work = WorkModel.objects.get(id=work_id)
+        print(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
             certificate = form.cleaned_data['certificate']
             date_start = form.cleaned_data['date_start']
             date_end = form.cleaned_data['date_end']
-            if request.POST.get("participant") != "":
+            if request.POST.get("participant") is not None:
                 provider = ParticipantModel.objects.create(
                     participant_type="SUP",
-                    subject_type="ИП",
+                    subject_type="ЮЛ",
                     legal_name=request.POST.get("participant"),
                 )
                 provider.save()
             else:
                 provider_id = request.POST['provider']
                 provider = ParticipantModel.objects.get(id=provider_id)
+
 
             new_material = MaterialModel.objects.create(
                 name=name,

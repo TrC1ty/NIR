@@ -33,7 +33,7 @@
                     <select class="form-select" aria-label="Default select example" name="provider">
                         <option selected></option>
                         {% for participant in participants %}
-                        <option value="{{ participant.id }}">{{ participant.surname }} {{ participant.name }} {{ participant.patronymic }}</option>
+                        <option value="{{ participant.id }}">{{ participant.legal_name }}</option>
                         {% endfor %}
                     </select>
                     {% endif %}
@@ -80,6 +80,5 @@
                 text_button = $(this).text();
             }
         });
-
 </script>
 {% endblock %}

@@ -42,5 +42,7 @@ urlpatterns = [
 
     # for bcars
     path('work/<int:work_id>/bcar/create', BCARView.as_view(), name='bcar-create'),
+    path('work/<int:work_id>/bcar/delete', BCARView.as_view(), name='bcar-delete'),
+
 ]
 
