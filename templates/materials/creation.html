@@ -27,7 +27,7 @@
             {% if participants %}
             <div class="row mb-4 align-items-center">
                 <div class="col-12 col-md-3">
-                    <label class="col-form-label p-0" for="provider">Поставщик</label>
+                    <label class="col-form-label p-0" for="provider">Организация выдавшая документ</label>
                 </div>
                 <div class="col-12 col-md-6">
                     <select class="form-select" aria-label="Default select example" name="provider">
@@ -56,7 +56,7 @@
             if ($(this).text() == "+ добавить"){
             $("#material-form").append(
             "<div class='form-group' id='form_participant'>"+
-            "<h4>Добавление поставщика:</h4>"+
+            "<h4>Добавление организации выдавшей документ:</h4>"+
                 "<div class='form-group'>"+
                     "<div class='row mb-4 align-items-center'>"+
                         "<div class='col-12 col-md-3'>"+

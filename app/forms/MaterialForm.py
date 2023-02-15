@@ -21,7 +21,7 @@ class Material(ModelForm):
             "certificate": "Сертификат",
             "date_start": "Дата начала",
             "date_end": "Дата конца",
-            "count": "Количество",
+            "count": "Количество материалов",
         }
 
 
@@ -41,7 +41,7 @@ class MaterialForm(forms.Form):
         attrs={'type': 'date', 'class': 'form-control'}
     ))
     count = forms.CharField(
-        label='Количество',
+        label='Количество материалов',
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
         ),

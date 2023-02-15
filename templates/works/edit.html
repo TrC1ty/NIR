@@ -17,10 +17,10 @@
             <button class="nav-link " data-bs-toggle="tab" data-bs-target="#materials">Материалы</button>
         </li>
         <li class="nav-item">
-            <button class="nav-link " data-bs-toggle="tab" data-bs-target="#bcars">BCAR</button>
+            <button class="nav-link " data-bs-toggle="tab" data-bs-target="#bcars">(Пункт 6)СНИП</button>
         </li>
         <li class="nav-item">
-            <button class="nav-link " data-bs-toggle="tab" data-bs-target="#acts">Нормативные акты</button>
+            <button class="nav-link " data-bs-toggle="tab" data-bs-target="#acts">(Пункт 4)Документы подтверждающие соответствие работ</button>
         </li>
     </ul>
 
@@ -83,17 +83,17 @@
         <div class="tab-pane" id="bcars">
             <div class="row p-3 bg-body rounded shadow-sm">
                 <div class="small col-8">
-                    BCARs(СНИПы)
+                    СНИПы
                 </div>
 
                 <div class="col-4">
-                    <a style = "float: right;" class="btn btn-outline-primary btn-sm" href="{%url 'bcar-create' work.id %}">Добавить bcar</a>
+                    <a style = "float: right;" class="btn btn-outline-primary btn-sm" href="{%url 'bcar-create' work.id %}">Добавить СНИП</a>
                 </div>
 
                 {% for bcar in work.bcars.all %}
                 <div class="row mb-3">
                     <div class="col-12 col-md-2">
-                        <span class="col-form-label p-0">BCAR</span>
+                        <span class="col-form-label p-0">СНИП</span>
                     </div>
 
                     <div class="col-12 col-md-4">
@@ -116,11 +116,11 @@
          <div class="tab-pane" id="acts">
             <div class="row p-3 bg-body rounded shadow-sm">
                 <div class="small col-8">
-                    Норативно правовые акты:
+                    Нормативно правовые акты:
                 </div>
 
                 <div class="col-4">
-                    <a style = "float: right;" class="btn btn-outline-primary btn-sm" href="{%url 'material-create' work.id %}">Добавить материал</a>
+                    <a style = "float: right;" class="btn btn-outline-primary btn-sm" href="{%url 'material-create' work.id %}">Добавить нормативный акт</a>
                 </div>
 
                 <form action="{% url 'work-editacts' work.id %}" method="post">
