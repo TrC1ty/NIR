@@ -304,7 +304,7 @@ def add_application(work, context, builder):
         context['submitted_doc'] = "Приложен реестр документов, " \
                                    "подтверждающих соответствие работ предъявляемым к ним требованиям"
 
-    else:
+    elif len(acts) == 1:
         context['submitted_doc'] = acts[0].name
 
 
