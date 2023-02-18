@@ -19,8 +19,8 @@ class Material(ModelForm):
         labels = {
             "name": "Название материала",
             "certificate": "Сертификат",
-            "date_start": "Дата начала",
-            "date_end": "Дата конца",
+            "date_start": "Дата выдачи сертификата",
+            "date_end": "Дата окончания действия сертификата",
             "count": "Количество материалов",
         }
 
@@ -36,7 +36,7 @@ class MaterialForm(forms.Form):
         format='%d-%m-%Y',
         attrs={'type': 'date', 'class': 'form-control'}
     ))
-    date_end = forms.DateField(label='Дата окончания сертификата', widget=forms.DateInput(
+    date_end = forms.DateField(label='Дата окончания действия сертификата', widget=forms.DateInput(
         format='%d-%m-%Y',
         attrs={'type': 'date', 'class': 'form-control'}
     ))

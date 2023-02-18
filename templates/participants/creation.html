@@ -18,7 +18,9 @@
         {% csrf_token %}
         {% for field in form.visible_fields %}
         <div class="form-group">
-            {{ field.errors }}
+            <div class="form-error">
+                <span class="text-danger"> {{ field.errors }}</span>
+            </div>
             <div class="row mb-4 align-items-center">
                 <div class="col-12 col-md-3">
                     <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>

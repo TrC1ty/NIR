@@ -5,12 +5,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
 
-def validate_even(value):
-    if value < 1:
-        raise ValidationError(
-            _('%(value)s is not an even number'),
-            params={'value': value},
-        )
+
 
 
 class Work(ModelForm):
@@ -57,49 +52,72 @@ class Work(ModelForm):
 
 class WorkForm(forms.Form):
     name_hidden_works = forms.CharField(label='Наименование скрытых работ', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
-    ))
+        attrs={'class': 'form-control'}),
+        required=False,
+    )
     number_project_doc = forms.CharField(label='Номер проектной документации', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
-    ))
+        attrs={'class': 'form-control'}),
+        required=False,
+    )
     number_working_doc = forms.CharField(label='Номер рабочей документации', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
-    ))
+        attrs={'class': 'form-control'}),
+        required=False,
+    )
     # todo: что это за поле вообще, какой его смысл
     other_details_project_drawing = forms.CharField(label='Другие реквизиты проектного чертежа', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
-    ))
+        attrs={'class': 'form-control'}),
+        required=False,
+    )
     # todo: что это за поле вообще, какой его смысл
     other_details_working_drawing = forms.CharField(label='Другие реквизиты рабочего чертежа', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
-    ))
+        attrs={'class': 'form-control'}),
+        required=False,
+    )
     name_project_doc = forms.CharField(label='Наименование проектной документации', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
-    ))
+        attrs={'class': 'form-control'}),
+        required=False,
+    )
     name_working_doc = forms.CharField(label='Наименование рабочей документации', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
-    ))
+        attrs={'class': 'form-control'}),
+        required=False,
+    )
     information_persons_prepare_doc = forms.CharField(label='Сведения о лицах, осуществялющих подготовку '
                                                             'раздела документации', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
-    ))
+        attrs={'class': 'form-control'}),
+        required=False,
+    )
     submitted_doc = forms.CharField(label='Предоставленные документы', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
-    ))
+        attrs={'class': 'form-control'}),
+        required=False,
+    )
     start_date_work = forms.DateField(label='Дата начала работ', widget=forms.DateInput(
         format='%d-%m-%Y',
-        attrs={'type': 'date', 'class': 'form-control'}
-    ))
+        attrs={'type': 'date', 'class': 'form-control'}),
+    )
     end_date_work = forms.DateField(label='Дата окончания работ', widget=forms.DateInput(
         format='%d-%m-%Y',
-        attrs={'type': 'date', 'class': 'form-control'}
-    ))
+        attrs={'type': 'date', 'class': 'form-control'}),
+    )
     permitted_works = forms.CharField(label='Разрешенные работы', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
-    ))
+        attrs={'class': 'form-control'}),
+        required=False,
+    )
     additional_information = forms.CharField(label='Дополнительная информация', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
-    ))
+        attrs={'class': 'form-control'}),
+        required=False,
+    )
     number_instances = forms.IntegerField(label='Количество экземпляров', widget=forms.NumberInput(
-        attrs={'class': 'form-control'}
-    ), validators=[validate_even])
+        attrs={'class': 'form-control'}),
+        required=False,
+    )
+
+
+    def clean(self):
+        cleaned_data = super(WorkForm, self).clean()
+        start_date_work = cleaned_data.get("start_date_work")
+        end_date_work = cleaned_data.get("end_date_work")
+
+        if start_date_work and end_date_work:
+            if start_date_work >= end_date_work:
+                raise ValidationError("'Дата начала работ' должна быть меньше 'Даты окончания работ'")
+        return cleaned_data

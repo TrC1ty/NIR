@@ -3,12 +3,24 @@
 {% block title %}Создание работы{% endblock %}
 
 {% block content %}
+<style>
+   li {
+    list-style-type: none; /* Убираем маркеры */
+   }
+   ul {
+    margin-left: 0; /* Отступ слева в браузере IE и Opera */
+    padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+   }
+</style>
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
     <h1>Создание работы</h1>
 </div>
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
     <form action="{% url 'work-create' project_id %}" method="post">
         {% csrf_token %}
+
+        <div class="form-error" style="color:red"> {{form.non_field_errors}}</div>
+
         <div id="work-form">
             {% for field in form.visible_fields %}
             <div class="form-group">

@@ -23,6 +23,7 @@ class ProjectModel(models.Model):
                                                                  related_name="represent_examined")
     other_persons_participated_examination = models.ForeignKey(ParticipantModel, on_delete=models.SET_NULL, null=True,
                                                                related_name="other_examined")
+
     name_project = models.TextField()
     name_project_documentation = models.TextField()
     building_address = models.TextField()

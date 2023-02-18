@@ -21,7 +21,7 @@ class WorkModel(models.Model):
     end_date_work = models.DateField(null=True)
     permitted_works = models.TextField()
     additional_information = models.TextField()
-    number_instances = models.IntegerField()
+    number_instances = models.IntegerField(null=True)
     materials = models.ManyToManyField(MaterialModel)
     bcars = models.ManyToManyField(BCARModel)
     acts = models.ManyToManyField(LegalActModel)

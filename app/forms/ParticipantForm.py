@@ -54,9 +54,9 @@ class ParticipantForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'passport_data'}),
         required=False,
     )
-    register_of_specialists = forms.IntegerField(
+    register_of_specialists = forms.CharField(
         label='Номер в национальном реестре специалистов',
-        widget=forms.NumberInput(attrs={'class': 'form-control', 'id': 'register_of_specialists'}),
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'register_of_specialists'}),
         required=False,
     )
     ogrn = forms.CharField(
@@ -157,7 +157,7 @@ class Participant(ModelForm):
             'patronymic': 'Отчество',
             'post': 'Должность',
             'passport_data': 'Паспортные данные',
-            'register_of_specialists': 'Номер а национальном реестре специалистов',
+            'register_of_specialists': 'Номер в национальном реестре специалистов',
             'ogrn': 'ОГРН',
             'inn': 'ИНН',
             'address': 'Адрес',

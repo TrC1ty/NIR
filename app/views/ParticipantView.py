@@ -70,7 +70,6 @@ class ParticipantView(View):
     @staticmethod
     def edit(request: HttpRequest, value) -> HttpResponse:
         participant = ParticipantModel.objects.get(id=value)
-
         if request.method == 'POST':
             form = ParticipantForm(request.POST)
             if form.is_valid():

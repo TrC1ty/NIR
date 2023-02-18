@@ -34,6 +34,7 @@
 
                 <form action="{% url 'work-edit' work.id %}" method="post">
                     {% csrf_token %}
+                    <div class="form-error" style="color:red"> {{form.non_field_errors}}</div>
                     {% for field in form.visible_fields %}
                     <div class="form-group">
                         {{ field.errors }}

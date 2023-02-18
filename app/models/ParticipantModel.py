@@ -19,7 +19,7 @@ class ParticipantModel(models.Model):
     patronymic = models.TextField()
     post = models.TextField()
     passport_data = models.TextField()
-    register_of_specialists = models.IntegerField(blank=True, null=True)
+    register_of_specialists = models.TextField(null=True)
     ogrn = models.TextField()
     inn = models.TextField()
     address = models.TextField()
