@@ -29,6 +29,7 @@ class BCARView(View):
                 bcar = querySet.get()
                 bcar.name = bcarForm[bcarId]
                 bcar.save()
+                bcars.append(bcar)
             else:
                 bcar = BCARModel.objects.create(
                     name=bcarForm[bcarId],
@@ -36,6 +37,11 @@ class BCARView(View):
                 bcar.save()
                 bcars.append(bcar)
 
+        for el in work.bcars.all():
+            if el not in bcars:
+                el.delete()
+
+        work.bcars.clear()
         work.bcars.add(*bcars)
         work.save()
 

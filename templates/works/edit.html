@@ -95,7 +95,7 @@
                     {% csrf_token %}
                     <div id="act-form">
                         {% for act in work.acts.all %}
-                            <div class="form-group">
+                            <div class="form-group" id="div-act-{{ act.id }}">
                                 <div class="row mb-4 align-items-center">
                                     <div class="col-12 col-md-3">
                                         <label class="col-form-label p-0" for="id_act{{act.id}}">Документ</label>
@@ -103,13 +103,16 @@
                                     <div class="col-12 col-md-6">
                                         <input class="form-control" name="act{{act.id}}" id="id_act{{act.id}}" value="{{act.name}}">
                                     </div>
+                                    <div class='col-12 col-md-3'>
+                                        <a id='a-act-{{act.id}}' act='{{act.id}}' class='close'
+                                           type='button' style='text-decoration: none;color:red'>×</a>
+                                    </div>
                                 </div>
                             </div>
                         {% endfor %}
                     </div>
                     <button type="submit" class="btn btn-primary my-2">Сохранить</button>
                 </form>
-
             </div>
         </div>
 
@@ -127,13 +130,17 @@
                     {% csrf_token %}
                     <div id="bcar-form">
                         {% for bcar in work.bcars.all %}
-                            <div class="form-group">
+                            <div class="form-group" id="div-bcar-{{ bcar.id }}">
                                 <div class="row mb-4 align-items-center">
                                     <div class="col-12 col-md-3">
                                         <label class="col-form-label p-0" for="id_bcar{{bcar.id}}">Нормативный акт</label>
                                     </div>
                                     <div class="col-12 col-md-6">
                                         <input class="form-control" name="bcar{{bcar.id}}" id="id_bcar{{bcar.id}}" value="{{bcar.name}}">
+                                    </div>
+                                    <div class='col-12 col-md-3'>
+                                        <a id='a-bcar-{{bcar.id}}' bcar='{{bcar.id}}' class='close'
+                                           type='button' style='text-decoration: none;color:red'>×</a>
                                     </div>
                                 </div>
                             </div>
@@ -188,6 +195,13 @@
             });
             actNumber ++;
         });
+
+        document.querySelectorAll("#act-form")[0].querySelectorAll("a").forEach(function(e) {
+            e.onclick = function() {
+                let act = $(this)[0].getAttribute("act");
+                $("#div-act-" + act).remove();
+            };
+        })
     </script>
     <script>
         // for bcar adding and editing
@@ -221,5 +235,12 @@
             });
             bcarNumber ++;
         });
+
+        document.querySelectorAll("#bcar-form")[0].querySelectorAll("a").forEach(function(e) {
+            e.onclick = function() {
+                let bcar = $(this)[0].getAttribute("bcar");
+                $("#div-bcar-" + bcar).remove();
+            };
+        })
     </script>
 {% endblock %}

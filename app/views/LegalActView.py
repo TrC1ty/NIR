@@ -26,6 +26,7 @@ class LegalActView(View):
                 act = querySet.get()
                 act.name = actForm[actId]
                 act.save()
+                acts.append(act)
             else:
                 act = LegalActModel.objects.create(
                     name=actForm[actId],
@@ -33,6 +34,11 @@ class LegalActView(View):
                 act.save()
                 acts.append(act)
 
+        for el in work.acts.all():
+            if el not in acts:
+                el.delete()
+
+        work.acts.clear()
         work.acts.add(*acts)
         work.save()
 
