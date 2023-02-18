@@ -1,3 +1,4 @@
+import re
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.views import View
 from django.shortcuts import render
@@ -18,15 +19,25 @@ class BCARView(View):
     @staticmethod
     def post(request: HttpRequest, work_id) -> HttpResponse:
         work = WorkModel.objects.get(id=work_id)
-        form = BCARForm(request.POST)
-        if form.is_valid():
-            bcar = BCARModel.objects.create(
-                code_of_rules_number=form.cleaned_data["code_of_rules_number"],
-                name=form.cleaned_data["name"],
-            )
-            bcar.save()
-            work.bcars.add(bcar)
-            work.save()
+        bcarForm = request.POST.dict()
+        bcarIds = re.findall(r'bcar\d+', ", ".join(bcarForm.keys()))
+        bcars = []
+        for bcarId in bcarIds:
+            elementId = re.search(r"\d+", bcarId).group()
+            querySet = work.bcars.filter(id=elementId)
+            if querySet:
+                bcar = querySet.get()
+                bcar.name = bcarForm[bcarId]
+                bcar.save()
+            else:
+                bcar = BCARModel.objects.create(
+                    name=bcarForm[bcarId],
+                )
+                bcar.save()
+                bcars.append(bcar)
+
+        work.bcars.add(*bcars)
+        work.save()
 
         form = Work(instance=work)
 

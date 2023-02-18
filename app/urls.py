@@ -31,7 +31,7 @@ urlpatterns = [
     path('works/index', WorkView.index, name='work-index'),
     path('works/<int:value>', WorkView.view, name='work-view'),
     path('works/edit/<int:value>', WorkView.edit, name='work-edit'),
-    path('works/editacts/<int:value>', LegalActView.editacts, name='work-editacts'),
+    path('works/editacts/<int:work_id>', LegalActView.edit_acts, name='work-edit-acts'),
     path('works/delete/<int:value>', WorkView.delete, name='work-delete'),
     path('works/create_doc/<int:value>', WorkView.create_doc, name='work-create-doc'),
 

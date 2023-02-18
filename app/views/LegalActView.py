@@ -11,31 +11,31 @@ from app.models.ProjectModel import ProjectModel
 from app.models.WorkModel import WorkModel
 from ..forms.WorkForm import WorkForm, Work
 
+
 class LegalActView(View):
     @staticmethod
-    def editacts(request: HttpRequest, value) -> HttpResponse:
-        work = WorkModel.objects.get(id=value)
-
-        if request.method == 'POST':
-            print(request.POST)
-
-            actForm = request.POST.dict()
-            print(f"!!!!!!!!!!!!!!{actForm}!!!!!!!!!!!")
-            actNames = re.findall(r'act\d+', ", ".join(actForm.keys()))
-            print(f"!!!!!!!!!!!!!!{actNames}!!!!!!!!!!!")
-            acts = []
-            for actName in actNames:
+    def edit_acts(request: HttpRequest, work_id) -> HttpResponse:
+        work = WorkModel.objects.get(id=work_id)
+        actForm = request.POST.dict()
+        actIds = re.findall(r'act\d+', ", ".join(actForm.keys()))
+        acts = []
+        for actId in actIds:
+            elementId = re.search(r"\d+", actId).group()
+            querySet = work.acts.filter(id=elementId)
+            if querySet:
+                act = querySet.get()
+                act.name = actForm[actId]
+                act.save()
+            else:
                 act = LegalActModel.objects.create(
-                    name=actForm[actName],
+                    name=actForm[actId],
                 )
                 act.save()
                 acts.append(act)
 
-            work.acts.clear()
-            work.acts.add(*acts)
-            work.save()
+        work.acts.add(*acts)
+        work.save()
 
         form = Work(instance=work)
 
-        return render(request, 'works/edit.html', {'work': work,
-                                                   'form': form})
+        return render(request, 'works/edit.html', {'work': work, 'form': form})
