@@ -40,7 +40,7 @@ class BCARView(View):
         for el in work.bcars.all():
             if el not in bcars:
                 el.delete()
-
+        print(bcars)
         work.bcars.clear()
         work.bcars.add(*bcars)
         work.save()

@@ -173,6 +173,9 @@
             }
         })
         let actNumber = Math.max.apply(null, actId) + 1;
+        if (actNumber === -Infinity) {
+            actNumber = 1;
+        }
 
         $("#add-act").click(function() {
             $("#act-form").append(
@@ -213,6 +216,9 @@
             }
         })
         let bcarNumber = Math.max.apply(null, bcarId) + 1;
+        if (bcarNumber === -Infinity) {
+            bcarNumber = 1;
+        }
 
         $("#add-bcar").click(function() {
             $("#bcar-form").append(
