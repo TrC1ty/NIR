@@ -115,5 +115,5 @@ class WorkForm(forms.Form):
 
         if start_date_work and end_date_work:
             if start_date_work >= end_date_work:
-                raise ValidationError("'Дата начала работ' должна быть меньше 'Даты окончания работ'")
+                raise ValidationError("«Дата начала работ» должна быть меньше «Даты окончания работ»")
         return cleaned_data
