@@ -164,6 +164,7 @@ def create_documentation(work_id):
         'builder': get_performer(project.builder),
         'person_the_construction': get_performer(project.person_the_construction),
         'person_prepares_doc': get_performer(project.person_prepares_doc),
+        'person_performing_work': get_performer(project.person_performed_work),
         'number': work.id,
         'name_project': project.name_project,
         'date_day': datetime.date.today().day,
@@ -172,7 +173,6 @@ def create_documentation(work_id):
         'representative_builder': get_performer(project.representative_builder),
         'representative_person_the_construction': get_performer(project.representative_person_the_construction),
         'specialist_organization_construction': get_performer(project.specialist_organization_construction),
-        'person_performing_work': get_performer(project.person_performed_work),
         'representative_person_preparing_project_doc': get_performer(
             project.representative_person_preparing_project_doc),
         'representative_person_performed_examined': get_performer(
@@ -181,8 +181,8 @@ def create_documentation(work_id):
     }
 
     # добавление названия субъекта, которое осуществляло строительство
-    if project.builder:
-        context['person_the_construction_name'] = project.builder.legal_name
+    if project.person_performed_work:
+        context['person_the_construction_name'] = project.person_performed_work.legal_name
 
     # добавление названия работ
     context['name_hidden_works'] = work.name_hidden_works
@@ -298,7 +298,7 @@ def add_application(work, context, builder):
                 'name': "Сертификат соответствия",
                 'number': material.certificate.replace("Сертификат соответствия", "").strip(),
                 'person': material.provider.legal_name,
-                'count': 1,
+                'count': material.list_count,
             })
 
         context['table'] = table

@@ -54,7 +54,32 @@
                         <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'builder' %}">Добавить участника</a>
                     </div>
                     {%endif%}
+                </div>
 
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Лицо, осуществляющее строительство</span>
+                    </div>
+                    {% if project.person_the_construction %}
+                    {% if project.person_the_construction.subject_type == 'ФЛ' %}
+                    <div class="col-12 col-md-6">
+                        <a href="{% url 'participant-view' project.person_the_construction.id %}">
+                            {{project.person_the_construction.surname}} {{project.person_the_construction.name}}
+                            {{project.person_the_construction.patronymic}}
+                        </a>
+                    </div>
+                    {% else %}
+                    <div class="col-12 col-md-6">
+                        <a href="{% url 'participant-view' project.person_the_construction.id %}">
+                            {{project.person_the_construction.legal_name}}
+                        </a>
+                    </div>
+                    {% endif %}
+                    {%else%}
+                    <div class="col-12 col-md-6">
+                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'person_the_construction' %}">Добавить участника</a>
+                    </div>
+                    {%endif%}
                 </div>
 
                 <div class="row mb-3">
@@ -78,6 +103,32 @@
                     {%else%}
                     <div class="col-12 col-md-6">
                         <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'person_prepares_doc' %}">Добавить участника</a>
+                    </div>
+                    {%endif%}
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-12 col-md-4">
+                        <span class="col-form-label p-0">Лицо, выполнившее работы</span>
+                    </div>
+                    {% if project.person_performed_work %}
+                    {% if project.person_performed_work.subject_type == 'ФЛ' %}
+                    <div class="col-12 col-md-6">
+                        <a href="{% url 'participant-view' project.person_performed_work.id %}">
+                            {{project.person_performed_work.surname}} {{project.person_performed_work.name}}
+                            {{project.person_performed_work.patronymic}}
+                        </a>
+                    </div>
+                    {% else %}
+                    <div class="col-12 col-md-6">
+                        <a href="{% url 'participant-view' project.person_performed_work.id %}">
+                            {{project.person_performed_work.legal_name}}
+                        </a>
+                    </div>
+                    {% endif %}
+                    {%else%}
+                    <div class="col-12 col-md-6">
+                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'person_performed_work' %}">Добавить участника</a>
                     </div>
                     {%endif%}
                 </div>

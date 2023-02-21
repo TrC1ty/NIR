@@ -7,7 +7,7 @@ from app.models.MaterialModel import MaterialModel
 class Material(ModelForm):
     class Meta:
         model = MaterialModel
-        fields = ['name', 'certificate', 'date_start', 'date_end', 'count']
+        fields = ['name', 'certificate', 'date_start', 'date_end', 'count', 'list_count']
         widgets = {
             'name': TextInput(attrs={'class': 'form-control'}),
             'certificate': TextInput(attrs={'class': 'form-control'}),
