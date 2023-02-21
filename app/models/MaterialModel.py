@@ -10,6 +10,7 @@ class MaterialModel(models.Model):
     date_start = models.DateField()
     date_end = models.DateField()
     provider = models.ForeignKey(ParticipantModel, on_delete=models.CASCADE)
+    list_count = models.TextField(null=True)
 
     class Meta:
         db_table = "Materials"

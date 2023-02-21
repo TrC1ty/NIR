@@ -14,6 +14,7 @@ class Material(ModelForm):
             'date_start': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'start'}),
             'date_end': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'end'}),
             'count': TextInput(attrs={'class': 'form-control'}),
+            'list_count': TextInput(attrs={'class': 'form-control'}),
         }
 
         labels = {
@@ -22,6 +23,7 @@ class Material(ModelForm):
             "date_start": "Дата выдачи сертификата",
             "date_end": "Дата окончания действия сертификата",
             "count": "Количество материалов",
+            "list_count": "Количество листов",
         }
 
 
@@ -42,6 +44,13 @@ class MaterialForm(forms.Form):
     ))
     count = forms.CharField(
         label='Количество материалов',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        ),
+        required=False,
+    )
+    list_count = forms.CharField(
+        label='Количество листов',
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
         ),

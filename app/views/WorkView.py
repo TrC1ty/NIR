@@ -172,6 +172,7 @@ def create_documentation(work_id):
         'representative_builder': get_performer(project.representative_builder),
         'representative_person_the_construction': get_performer(project.representative_person_the_construction),
         'specialist_organization_construction': get_performer(project.specialist_organization_construction),
+        'person_performing_work': get_performer(project.person_performed_work),
         'representative_person_preparing_project_doc': get_performer(
             project.representative_person_preparing_project_doc),
         'representative_person_performed_examined': get_performer(

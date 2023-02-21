@@ -11,6 +11,8 @@ class ProjectModel(models.Model):
                                                 related_name="construction")
     person_prepares_doc = models.ForeignKey(ParticipantModel, on_delete=models.SET_NULL, null=True,
                                             related_name="document")
+    person_performed_work = models.ForeignKey(ParticipantModel, on_delete=models.SET_NULL, null=True,
+                                              related_name="performing")
     representative_builder = models.ForeignKey(ParticipantModel, on_delete=models.SET_NULL, null=True,
                                                related_name="part_represent_builder")
     representative_person_the_construction = models.ForeignKey(ParticipantModel, on_delete=models.SET_NULL, null=True,
@@ -49,6 +51,8 @@ class ProjectModel(models.Model):
                 self.person_the_construction = participant
             case "person_prepares_doc":
                 self.person_prepares_doc = participant
+            case "person_performed_work":
+                self.person_performed_work = participant
             case "representative_builder":
                 self.representative_builder = participant
             case "representative_person_the_construction":
