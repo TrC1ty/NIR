@@ -29,6 +29,7 @@ class MaterialView(View):
     def post(request: HttpRequest, work_id) -> HttpResponse:
         form = MaterialForm(request.POST)
         work = WorkModel.objects.get(id=work_id)
+        participants = ParticipantModel.objects.filter(participant_type='SUP')
         print(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
@@ -61,9 +62,14 @@ class MaterialView(View):
             work.materials.add(new_material)
             work.save()
 
-        form = Work(instance=work)
+            form = Work(instance=work)
 
-        return render(request, 'works/edit.html', {'work': work, 'form': form})
+            return render(request, 'works/edit.html', {'work': work, 'form': form})
+
+        return render(request, 'materials/creation.html', {'form_material': form, 'work_id': work_id,
+                                                           'participants': participants})
+
+
 
     @staticmethod
     def index(request: HttpRequest) -> HttpResponse:

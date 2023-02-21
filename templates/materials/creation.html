@@ -8,6 +8,9 @@
 </div>
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
     <form action="{% url 'material-create' work_id %}" method="post">
+
+        <div class="form-error" style="color:red"> {{form_material.non_field_errors}}</div>
+
         {% csrf_token %}
         <div id="material-form">
             {% for field in form_material %}
@@ -30,7 +33,7 @@
                     <label class="col-form-label p-0" for="provider">Организация выдавшая документ</label>
                 </div>
                 <div class="col-12 col-md-6">
-                    <select class="form-select" aria-label="Default select example" name="provider">
+                    <select class="form-select" aria-label="Default select example" name="provider" id="selectProvider" required>
                         <option selected></option>
                         {% for participant in participants %}
                         <option value="{{ participant.id }}">{{ participant.legal_name }}</option>
@@ -43,14 +46,13 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary my-2">Сохранить</button>
+        <button type="submit" class="btn btn-primary my-2" onclick="doFunction();">Сохранить</button>
     </form>
 </div>
 {% endblock %}
 {% block scripts %}
 <script>
         var text_button = $("#add_participant").text();
-
          $("#add_participant").click(function() {
          console.log(text_button);
             if ($(this).text() == "+ добавить"){
@@ -80,5 +82,20 @@
                 text_button = $(this).text();
             }
         });
+
+        function doFunction(){
+            var participant = document.querySelector('#participant');
+            var selectProvider = document.querySelector('#selectProvider');
+
+            console.log(participant);
+            console.log(selectProvider);
+
+            if(participant != null){
+                selectProvider.removeAttribute("required");
+            }
+            else{
+                selectProvider.setAttribute("required","required");
+            }
+        }
 </script>
 {% endblock %}

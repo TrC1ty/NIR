@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 from django.forms import ModelForm, TextInput, DateInput, NumberInput
 
 from app.models.MaterialModel import MaterialModel
@@ -56,6 +57,16 @@ class MaterialForm(forms.Form):
         ),
         required=False,
     )
+
+    def clean(self):
+        cleaned_data = super(MaterialForm, self).clean()
+        date_start = cleaned_data.get("date_start")
+        date_end = cleaned_data.get("date_end")
+
+        if date_start and date_end:
+            if date_start >= date_end:
+                raise ValidationError("«Дата начала» должна быть меньше «Даты конца»")
+        return cleaned_data
 
     # def __init__(self, *args, **kwargs):
     #     super(MaterialForm, self).__init__(*args, **kwargs)  # Call to ModelForm constructor

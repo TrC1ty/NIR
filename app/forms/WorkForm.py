@@ -4,10 +4,6 @@ from django.forms import ModelForm, Textarea, TextInput, NumberInput, DateInput
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
-
-
-
-
 class Work(ModelForm):
     class Meta:
         model = WorkModel
@@ -113,7 +109,7 @@ class WorkForm(forms.Form):
 
 
     def clean(self):
-        cleaned_data = super(WorkForm, self).clean()
+        cleaned_data = super().clean()
         start_date_work = cleaned_data.get("start_date_work")
         end_date_work = cleaned_data.get("end_date_work")
 

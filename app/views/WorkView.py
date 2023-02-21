@@ -58,6 +58,8 @@ class WorkView(View):
 
             return HttpResponseRedirect(f'/works/{work.id}')
 
+        return render(request, 'works/creation.html', {'form': form, 'project_id': project_id})
+
     @staticmethod
     def index(request: HttpRequest) -> HttpResponse:
         works = WorkModel.objects.all().order_by('-id')
