@@ -27,10 +27,6 @@
     <div class="tab-content">
         <div class="tab-pane active" id="participant">
             <div class="p-3 bg-body rounded shadow-sm">
-                <div class="small mb-3">
-                    Люди, участвующие в данноме проекте:
-                </div>
-
                 <div class="row mb-3">
                     <div class="col-12 col-md-4">
                         <span class="col-form-label p-0">Застройщик</span>
@@ -286,33 +282,6 @@
                     </div>
                     {%endif%}
                 </div>
-
-                <div class="row mb-3">
-                    <div class="col-12 col-md-4">
-                        <span class="col-form-label p-0">Лицо, осуществляющее строительство</span>
-                    </div>
-                    {% if project.person_the_construction %}
-                    {% if project.person_the_construction.subject_type == 'ФЛ' %}
-                    <div class="col-12 col-md-6">
-                        <a href="{% url 'participant-view' project.person_the_construction.id %}">
-                            {{project.person_the_construction.surname}} {{project.person_the_construction.name}} {{project.person_the_construction.patronymic}}
-                        </a>
-                    </div>
-                    {% else %}
-                    <div class="col-12 col-md-6">
-                        <a href="{% url 'participant-view' project.person_the_construction.id %}">
-                            {{project.person_the_construction.legal_name}}
-                        </a>
-                    </div>
-                    {% endif %}
-                    {%else%}
-                    <div class="col-12 col-md-6">
-                        <a class="btn btn-outline-primary btn-sm" href="{%url 'participant-create' project.id 'person_the_construction' %}">Добавить участника</a>
-                    </div>
-                    {%endif%}
-                </div>
-
-
             </div>
         </div>
 
