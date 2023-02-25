@@ -4,12 +4,26 @@ from django.forms import ModelForm, Textarea, TextInput, NumberInput, DateInput
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 
+
 class Work(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['number_project_doc'].required = False
+        self.fields['number_working_doc'].required = False
+        self.fields['other_details_project_drawing'].required = False
+        self.fields['other_details_working_drawing'].required = False
+        self.fields['name_project_doc'].required = False
+        self.fields['name_working_doc'].required = False
+        self.fields['information_persons_prepare_doc'].required = False
+        self.fields['permitted_works'].required = False
+        self.fields['additional_information'].required = False
+        self.fields['number_instances'].required = False
+
     class Meta:
         model = WorkModel
         fields = ['name_hidden_works', 'number_project_doc', 'number_working_doc', 'other_details_project_drawing',
                   'other_details_working_drawing', 'name_project_doc', 'name_working_doc',
-                  'information_persons_prepare_doc', 'submitted_doc', 'start_date_work', 'end_date_work',
+                  'information_persons_prepare_doc', 'start_date_work', 'end_date_work',
                   'permitted_works', 'additional_information', 'number_instances']
         widgets = {
             'name_hidden_works': TextInput(attrs={'class': 'form-control'}),
@@ -20,7 +34,6 @@ class Work(ModelForm):
             'name_project_doc': TextInput(attrs={'class': 'form-control'}),
             'name_working_doc': TextInput(attrs={'class': 'form-control'}),
             'information_persons_prepare_doc': TextInput(attrs={'class': 'form-control'}),
-            'submitted_doc': TextInput(attrs={'class': 'form-control'}),
             'start_date_work': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'start'}),
             'end_date_work': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'end'}),
             'permitted_works': TextInput(attrs={'class': 'form-control'}),
@@ -37,7 +50,6 @@ class Work(ModelForm):
             'name_project_doc': 'Наименование проектной документации',
             'name_working_doc': 'Наименование рабочей документации',
             'information_persons_prepare_doc': 'Сведения о лицах, осуществялющих подготовку раздела документации',
-            'submitted_doc': 'Предоставленные документы',
             'start_date_work': 'Дата начала работ',
             'end_date_work': 'Дата окончания работ',
             'permitted_works': 'Разрешенные работы',
@@ -82,10 +94,6 @@ class WorkForm(forms.Form):
         attrs={'class': 'form-control'}),
         required=False,
     )
-    submitted_doc = forms.CharField(label='Предоставленные документы', widget=forms.TextInput(
-        attrs={'class': 'form-control'}),
-        required=False,
-    )
     start_date_work = forms.DateField(label='Дата начала работ', widget=forms.DateInput(
         format='%d-%m-%Y',
         attrs={'type': 'date', 'class': 'form-control'}),
@@ -106,7 +114,6 @@ class WorkForm(forms.Form):
         attrs={'class': 'form-control'}),
         required=False,
     )
-
 
     def clean(self):
         cleaned_data = super().clean()

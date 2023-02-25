@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.views import View
 from docxtpl import DocxTemplate
+from django.utils.encoding import escape_uri_path
 
 from app.models.LegalActModel import LegalActModel
 from app.models.ProjectModel import ProjectModel
@@ -45,7 +46,6 @@ class WorkView(View):
                 name_project_doc=form.cleaned_data["name_project_doc"],
                 name_working_doc=form.cleaned_data["name_working_doc"],
                 information_persons_prepare_doc=form.cleaned_data["information_persons_prepare_doc"],
-                submitted_doc=form.cleaned_data["submitted_doc"],
                 start_date_work=form.cleaned_data["start_date_work"],
                 end_date_work=form.cleaned_data["end_date_work"],
                 permitted_works=form.cleaned_data["permitted_works"],
@@ -79,17 +79,6 @@ class WorkView(View):
         if request.method == 'POST':
             form = WorkForm(request.POST)
             if form.is_valid():
-                actForm = request.POST.dict()
-                print(f"!!!!!!!!!!!!!!{actForm}!!!!!!!!!!!")
-                actNames = re.findall(r'act\d+', ", ".join(actForm.keys()))
-                print(f"!!!!!!!!!!!!!!{actNames}!!!!!!!!!!!")
-                acts = []
-                for actName in actNames:
-                    act = LegalActModel.objects.create(
-                        name=actForm[actName],
-                    )
-                    act.save()
-                    acts.append(act)
                 work.name_hidden_works = form.cleaned_data["name_hidden_works"]
                 work.number_project_doc = form.cleaned_data["number_project_doc"]
                 work.number_working_doc = form.cleaned_data["number_working_doc"]
@@ -98,15 +87,12 @@ class WorkView(View):
                 work.name_project_doc = form.cleaned_data["name_project_doc"]
                 work.name_working_doc = form.cleaned_data["name_working_doc"]
                 work.information_persons_prepare_doc = form.cleaned_data["information_persons_prepare_doc"]
-                work.submitted_doc = form.cleaned_data["submitted_doc"]
                 work.start_date_work = form.cleaned_data["start_date_work"]
                 work.end_date_work = form.cleaned_data["end_date_work"]
                 work.permitted_works = form.cleaned_data["permitted_works"]
                 work.additional_information = form.cleaned_data["additional_information"]
                 work.number_instances = form.cleaned_data["number_instances"]
 
-                work.acts.clear()
-                work.acts.add(*acts)
                 work.save()
 
                 return render(request, 'works/work.html', {'work': work})
@@ -133,7 +119,7 @@ class WorkView(View):
             content,
             content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         )
-        response['Content-Disposition'] = "attachment; filename=%s" % filename
+        response['Content-Disposition'] = "attachment; filename=" + escape_uri_path(filename)
 
         return response
 
@@ -207,9 +193,6 @@ def create_documentation(work_id):
     row = f"{row[:-2]}."
     context['materials'] = row
 
-    # добавление предъявленных документов
-    context['submitted_doc'] = work.submitted_doc
-
     # добавление начала работ
     context['start_date_work_day'] = work.start_date_work.day
     context['start_date_work_month'] = months[str(work.start_date_work.month)]
@@ -267,7 +250,13 @@ def create_documentation(work_id):
     path = os.path.join(base_path, 'documentation/new_act.docx')
     doc.save(path)
 
-    return path, "new_act.docx"
+    act_name = "акт_"
+    if len(work.name_hidden_works) > 20:
+        act_name += work.name_hidden_works[0:20] + ".docx"
+    else:
+        act_name += work.name_hidden_works + ".docx"
+
+    return path, act_name
 
 
 # добавление актов

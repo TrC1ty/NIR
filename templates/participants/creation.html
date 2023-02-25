@@ -74,9 +74,10 @@
                 $("#legal_name").parent().parent().parent().hide();
             }
         });
-        subject_type.val('ФЛ').trigger("change");
+        subject_type.val('ЮЛ').trigger("change");
 
         let participant_type = $("#participant_type");
+        document.querySelector("#participant_type option[value='SUP']").remove();
         participant_type.change(function () {
             e = participant_type[0];
             if (e.value === 'REP') {
@@ -90,6 +91,6 @@
                 $("#post").parent().parent().parent().hide();
             }
         });
-        participant_type.val('SUP').trigger("change");
+        participant_type.val('DEV').trigger("change");
     </script>
 {% endblock %}

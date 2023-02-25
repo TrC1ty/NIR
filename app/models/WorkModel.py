@@ -16,12 +16,11 @@ class WorkModel(models.Model):
     name_working_doc = models.TextField()
     # todo: нужно ли разделить то поле на проектную и рабочую документацию
     information_persons_prepare_doc = models.TextField()
-    submitted_doc = models.TextField()
     start_date_work = models.DateField()
     end_date_work = models.DateField(null=True)
     permitted_works = models.TextField()
     additional_information = models.TextField()
-    number_instances = models.IntegerField(null=True)
+    number_instances = models.IntegerField(default=0, null=True)
     materials = models.ManyToManyField(MaterialModel)
     bcars = models.ManyToManyField(BCARModel)
     acts = models.ManyToManyField(LegalActModel)
