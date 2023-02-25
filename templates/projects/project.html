@@ -7,6 +7,7 @@
     <h1>Просмотр проекта</h1>
     <form method="post">
         <a class="btn btn-outline-primary btn-sm" href="{% url 'project-edit' project.id %}">Редактировать</a>
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'work-create-acts' project.id %}" >Создать акты для всех работ в проекте</a>
         {% csrf_token %}
         <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот проект?');" class="btn btn-outline-secondary btn-sm float-end" formaction="{% url 'project-delete' project.id %}"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>
     </form>

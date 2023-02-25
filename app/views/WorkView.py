@@ -1,13 +1,15 @@
 import datetime
+import io
 import os
 import re
+import zipfile
 from pathlib import Path
 
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.utils.encoding import escape_uri_path
 from django.views import View
 from docxtpl import DocxTemplate
-from django.utils.encoding import escape_uri_path
 
 from app.models.LegalActModel import LegalActModel
 from app.models.ProjectModel import ProjectModel
@@ -115,13 +117,38 @@ class WorkView(View):
         filepath, filename = create_documentation(value)
         file = open(filepath, 'rb')
         content = file.read()
+
         response = HttpResponse(
             content,
             content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
         )
         response['Content-Disposition'] = "attachment; filename=" + escape_uri_path(filename)
+        return response
+
+    @staticmethod
+    def create_acts_in_project(request: HttpRequest, value) -> HttpResponse:
+        project_get = ProjectModel.objects.get(id=value)
+        works = WorkModel.objects.filter(project=project_get)
+        buffer = io.BytesIO()
+        my_zip = zipfile.ZipFile(buffer, 'a')
+        name_zip = f'{project_get.name_project}.zip'
+
+        for i in range(works.count()):
+            filepath, filename = create_documentation(works[i].id)
+            file = open(filepath, 'rb')
+            content = file.read()
+
+            my_zip.writestr(filename, content)
+        my_zip.close()
+
+        # Return zip
+        response = HttpResponse(buffer.getvalue())
+        response['Content-Type'] = 'application/x-zip-compressed'
+        response['Content-Disposition'] = "attachment; filename=" + escape_uri_path(name_zip)
 
         return response
+
+
 
 
 def create_documentation(work_id):
