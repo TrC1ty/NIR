@@ -39,7 +39,17 @@ class ParticipantView(View):
                 details_admin_doc=form.cleaned_data["details_admin_doc"],
                 sro_name=form.cleaned_data["sro_name"],
                 sro_inn=form.cleaned_data["sro_inn"],
-                sro_ogrn=form.cleaned_data["sro_ogrn"]
+                sro_ogrn=form.cleaned_data["sro_ogrn"],
+                kpp=form.cleaned_data["kpp"],
+                bic=form.cleaned_data["bic"],
+                payment_account=form.cleaned_data["payment_account"],
+                cor_account=form.cleaned_data["cor_account"],
+                okpo=form.cleaned_data["okpo"],
+                okato=form.cleaned_data["okato"],
+                okved=form.cleaned_data["okved"],
+                mail=form.cleaned_data["mail"],
+                site=form.cleaned_data["site"],
+                post_address=form.cleaned_data["post_address"]
             )
             participant_new.save()
             print(participant_new.SubjectType[0])
@@ -90,6 +100,16 @@ class ParticipantView(View):
                 participant.sro_name = form.cleaned_data["sro_name"]
                 participant.sro_inn = form.cleaned_data["sro_inn"]
                 participant.sro_ogrn = form.cleaned_data["sro_ogrn"]
+                participant.kpp = form.cleaned_data["kpp"],
+                participant.bic = form.cleaned_data["bic"],
+                participant.payment_account = form.cleaned_data["payment_account"],
+                participant.cor_account = form.cleaned_data["cor_account"],
+                participant.okpo = form.cleaned_data["okpo"],
+                participant.okato = form.cleaned_data["okato"],
+                participant.okved = form.cleaned_data["okved"],
+                participant.mail = form.cleaned_data["mail"],
+                participant.site = form.cleaned_data["site"],
+                participant.post_address = form.cleaned_data["post_address"]
                 participant.save()
 
                 return render(request, 'participants/participant.html', {'participant': participant})

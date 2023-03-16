@@ -70,7 +70,7 @@ class ParticipantForm(forms.Form):
         required=False,
     )
     address = forms.CharField(
-        label='Адрес',
+        label='Юридический адрес',
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'address'}),
         required=False,
     )
@@ -104,6 +104,56 @@ class ParticipantForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'sro_ogrn'}),
         required=False,
     )
+    kpp = forms.CharField(
+        label='КПП',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'kpp'}),
+        required=False,
+    )
+    bic = forms.CharField(
+        label='БИК',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'bic'}),
+        required=False,
+    )
+    payment_account = forms.CharField(
+        label='Р/С',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'payment_account'}),
+        required=False,
+    )
+    cor_account = forms.CharField(
+        label='К/С',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'cor_account'}),
+        required=False,
+    )
+    okpo = forms.CharField(
+        label='ОКПО',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'okpo'}),
+        required=False,
+    )
+    okato = forms.CharField(
+        label='ОКАТО',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'okato'}),
+        required=False,
+    )
+    okved = forms.CharField(
+        label='ОКВЭД',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'okved'}),
+        required=False,
+    )
+    mail = forms.CharField(
+        label='Электронная почта',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'mail'}),
+        required=False,
+    )
+    site = forms.CharField(
+        label='Сайт',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'site'}),
+        required=False,
+    )
+    post_address = forms.CharField(
+        label='Почтовый адрес',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'post_address'}),
+        required=False,
+    )
 
 
 class Participant(ModelForm):
@@ -124,12 +174,23 @@ class Participant(ModelForm):
         self.fields['sro_inn'].required = False
         self.fields['sro_ogrn'].required = False
         self.fields['post'].required = False
+        self.fields['kpp'].required = False
+        self.fields['bic'].required = False
+        self.fields['payment_account'].required = False
+        self.fields['cor_account'].required = False
+        self.fields['okpo'].required = False
+        self.fields['okato'].required = False
+        self.fields['okved'].required = False
+        self.fields['mail'].required = False
+        self.fields['site'].required = False
+        self.fields['post_address'].required = False
 
     class Meta:
         model = ParticipantModel
         fields = ['surname', 'name', 'patronymic', 'post', 'passport_data', 'register_of_specialists', 'ogrn', 'inn',
                   'address', 'phone', 'legal_name', 'details_admin_doc', 'participant_type', 'subject_type', 'sro_name',
-                  'sro_inn', 'sro_ogrn']
+                  'sro_inn', 'sro_ogrn', 'kpp', 'bic', 'payment_account', 'cor_account', 'okpo', 'okato', 'okved',
+                  'mail', 'site', 'post_address']
         widgets = {
             'surname': TextInput(attrs={'class': 'form-control', 'id': 'surname'}),
             'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
@@ -149,6 +210,16 @@ class Participant(ModelForm):
             'sro_name': TextInput(attrs={'class': 'form-control', 'id': 'sro_name'}),
             'sro_inn': TextInput(attrs={'class': 'form-control', 'id': 'sro_inn'}),
             'sro_ogrn': TextInput(attrs={'class': 'form-control', 'id': 'sro_ogrn'}),
+            'kpp': TextInput(attrs={'class': 'form-control', 'id': 'kpp'}),
+            'bic': TextInput(attrs={'class': 'form-control', 'id': 'bic'}),
+            'payment_account': TextInput(attrs={'class': 'form-control', 'id': 'payment_account'}),
+            'cor_account': TextInput(attrs={'class': 'form-control', 'id': 'cor_account'}),
+            'okpo': TextInput(attrs={'class': 'form-control', 'id': 'okpo'}),
+            'okato': TextInput(attrs={'class': 'form-control', 'id': 'okato'}),
+            'okved': TextInput(attrs={'class': 'form-control', 'id': 'okved'}),
+            'mail': TextInput(attrs={'class': 'form-control', 'id': 'mail'}),
+            'site': TextInput(attrs={'class': 'form-control', 'id': 'site'}),
+            'post_address': TextInput(attrs={'class': 'form-control', 'id': 'post_address'}),
         }
 
         labels = {
@@ -160,7 +231,7 @@ class Participant(ModelForm):
             'register_of_specialists': 'Номер в национальном реестре специалистов',
             'ogrn': 'ОГРН',
             'inn': 'ИНН',
-            'address': 'Адрес',
+            'address': 'Юридический адрес',
             'phone': 'Номер телефона',
             'legal_name': 'Наименование юридического лица',
             'details_admin_doc': 'Реквизиты распорядительного документа',
@@ -168,5 +239,15 @@ class Participant(ModelForm):
             'subject_type': 'Статус участника',
             'sro_name': 'Наименование СРО',
             'sro_inn': 'СРО ИНН',
-            'sro_ogrn': 'СРО ОГРН'
+            'sro_ogrn': 'СРО ОГРН',
+            'kpp': "КПП",
+            'bic': "БИК",
+            'payment_account': "Р/С",
+            'cor_account': "К/С",
+            'okpo': "ОКПО",
+            'okato': "ОКАТО",
+            'okved': "ОКВЭД",
+            'mail': "Электронная почта",
+            'site': "Сайт",
+            'post_address': "Почтовый адрес",
         }

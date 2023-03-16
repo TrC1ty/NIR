@@ -116,10 +116,21 @@
         {% if participant.address %}
         <div class="row mb-3">
             <div class="col-12 col-md-3">
-                <span class="col-form-label p-0">Адрес</span>
+                <span class="col-form-label p-0">Юридический адрес</span>
             </div>
             <div class="col-12 col-md-6">
                 {{participant.address}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if participant.post_address %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Почтовый адрес</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{participant.post_address}}
             </div>
         </div>
         {% endif %}
@@ -131,6 +142,105 @@
             </div>
             <div class="col-12 col-md-6">
                 {{participant.phone}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if participant.kpp %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">КПП</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{participant.kpp}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if participant.bic %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">БИК</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{participant.bic}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if participant.payment_account %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Р/С</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{participant.payment_account}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if participant.cor_account %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">К/С</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{participant.cor_account}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if participant.okpo %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">ОКПО</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{participant.okpo}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if participant.okato %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">ОКАТО</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{participant.okato}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if participant.okved %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">ОКВЭД</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{participant.okved}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if participant.mail %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Электронная почта</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{participant.mail}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if participant.site %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Сайт</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{participant.site}}
             </div>
         </div>
         {% endif %}
