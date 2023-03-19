@@ -15,7 +15,7 @@ class Project(ModelForm):
         }
 
         labels = {
-            "name_project": "Название проекта",
+            "name_project": "Наименование проекта",
             "name_project_documentation": "Наименование проектной документации",
             "building_address": "Адрес объекта строительства",
             "number_document": "Номер документа",
@@ -28,7 +28,7 @@ class ProjectForm(forms.Form):
     #     attrs={'class': 'form-control'}
     # ))
 
-    name_project = forms.CharField(label='Название проекта', widget=forms.TextInput(
+    name_project = forms.CharField(label='Наименование проекта', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))
     name_project_documentation = forms.CharField(label='Наименование проектной документации', widget=forms.TextInput(
