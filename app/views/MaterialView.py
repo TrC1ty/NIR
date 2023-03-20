@@ -37,6 +37,7 @@ class MaterialView(View):
             date_start = form.cleaned_data['date_start']
             date_end = form.cleaned_data['date_end']
             count = form.cleaned_data['count']
+            units_of_measurement = form.cleaned_data['units_of_measurement']
             list_count = form.cleaned_data['list_count']
             if request.POST.get("participant") is not None:
                 provider = ParticipantModel.objects.create(
@@ -56,6 +57,7 @@ class MaterialView(View):
                 date_end=date_end,
                 provider=provider,
                 count=count,
+                units_of_measurement=units_of_measurement,
                 list_count=list_count
             )
             new_material.save()
@@ -89,6 +91,7 @@ class MaterialView(View):
                 material.date_start = form.cleaned_data['date_start']
                 material.date_end = form.cleaned_data['date_end']
                 material.count = form.cleaned_data['count']
+                material.units_of_measurement = form.cleaned_data['units_of_measurement']
                 material.list_count = form.cleaned_data['list_count']
                 material.save()
 

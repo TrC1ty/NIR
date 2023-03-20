@@ -37,41 +37,53 @@
 {% endblock %}
 {% block scripts %}
     <script>
+        function hideElement(element) {
+            $("#" + element).parent().parent().parent().hide();
+        }
         let subject_type = $("#subject_type");
+        let fields_for_participant = ['post', 'register_of_specialists', 'details_admin_doc', 'sro_name', 'sro_inn',
+            'sro_ogrn']
+        let fields_for_subject = ['surname', 'name', 'patronymic', 'passport_data', 'ogrn', 'phone', 'legal_name',
+            'kpp', 'bic', 'cor_account', 'okpo', 'okato', 'okved', 'mail', 'site', 'post_address', 'bank_name',
+            'taxation_system', 'general_manager']
         subject_type.change(function () {
+            fields_for_subject.forEach(element => hideElement(element));
             let e = subject_type[0];
             if (e.value === 'ФЛ') {
                 $("#surname").parent().parent().parent().show();
                 $("#name").parent().parent().parent().show();
                 $("#patronymic").parent().parent().parent().show();
                 $("#passport_data").parent().parent().parent().show();
-                $("#ogrn").parent().parent().parent().hide();
-                $("#inn").parent().parent().parent().hide();
-                $("#address").parent().parent().parent().show();
-                $("#phone").parent().parent().parent().show();
-                $("#legal_name").parent().parent().parent().hide();
+                $("#inn").parent().parent().parent().show();
             }
             else if (e.value === 'ЮЛ') {
-                $("#surname").parent().parent().parent().hide();
-                $("#name").parent().parent().parent().hide();
-                $("#patronymic").parent().parent().parent().hide();
-                $("#passport_data").parent().parent().parent().hide();
-                $("#ogrn").parent().parent().parent().show();
-                $("#inn").parent().parent().parent().show();
-                $("#address").parent().parent().parent().show();
-                $("#phone").parent().parent().parent().show();
                 $("#legal_name").parent().parent().parent().show();
+                $("#post_address").parent().parent().parent().show();
+                $("#inn").parent().parent().parent().show();
+                $("#kpp").parent().parent().parent().show();
+                $("#bic").parent().parent().parent().show();
+                $("#cor_account").parent().parent().parent().show();
+                $("#okpo").parent().parent().parent().show();
+                $("#okato").parent().parent().parent().show();
+                $("#okved").parent().parent().parent().show();
+                $("#ogrn").parent().parent().parent().show();
+                $("#general_manager").parent().parent().parent().show();
+                $("#mail").parent().parent().parent().show();
+                $("#phone").parent().parent().parent().show();
+                $("#site").parent().parent().parent().show();
             }
             else if (e.value === 'ИП') {
-                $("#surname").parent().parent().parent().show();
-                $("#name").parent().parent().parent().show();
-                $("#patronymic").parent().parent().parent().show();
-                $("#passport_data").parent().parent().parent().hide();
-                $("#ogrn").parent().parent().parent().show();
+                $("#legal_name").parent().parent().parent().show();
+                $("#post_address").parent().parent().parent().show();
+                $("#mail").parent().parent().parent().show();
+                $("#phone").parent().parent().parent().show();
                 $("#inn").parent().parent().parent().show();
-                $("#address").parent().parent().parent().show();
-                $("#phone").parent().parent().parent().hide();
-                $("#legal_name").parent().parent().parent().hide();
+                $("#ogrn").parent().parent().parent().show();
+                $("#bank_name").parent().parent().parent().show();
+                $("#bic").parent().parent().parent().show();
+                $("#cor_account").parent().parent().parent().show();
+                $("#okved").parent().parent().parent().show();
+                $("#taxation_system").parent().parent().parent().show();
             }
         });
         subject_type.val('ЮЛ').trigger("change");
@@ -79,16 +91,17 @@
         let participant_type = $("#participant_type");
         document.querySelector("#participant_type option[value='SUP']").remove();
         participant_type.change(function () {
-            e = participant_type[0];
+            fields_for_participant.forEach(element => hideElement(element));
+            let e = participant_type[0];
             if (e.value === 'REP') {
                 $("#register_of_specialists").parent().parent().parent().show();
                 $("#details_admin_doc").parent().parent().parent().show();
                 $("#post").parent().parent().parent().show();
             }
-            else {
-                $("#register_of_specialists").parent().parent().parent().hide();
-                $("#details_admin_doc").parent().parent().parent().hide();
-                $("#post").parent().parent().parent().hide();
+            else if (e.value === 'CONSTR') {
+                $("#sro_name").parent().parent().parent().show();
+                $("#sro_inn").parent().parent().parent().show();
+                $("#sro_ogrn").parent().parent().parent().show();
             }
         });
         participant_type.val('DEV').trigger("change");

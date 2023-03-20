@@ -6,15 +6,22 @@ from app.models.MaterialModel import MaterialModel
 
 
 class Material(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['count'].required = False
+        self.fields['units_of_measurement'].required = False
+        self.fields['list_count'].required = False
+
     class Meta:
         model = MaterialModel
-        fields = ['name', 'certificate', 'date_start', 'date_end', 'count', 'list_count']
+        fields = ['name', 'certificate', 'date_start', 'date_end', 'count', 'units_of_measurement', 'list_count']
         widgets = {
             'name': TextInput(attrs={'class': 'form-control'}),
             'certificate': TextInput(attrs={'class': 'form-control'}),
             'date_start': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'start'}),
             'date_end': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'end'}),
             'count': TextInput(attrs={'class': 'form-control'}),
+            'units_of_measurement': TextInput(attrs={'class': 'form-control'}),
             'list_count': TextInput(attrs={'class': 'form-control'}),
         }
 
@@ -24,6 +31,7 @@ class Material(ModelForm):
             "date_start": "Дата выдачи сертификата",
             "date_end": "Дата окончания действия сертификата",
             "count": "Количество материалов",
+            "units_of_measurement": "Единицы измерения",
             "list_count": "Количество листов",
         }
 
@@ -45,6 +53,13 @@ class MaterialForm(forms.Form):
     ))
     count = forms.CharField(
         label='Количество материалов',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        ),
+        required=False,
+    )
+    units_of_measurement = forms.CharField(
+        label='Единицы измерения',
         widget=forms.TextInput(
             attrs={'class': 'form-control'}
         ),

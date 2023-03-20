@@ -8,124 +8,33 @@
 </div>
  <form method="post">
     {% csrf_token %}
-    <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
-        {% if projects %}
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">№</th>
-                        <th scope="col">Название</th>
-                        <th scope="col">Дата создания</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for project in projects %}
-                        <tr>
-                            <th scope="row">
-                                {{ project.id }}
-                            </th>
-                            <td><a href="{% url 'project-view' project.id %}">{{ project.name_project }}</a></td>
-                            <td>{{ project.date }}</td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        {% else %}
-            <div>(по текущему фильтру проектов не найдено)</div>
-        {% endif %}
-    </div>
+
 </form>
   <div class="container">
     <div class="flex-container" style="display: flex;margin-top: 10px;">
       <div class="flex-item" style="flex-basis: 100%;">
         <div class="child left" style="flex-grow:2; background:#ABCDEF; padding: 10px;">
           <div class="row" data-masonry='{"percentPosition": true }'>
-            <div class="col-6 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Дом на варшавке</h5>
-                  <p class="card-text">С вспомогательным текстом ниже в качестве естественного перехода к
-                    дополнительному
-                    контенту.</p>
-
-                  <div class="text-md-end">
-                    <a type="button" class="btn btn-outline-primary btn-sm" href="#">Информация</a>
-                    <a type="button" class="btn btn-primary btn-sm">Перейти</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-6 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Особое обращение с заголовком</h5>
-                  <p class="card-text">С вспомогательным текстом ниже в качестве естественного перехода к
-                    дополнительному
-                    контенту.</p>
-
-                  <div class="text-md-end">
-                    <a type="button" class="btn btn-outline-primary btn-sm" href="#">Информация</a>
-                    <a type="button" class="btn btn-primary btn-sm">Перейти</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-6 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Дом на варшавке</h5>
-                  <p class="card-text">С вспомогательным текстом ниже в качестве естественного перехода к
-                    дополнительному
-                    контенту.С вспомогательным текстом ниже в качестве естественного перехода к дополнительному
-                    контенту.С вспомогательным текстом ниже в качестве естественного перехода к дополнительному
-                    контенту.С вспомогательным текстом ниже в качестве естественного перехода к дополнительному
-                    контенту.С вспомогательным текстом ниже в качестве естественного перехода к дополнительному
-                    контенту..</p>
-
-                  <div class="text-md-end">
-                    <a type="button" class="btn btn-outline-primary btn-sm" href="#">Информация</a>
-                    <a type="button" class="btn btn-primary btn-sm">Перейти</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-6 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Дом на варшавке</h5>
-                  <p class="card-text">С вспомогательным текстом ниже в качестве естественного перехода к
-                    дополнительному
-                    контенту.</p>
-
-                  <div class="text-md-end">
-                    <a type="button" class="btn btn-outline-primary btn-sm" href="#">Информация</a>
-                    <a type="button" class="btn btn-primary btn-sm">Перейти</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-6 mb-2">
-              <div class="card">
-                <div class="card-body">
-                  <h5 class="card-title">Дом на варшавке</h5>
-                  <p class="card-text">С вспомогательным текстом ниже в качестве естественного перехода к
-                    дополнительному
-                    контvС вспомогательным текстом ниже в качестве естественного перехода к дополнительному
-                    контенту.С вспомогательным текстом ниже в качестве естественного перехода к дополнительному
-                    контенту.</p>
-
-                  <div class="text-md-end">
-                    <a type="button" class="btn btn-outline-primary btn-sm" href="#">Информация</a>
-                    <a type="button" class="btn btn-primary btn-sm">Перейти</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
+              {% if projects %}
+                  <form method="post">
+                      {% csrf_token %}
+                      {% for project in projects %}
+                          <div class="col-6 mb-2">
+                              <div class="card">
+                                  <div class="card-body">
+                                      <h5 class="card-title">{{ project.name_project }}</h5>
+                                      <p class="card-text">{{ project.building_address }}</p>
+                                      <div class="text-md-end">
+                                          <a type="button" class="btn btn-outline-primary btn-sm" href="#">Информация</a>
+                                          <a type="button" class="btn btn-primary btn-sm"
+                                             href="{% url 'project-view' project.id %}">Перейти</a>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      {% endfor %}
+                  </form>
+              {% endif %}
           </div>
         </div>
       </div>
@@ -133,7 +42,6 @@
       <div class="flex-item" style="flex-basis: 100%;">
         <div style="margin-left: 20px;padding:20px;background:#ABCDEF;">
           <input class="form-control mb-2" placeholder="Наименование проекта">
-          </input>
           <div class="text-md-center">
             <a type="button" class="btn btn-primary btn-sm">Создать новый проект</a>
           </div>

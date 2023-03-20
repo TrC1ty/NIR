@@ -154,6 +154,21 @@ class ParticipantForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'post_address'}),
         required=False,
     )
+    bank_name = forms.CharField(
+        label='Наименование банка',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'bank_name'}),
+        required=False,
+    )
+    taxation_system = forms.CharField(
+        label='Система налогообложения',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'taxation_system'}),
+        required=False,
+    )
+    general_manager = forms.CharField(
+        label='Генеральный директор',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'general_manager'}),
+        required=False,
+    )
 
 
 class Participant(ModelForm):
@@ -184,13 +199,16 @@ class Participant(ModelForm):
         self.fields['mail'].required = False
         self.fields['site'].required = False
         self.fields['post_address'].required = False
+        self.fields['bank_name'].required = False
+        self.fields['taxation_system'].required = False
+        self.fields['general_manager'].required = False
 
     class Meta:
         model = ParticipantModel
         fields = ['surname', 'name', 'patronymic', 'post', 'passport_data', 'register_of_specialists', 'ogrn', 'inn',
                   'address', 'phone', 'legal_name', 'details_admin_doc', 'participant_type', 'subject_type', 'sro_name',
                   'sro_inn', 'sro_ogrn', 'kpp', 'bic', 'payment_account', 'cor_account', 'okpo', 'okato', 'okved',
-                  'mail', 'site', 'post_address']
+                  'mail', 'site', 'post_address', 'bank_name', 'taxation_system', 'general_manager']
         widgets = {
             'surname': TextInput(attrs={'class': 'form-control', 'id': 'surname'}),
             'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
@@ -220,6 +238,9 @@ class Participant(ModelForm):
             'mail': TextInput(attrs={'class': 'form-control', 'id': 'mail'}),
             'site': TextInput(attrs={'class': 'form-control', 'id': 'site'}),
             'post_address': TextInput(attrs={'class': 'form-control', 'id': 'post_address'}),
+            'bank_name': TextInput(attrs={'class': 'form-control', 'id': 'bank_name'}),
+            'taxation_system': TextInput(attrs={'class': 'form-control', 'id': 'taxation_system'}),
+            'general_manager': TextInput(attrs={'class': 'form-control', 'id': 'general_manager'})
         }
 
         labels = {
@@ -250,4 +271,7 @@ class Participant(ModelForm):
             'mail': "Электронная почта",
             'site': "Сайт",
             'post_address': "Почтовый адрес",
+            'bank_name': "Наименование банка",
+            'taxation_system': "Система налогообложения",
+            'general_manager': "Генеральный директор"
         }

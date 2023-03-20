@@ -245,6 +245,39 @@
         </div>
         {% endif %}
 
+        {% if participant.bank_name %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Наименование банка</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{participant.bank_name}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if participant.taxation_system %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Система налогообложения</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{participant.taxation_system}}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if participant.general_manager %}
+        <div class="row mb-3">
+            <div class="col-12 col-md-3">
+                <span class="col-form-label p-0">Генеральный директор</span>
+            </div>
+            <div class="col-12 col-md-6">
+                {{participant.general_manager}}
+            </div>
+        </div>
+        {% endif %}
+
         {% if participant.details_admin_doc %}
         <div class="row mb-3">
             <div class="col-12 col-md-3">

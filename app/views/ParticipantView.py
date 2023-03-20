@@ -49,7 +49,10 @@ class ParticipantView(View):
                 okved=form.cleaned_data["okved"],
                 mail=form.cleaned_data["mail"],
                 site=form.cleaned_data["site"],
-                post_address=form.cleaned_data["post_address"]
+                post_address=form.cleaned_data["post_address"],
+                bank_name=form.cleaned_data["bank_name"],
+                taxation_system=form.cleaned_data["taxation_system"],
+                general_manager=form.cleaned_data["general_manager"]
             )
             participant_new.save()
             print(participant_new.SubjectType[0])
@@ -110,6 +113,9 @@ class ParticipantView(View):
                 participant.mail = form.cleaned_data["mail"],
                 participant.site = form.cleaned_data["site"],
                 participant.post_address = form.cleaned_data["post_address"]
+                participant.bank_name = form.cleaned_data["bank_name"]
+                participant.taxation_system = form.cleaned_data["taxation_system"]
+                participant.general_manager = form.cleaned_data["general_manager"]
                 participant.save()
 
                 return render(request, 'participants/participant.html', {'participant': participant})

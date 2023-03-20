@@ -39,6 +39,9 @@ class ParticipantModel(models.Model):
     sro_name = models.TextField(null=True)
     sro_inn = models.TextField(null=True)
     sro_ogrn = models.TextField(null=True)
+    bank_name = models.TextField(null=True)
+    taxation_system = models.TextField(null=True)
+    general_manager = models.TextField(null=True)
     participant_type = models.CharField(
         max_length=6,
         choices=ParticipantType,

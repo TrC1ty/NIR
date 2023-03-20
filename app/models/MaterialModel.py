@@ -7,6 +7,7 @@ class MaterialModel(models.Model):
     name = models.TextField()
     certificate = models.TextField()
     count = models.TextField(null=True)
+    units_of_measurement = models.TextField(null=True)
     date_start = models.DateField()
     date_end = models.DateField()
     provider = models.ForeignKey(ParticipantModel, on_delete=models.CASCADE)
