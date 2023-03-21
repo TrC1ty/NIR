@@ -6,49 +6,49 @@
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
     <h1>Список проектов</h1>
 </div>
- <form method="post">
+<form method="post">
     {% csrf_token %}
 
 </form>
-  <div class="container">
+<div class="container">
     <div class="flex-container" style="display: flex;margin-top: 10px;">
-      <div class="flex-item" style="flex-basis: 100%;">
-        <div class="child left" style="flex-grow:2; background:#ABCDEF; padding: 10px;">
-          <div class="row" data-masonry='{"percentPosition": true }'>
-              {% if projects %}
-                  <form method="post">
-                      {% csrf_token %}
-                      {% for project in projects %}
-                          <div class="col-6 mb-2">
-                              <div class="card">
-                                  <div class="card-body">
-                                      <h5 class="card-title">{{ project.name_project }}</h5>
-                                      <p class="card-text">{{ project.building_address }}</p>
-                                      <div class="text-md-end">
-                                          <a type="button" class="btn btn-outline-primary btn-sm" href="#">Информация</a>
-                                          <a type="button" class="btn btn-primary btn-sm"
-                                             href="{% url 'project-view' project.id %}">Перейти</a>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      {% endfor %}
-                  </form>
-              {% endif %}
-          </div>
+        <div class="flex-item" style="flex-basis: 100%;">
+            <div class="child left" style="flex-grow:2; background:#ABCDEF; padding: 10px;">
+                {% if projects %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row" data-masonry='{"percentPosition": true }'>
+                        {% for project in projects %}
+                        <div class="col-6 mb-2">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ project.name_project }}</h5>
+                                    <p class="card-text">{{ project.building_address }}</p>
+                                    <div class="text-md-end">
+                                        <a type="button" class="btn btn-outline-primary btn-sm" href="#">Информация</a>
+                                        <a type="button" class="btn btn-primary btn-sm"
+                                           href="{% url 'project-view' project.id %}">Перейти</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </form>
+                {% endif %}
+            </div>
         </div>
-      </div>
-
-      <div class="flex-item" style="flex-basis: 100%;">
-        <div style="margin-left: 20px;padding:20px;background:#ABCDEF;">
-          <input class="form-control mb-2" placeholder="Наименование проекта">
-          <div class="text-md-center">
-            <a type="button" class="btn btn-primary btn-sm">Создать новый проект</a>
-          </div>
+        <div class="flex-item" style="flex-basis: 100%;">
+            <div style="margin-left: 20px;padding:20px;background:#ABCDEF;">
+                <input class="form-control mb-2" placeholder="Наименование проекта">
+                <div class="text-md-center">
+                    <a type="button" class="btn btn-primary btn-sm">Создать новый проект</a>
+                </div>
+            </div>
         </div>
-
-      </div>
     </div>
 
-  </div>
+
+</div>
+
 {% endblock %}
