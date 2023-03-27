@@ -4,17 +4,20 @@ from django.shortcuts import render
 from ..models.ParticipantModel import ParticipantModel
 from ..forms.ParticipantForm import ParticipantForm, Participant
 from ..models.ProjectModel import ProjectModel
+from ..forms.NaturalPerson import NaturalPersonForm
 
 
 class ParticipantView(View):
     @staticmethod
     def get(request: HttpRequest, project_id, participant) -> HttpResponse:
         form = ParticipantForm()
+        naturalPerson = NaturalPersonForm()
         participant_name = get_participant_name(participant)
 
         return render(request, 'participants/creation.html', {'form': form, 'project_id': project_id,
                                                               'participant': participant,
-                                                              'participant_name': participant_name})
+                                                              'participant_name': participant_name,
+                                                              'naturalPerson': naturalPerson})
 
     @staticmethod
     def post(request: HttpRequest, project_id, participant) -> HttpResponse:

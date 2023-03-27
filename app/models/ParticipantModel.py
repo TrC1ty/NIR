@@ -8,10 +8,8 @@ class ParticipantModel(models.Model):
         ('ИП', 'Индивидуальный предприниматель'),
     )
     ParticipantType = (
-        ('SUP', 'Поставщик'),
         ('CONSTR', 'Участник строительства'),
         ('REP', 'Представитель'),
-        ('OTH', 'Другое'),
     )
     id = models.BigAutoField(auto_created=True, primary_key=True)
     surname = models.TextField()
@@ -35,6 +33,7 @@ class ParticipantModel(models.Model):
     post_address = models.TextField(null=True)
     phone = models.TextField()
     legal_name = models.TextField()
+    short_name = models.TextField(null=True)
     details_admin_doc = models.TextField()
     sro_name = models.TextField(null=True)
     sro_inn = models.TextField(null=True)

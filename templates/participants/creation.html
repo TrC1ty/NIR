@@ -16,21 +16,23 @@
     </div>
     <form action="{% url 'participant-create' project_id participant %}" method="post">
         {% csrf_token %}
-        {% for field in form.visible_fields %}
-        <div class="form-group">
-            <div class="form-error">
-                <span class="text-danger"> {{ field.errors }}</span>
-            </div>
-            <div class="row mb-4 align-items-center">
-                <div class="col-12 col-md-3">
-                    <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+        <div id="space-for-forms">
+            {% for field in form.visible_fields %}
+                <div class="form-group">
+                    <div class="form-error">
+                        <span class="text-danger"> {{ field.errors }}</span>
+                    </div>
+                    <div class="row mb-4 align-items-center">
+                        <div class="col-12 col-md-3">
+                            <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ field }}
+                        </div>
+                    </div>
                 </div>
-                <div class="col-12 col-md-6">
-                    {{ field }}
-                </div>
-            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
         <button type="submit" class="btn btn-primary my-2">Сохранить</button>
     </form>
 </div>
@@ -191,73 +193,11 @@
 {% endblock %}
 {% block scripts %}
     <script>
-        function hideElement(element) {
-            $("#" + element).parent().parent().parent().hide();
-        }
-        let subject_type = $("#subject_type");
-        let fields_for_participant = ['post', 'register_of_specialists', 'details_admin_doc', 'sro_name', 'sro_inn',
-            'sro_ogrn']
-        let fields_for_subject = ['surname', 'name', 'patronymic', 'passport_data', 'ogrn', 'phone', 'legal_name',
-            'kpp', 'bic', 'cor_account', 'okpo', 'okato', 'okved', 'mail', 'site', 'post_address', 'bank_name',
-            'taxation_system', 'general_manager']
-        subject_type.change(function () {
-            fields_for_subject.forEach(element => hideElement(element));
-            let e = subject_type[0];
-            if (e.value === 'ФЛ') {
-                $("#surname").parent().parent().parent().show();
-                $("#name").parent().parent().parent().show();
-                $("#patronymic").parent().parent().parent().show();
-                $("#passport_data").parent().parent().parent().show();
-                $("#inn").parent().parent().parent().show();
-            }
-            else if (e.value === 'ЮЛ') {
-                $("#legal_name").parent().parent().parent().show();
-                $("#post_address").parent().parent().parent().show();
-                $("#inn").parent().parent().parent().show();
-                $("#kpp").parent().parent().parent().show();
-                $("#bic").parent().parent().parent().show();
-                $("#cor_account").parent().parent().parent().show();
-                $("#okpo").parent().parent().parent().show();
-                $("#okato").parent().parent().parent().show();
-                $("#okved").parent().parent().parent().show();
-                $("#ogrn").parent().parent().parent().show();
-                $("#general_manager").parent().parent().parent().show();
-                $("#mail").parent().parent().parent().show();
-                $("#phone").parent().parent().parent().show();
-                $("#site").parent().parent().parent().show();
-            }
-            else if (e.value === 'ИП') {
-                $("#legal_name").parent().parent().parent().show();
-                $("#post_address").parent().parent().parent().show();
-                $("#mail").parent().parent().parent().show();
-                $("#phone").parent().parent().parent().show();
-                $("#inn").parent().parent().parent().show();
-                $("#ogrn").parent().parent().parent().show();
-                $("#bank_name").parent().parent().parent().show();
-                $("#bic").parent().parent().parent().show();
-                $("#cor_account").parent().parent().parent().show();
-                $("#okved").parent().parent().parent().show();
-                $("#taxation_system").parent().parent().parent().show();
-            }
-        });
-        subject_type.val('ЮЛ').trigger("change");
+        let spaceFroForms = document.querySelector("#space-for-forms");
+        let subject_type = document.querySelector("#subject_type");
 
-        let participant_type = $("#participant_type");
-        document.querySelector("#participant_type option[value='SUP']").remove();
-        participant_type.change(function () {
-            fields_for_participant.forEach(element => hideElement(element));
-            let e = participant_type[0];
-            if (e.value === 'REP') {
-                $("#register_of_specialists").parent().parent().parent().show();
-                $("#details_admin_doc").parent().parent().parent().show();
-                $("#post").parent().parent().parent().show();
-            }
-            else if (e.value === 'CONSTR') {
-                $("#sro_name").parent().parent().parent().show();
-                $("#sro_inn").parent().parent().parent().show();
-                $("#sro_ogrn").parent().parent().parent().show();
-            }
-        });
-        participant_type.val('DEV').trigger("change");
+        function changeForm() {
+
+        }
     </script>
 {% endblock %}
