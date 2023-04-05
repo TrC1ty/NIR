@@ -23,11 +23,6 @@ class Project(ModelForm):
 
 
 class ProjectForm(forms.Form):
-    # todo: как я понял, нужно тут вытаскивать из базы данных челов, сделать из них список и сделать поле с выбором?
-    # builder = forms.CharField(label='Застройщик', widget=forms.TextInput(
-    #     attrs={'class': 'form-control'}
-    # ))
-
     name_project = forms.CharField(label='Наименование проекта', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))

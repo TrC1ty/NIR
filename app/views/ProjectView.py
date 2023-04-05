@@ -8,6 +8,10 @@ from app.models.ProjectModel import ProjectModel
 from app.models.WorkModel import WorkModel
 from datetime import datetime
 
+from ..forms.IndividualEntrepreneur import IndividualEntrepreneurForm
+from ..forms.NaturalPerson import NaturalPersonForm
+from ..forms.LegalEntity import LegalEntityForm
+
 
 class ProjectView(View):
     @staticmethod
@@ -23,15 +27,19 @@ class ProjectView(View):
         return render(request, 'projects/project.html', {'project': project})
 
     @staticmethod
-    def get(request: HttpRequest) -> HttpResponse:
-        form = ProjectForm()
+    def create_project(request: HttpRequest) -> HttpResponse:
+        data = request.POST.get("project_name")
+        project = ProjectModel(
+            name_project=data
+        )
+        form = Project(instance=project)
 
         return render(request, 'projects/creation.html', {'form': form})
 
     @staticmethod
     def post(request: HttpRequest) -> HttpResponse:
         form = ProjectForm(request.POST)
-
+        print(123)
         if form.is_valid():
             name_project = form.cleaned_data['name_project']
             name_project_documentation = form.cleaned_data['name_project_documentation']
@@ -46,8 +54,7 @@ class ProjectView(View):
                 number_document=number_document
             ).save()
 
-            return HttpResponseRedirect('index')
-
+            return HttpResponseRedirect('/')
 
     @staticmethod
     def edit(request: HttpRequest, value) -> HttpResponse:

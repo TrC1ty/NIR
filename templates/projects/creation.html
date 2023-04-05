@@ -2,12 +2,16 @@
 
 {% block title %}Создание проекта{% endblock %}
 
+{% block navbar %}
+    <a class="navbar-link" href="{% url 'project-index' %}"><i class="bi bi-arrow-left"></i>К проектам</a>
+{% endblock %}
+
 {% block content %}
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
     <h1>Создание проекта</h1>
 </div>
 <div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
-    <form action="{% url 'project-create' %}" method="post">
+    <form action="{% url 'project-post' %}" method="post">
         {% csrf_token %}
         {% for field in form %}
             <div class="form-group">

@@ -2,14 +2,9 @@
 
 {% block title %}Список проектов{% endblock %}
 
-{% block content %}
-<div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
-    <h1>Список проектов</h1>
-</div>
-<form method="post">
-    {% csrf_token %}
+{% block pageName %} Список проектов {% endblock %}
 
-</form>
+{% block content %}
 <div class="container">
     <div class="flex-container" style="display: flex;margin-top: 10px;">
         <div class="flex-item" style="flex-basis: 100%;">
@@ -40,10 +35,14 @@
         </div>
         <div class="flex-item" style="flex-basis: 100%;">
             <div style="margin-left: 20px;padding:20px;background:#ABCDEF;">
-                <input class="form-control mb-2" placeholder="Наименование проекта">
-                <div class="text-md-center">
-                    <a type="button" class="btn btn-primary btn-sm">Создать новый проект</a>
-                </div>
+                <form action="{% url 'project-create' %}" method="post">
+                    {% csrf_token %}
+                    <label for="project-name">Наименование проекта</label>
+                    <input id="project-name" class="form-control mb-2" name="project_name">
+                    <div class="text-md-center">
+                        <button type="submit" class="btn btn-primary btn-sm">Создать новый проект</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

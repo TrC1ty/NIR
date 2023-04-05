@@ -2,202 +2,75 @@
 {% load static %}
 {% block title %}Проект №{{ project.id }}{% endblock %}
 
+{% block navbar %}
+    <a class="navbar-link" href="{% url 'project-index' %}"><i class="bi bi-arrow-left"></i>К проектам</a>
+{% endblock %}
+
+{% block pageName %} {{ project.name_project }} {% endblock %}
+
 {% block content %}
+    <!-- Nav tabs -->
+    <ul class="sidenav nav-tabs" id="myTab" role="tablist">
+        <li>
+            <a class="sidenav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
+                    role="tab" aria-controls="home" aria-selected="true">
+                <i class="bi bi-house"></i>Паспорт проекта
+            </a>
+        </li>
+        <li>
+            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="false">
+                <i class="bi bi-people"></i>Участники</a>
+        </li>
+        <li>
+            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="false">
+                <i class="bi bi-file-earmark"></i>Документация</a>
+        </li>
+        <li>
+            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="false">
+                <i class="bi bi-wrench-adjustable"></i>ИТД<i class="bi bi-caret-down bi-caret-down-sidenav"></i></a>
+        </li>
+        <li>
+            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="false">
+                Реестр ИД</a>
+        </li>
+        <li>
+            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="false">
+                Раздел ОЖР</a>
+        </li>
+        <li>
+            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="false">
+                Материалы</a>
+        </li>
+    </ul>
 
-<div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
-    <h1>Просмотр проекта</h1>
-    <form method="post">
-        <a class="btn btn-outline-primary btn-sm" href="{% url 'project-edit' project.id %}">Редактировать</a>
-        <a class="btn btn-outline-primary btn-sm" href="{% url 'work-create-acts' project.id %}" >Создать акты для всех работ в проекте</a>
-        {% csrf_token %}
-        <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот проект?');" class="btn btn-outline-secondary btn-sm float-end" formaction="{% url 'project-delete' project.id %}"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>
-    </form>
-</div>
-<div class="mt-4 my-3 p-3 bg-body rounded shadow-sm">
-    <form method="post">
-        {% csrf_token %}
-        <div class="row mb-3">
-            <div class="col-12 col-md-3">
-                <span class="col-form-label p-0">Наименование проекта</span>
+    <!-- Tab panes -->
+    <div class="content">
+        <div class="tab-content">
+            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                <p style="color: rgba(0, 0, 0, 0.54);">Паспорт проекта</p>
+                <div class="information">
+                    {% for name, value in project.get_attributes.items %}
+                        <div class="row p-2">
+                            <div class="col-12 col-md-4 label">
+                                <span class="col-form-label p-0" style="color: rgba(0, 0, 0, 0.54);">{{ name }}</span>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                {{ value }}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-            <div class="col-12 col-md-6">
-                {{project.name_project}}
-            </div>
+
+            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">2</div>
+            <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">...</div>
+            <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">...</div>
         </div>
-
-        <div class="row mb-3">
-            <div class="col-12 col-md-3">
-                <span class="col-form-label p-0">Наименование проектной документации</span>
-            </div>
-            <div class="col-12 col-md-6">
-                {{project.name_project_documentation}}
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-12 col-md-3">
-                <span class="col-form-label p-0">Адрес объекта строительства</span>
-            </div>
-            <div class="col-12 col-md-6">
-                {{project.building_address}}
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-12 col-md-3">
-                <span class="col-form-label p-0">Дата создания проекта</span>
-            </div>
-            <div class="col-12 col-md-6">
-                {{project.date}}
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col-12 col-md-3">
-                <span class="col-form-label p-0">Номер документа</span>
-            </div>
-            <div class="col-12 col-md-6">
-                {{project.number_document}}
-            </div>
-        </div>
-    </form>
-</div>
-
-<div class="navbar">
-  <a class="navbar-link" href="#home"><i class="bi bi-arrow-left"></i>К проектам</a>
-  <div style="margin-right: 45%;" class="name-project">Дом на Варшавке</div>
-</div>
-
-
-  <ul class="sidenav">
-    <li><a class="sidenav-link" href="#project-passport"><i class="bi bi-house"></i>Паспорт
-        проекта</a></li>
-    <li><a class="sidenav-link sidenav-link-active" href="#participants"><i class="bi bi-people"></i>Участники</a></li>
-    <li><a class="sidenav-link" href="#documentation"><i class="bi bi-file-earmark"></i>Документация</a></li>
-    <li><a class="sidenav-link" href="#"><i class="bi bi-wrench-adjustable"></i>ИТД<i
-          class="bi bi-caret-down bi-caret-down-sidenav"></i></a></li>
-    <li><a class="sidenav-link" href="#id-registry">Реестр ИД</a></li>
-    <li><a class="sidenav-link" href="#ogr-section">Раздел ОЖР</a></li>
-    <li><a class="sidenav-link" href="#materials">Материалы</a></li>
-  </ul>
-
-
-
-  <div class="content">
-    <p style="color: rgba(0, 0, 0, 0.54);">Участники</p>
-    <div class="information">
-
-      <div class="row p-2 participant">
-        <div class="col-12 col-md-6 label">
-          <span class="col-form-label p-0 " style="color: rgba(0, 0, 0, 0.54);">Застрощик</span>
-        </div>
-
-        <div class="col-12 col-md-4">
-          John Smith
-        </div>
-
-        <div class="col-12 col-md-1" style="cursor: pointer;">
-          <i class="bi bi-caret-down"></i>
-        </div>
-      </div>
-
-      <div class="row p-2 participant">
-        <div class="col-12 col-md-6 label">
-          <span class="col-form-label p-0" style="color: rgba(0, 0, 0, 0.54);">Лицо, осуществляющее строительство</span>
-        </div>
-
-        <div class="col-12 col-md-4">
-          Jane Doe
-        </div>
-
-        <div class="col-12 col-md-1" style="cursor: pointer;">
-          <i class="bi bi-caret-down"></i>
-        </div>
-      </div>
-
-      <div class="row p-2 participant">
-        <div class="col-12 col-md-6 label">
-          <span class="col-form-label p-0" style="color: rgba(0, 0, 0, 0.54);">Представитель лица, осуществляющего
-            строительство</span>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <a href="participant_create.html">Добавить участника</a>
-        </div>
-
-      </div>
-
-      <div class="row p-2 participant">
-        <div class="col-12 col-md-6 label">
-          <span class="col-form-label p-0" style="color: rgba(0, 0, 0, 0.54);">Лицо, осущестляющее подготовку проектной
-            документации</span>
-        </div>
-
-        <div class="col-12 col-md-4">
-          Michael Lee
-        </div>
-
-        <div class="col-12 col-md-1" style="cursor: pointer;">
-          <i class="bi bi-caret-down"></i>
-        </div>
-      </div>
-
-      <div class="row p-2 participant">
-        <div class="col-12 col-md-6 label">
-          <span class="col-form-label p-0" style="color: rgba(0, 0, 0, 0.54);">Лицо, выполнившее работы</span>
-        </div>
-
-        <div class="col-12 col-md-4">
-          Sarah Johnson
-        </div>
-
-        <div class="col-12 col-md-1" style="cursor: pointer;">
-          <i class="bi bi-caret-down"></i>
-        </div>
-      </div>
-
-      <div class="row p-2 participant">
-        <div class="col-12 col-md-6 label">
-          <span class="col-form-label p-0" style="color: rgba(0, 0, 0, 0.54);">Представитель лица, выполнившее
-            работы</span>
-        </div>
-
-        <div class="col-12 col-md-4">
-          <a href="participant_create.html">Добавить участника</a>
-        </div>
-
-      </div>
-
-      <div class="row p-2 participant">
-        <div class="col-12 col-md-6 label">
-          <span class="col-form-label p-0" style="color: rgba(0, 0, 0, 0.54);">Заполненное лицо</span>
-        </div>
-
-        <div class="col-12 col-md-4">
-          John Smith
-        </div>
-
-        <div class="col-12 col-md-1" style="cursor: pointer;">
-          <i class="bi bi-caret-up"></i>
-        </div>
-
-        <div class="row p-2">
-          <div class="col-12 col-md-2 label">
-            <img src="image 7.png">
-          </div>
-
-          <div class="col-12 col-md-5">
-            <div style="color: rgba(0, 0, 0, 0.54);">Michael Lee</div>
-            <div style="color: rgba(0, 0, 0, 0.54);">michaellee@engineeringfirm.com</div>
-            <div style="color: rgba(0, 0, 0, 0.54);">Статус участника: Участник</div>
-            <div style="color: rgba(0, 0, 0, 0.54);">Паспорт: 1235933</div>
-            <div style="color: rgba(0, 0, 0, 0.54);">ИНН: 22114411223</div>
-          </div>
-        </div>
-      </div>
-
     </div>
-  </div>
-
-
 {% endblock %}

@@ -10,11 +10,10 @@ from app.views.BCARView import BCARView
 
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='home'),
-
     # for projects
-    path('projects/create', ProjectView.as_view(), name='project-create'),
-    path('projects/index', ProjectView.index, name='project-index'),
+    path('', ProjectView.index, name='project-index'),
+    path('projects/create', ProjectView.create_project, name='project-create'),
+    path('projects/post', ProjectView.post, name='project-post'),
     path('projects/<int:value>', ProjectView.view, name='project-view'),
     path('projects/edit/<int:value>', ProjectView.edit, name='project-edit'),
     path('projects/delete/<int:value>', ProjectView.delete, name='project-delete'),

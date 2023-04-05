@@ -3,7 +3,7 @@ from django.forms import ModelForm, TextInput
 from app.models.ParticipantModel import ParticipantModel
 
 
-class IndividualEntrepreneurForm(forms.Form):
+class LegalEntityForm(forms.Form):
     legal_name = forms.CharField(
         label='Полное наименование',
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'legal_name'}),
@@ -101,7 +101,7 @@ class IndividualEntrepreneurForm(forms.Form):
     )
 
 
-class IndividualEntrepreneur(ModelForm):
+class LegalEntity(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['legal_name'].required = False
