@@ -14,7 +14,6 @@ class WorkModel(models.Model):
     other_details_working_drawing = models.TextField()
     name_project_doc = models.TextField()
     name_working_doc = models.TextField()
-    # todo: нужно ли разделить то поле на проектную и рабочую документацию
     information_persons_prepare_doc = models.TextField()
     start_date_work = models.DateField()
     end_date_work = models.DateField(null=True)

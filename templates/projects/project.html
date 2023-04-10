@@ -12,14 +12,14 @@
     <!-- Nav tabs -->
     <ul class="sidenav nav-tabs" id="myTab" role="tablist">
         <li>
-            <a class="sidenav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button"
-                    role="tab" aria-controls="home" aria-selected="true">
+            <a class="sidenav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="true">
                 <i class="bi bi-house"></i>Паспорт проекта
             </a>
         </li>
         <li>
-            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="false">
+            <a class="sidenav-link" id="participants-tab" data-bs-toggle="tab" data-bs-target="#participants"
+               type="button" role="tab" aria-controls="participants" aria-selected="false">
                 <i class="bi bi-people"></i>Участники</a>
         </li>
         <li>
@@ -40,7 +40,12 @@
         <li>
             <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
                     role="tab" aria-controls="profile" aria-selected="false">
-                Раздел ОЖР</a>
+                Формирование объектов ИД</a>
+        </li>
+        <li>
+            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="false">
+                Работы</a>
         </li>
         <li>
             <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
@@ -52,7 +57,7 @@
     <!-- Tab panes -->
     <div class="content">
         <div class="tab-content">
-            <div class="tab-pane active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <p style="color: rgba(0, 0, 0, 0.54);">Паспорт проекта</p>
                 <div class="information">
                     {% for name, value in project.get_attributes.items %}
@@ -68,9 +73,199 @@
                 </div>
             </div>
 
-            <div class="tab-pane" id="profile" role="tabpanel" aria-labelledby="profile-tab">2</div>
-            <div class="tab-pane" id="messages" role="tabpanel" aria-labelledby="messages-tab">...</div>
-            <div class="tab-pane" id="settings" role="tabpanel" aria-labelledby="settings-tab">...</div>
+            <div class="tab-pane" id="participants" role="tabpanel" aria-labelledby="participants-tab">
+                <p style="color: rgba(0, 0, 0, 0.54);">Участники проекта проекта</p>
+                <div class="information">
+                    {% for name, value in participants.items %}
+                        <div class="row p-2">
+                            <div class="col-12 col-md-4 label">
+                                <span class="col-form-label p-0" style="color: rgba(0, 0, 0, 0.54);">{{ name }}</span>
+                            </div>
+                            {% if value == None %}
+                                <div class="col-12 col-md-6">
+                                    <a class="add-new-participant">Добавить</a>
+                                </div>
+                            {% else %}
+                                <div class="col-12 col-md-6">
+                                    {{ value.surname }} {{ value.name }} {{ value.patronymic }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="tab-pane" id="naturalPerson" role="tabpanel" aria-labelledby="naturalPerson-tab">
+                <p class="participant-name" style="color: rgba(0, 0, 0, 0.54);"></p>
+                <form action="{% url 'project-post' %}" method="post">
+                    {% csrf_token %}
+                    {% for field in naturalPerson.visible_fields %}
+                        <div class="form-group">
+                            <div class="form-error">
+                                <span class="text-danger"> {{ field.errors }}</span>
+                            </div>
+                            <div class="row mb-4 align-items-center">
+                                <div class="col-12 col-md-3">
+                                    <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ field }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <select name="participant_type" class="form-select" maxlength="6" style="display: none">
+                        <option value="DEV">Участник</option>
+                        <option value="REP">Представитель участника</option>
+                        <option value="OTH">Другое</option>
+                    </select>
+
+                    <select name="subject_type" class="form-select" maxlength="2" style="display: none">
+                        <option value="ЮЛ">Юридическое лицо</option>
+                        <option value="ФЛ">Физическое лицо</option>
+                        <option value="ИП">Индивидуальный предприниматель</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="tab-pane" id="legalEntity" role="tabpanel" aria-labelledby="legalEntity-tab">
+                <form action="{% url 'project-post' %}" method="post">
+                    {% csrf_token %}
+                    {% for field in legalEntity.visible_fields %}
+                        <div class="form-group">
+                            <div class="form-error">
+                                <span class="text-danger"> {{ field.errors }}</span>
+                            </div>
+                            <div class="row mb-4 align-items-center">
+                                <div class="col-12 col-md-3">
+                                    <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ field }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <select name="participant_type" class="form-select" maxlength="6" style="display: none">
+                        <option value="DEV">Участник</option>
+                        <option value="REP">Представитель участника</option>
+                        <option value="OTH">Другое</option>
+                    </select>
+
+                    <select name="subject_type" class="form-select" maxlength="2" style="display: none">
+                        <option value="ЮЛ">Юридическое лицо</option>
+                        <option value="ФЛ">Физическое лицо</option>
+                        <option value="ИП">Индивидуальный предприниматель</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="tab-pane" id="individualEntrepreneur" role="tabpanel" aria-labelledby="individualEntrepreneur-tab">
+                <form action="{% url 'project-post' %}" method="post">
+                    {% csrf_token %}
+                    {% for field in individualEntrepreneur.visible_fields %}
+                        <div class="form-group">
+                            <div class="form-error">
+                                <span class="text-danger"> {{ field.errors }}</span>
+                            </div>
+                            <div class="row mb-4 align-items-center">
+                                <div class="col-12 col-md-3">
+                                    <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ field }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <select name="participant_type" class="form-select" maxlength="6" style="display: none">
+                        <option value="DEV">Участник</option>
+                        <option value="REP">Представитель участника</option>
+                        <option value="OTH">Другое</option>
+                    </select>
+
+                    <select name="subject_type" class="form-select" maxlength="2" style="display: none">
+                        <option value="ЮЛ">Юридическое лицо</option>
+                        <option value="ФЛ">Физическое лицо</option>
+                        <option value="ИП">Индивидуальный предприниматель</option>
+                    </select>
+                </form>
+            </div>
+
+            <div class="tab-pane" id="participant-create" role="tabpanel" aria-labelledby="participant-create-tab">
+                <form>
+                    {% for field in participantType.visible_fields %}
+                        <div class="form-group">
+                            <div class="form-error">
+                                <span class="text-danger"> {{ field.errors }}</span>
+                            </div>
+                            <div class="row mb-4 align-items-center">
+                                <div class="col-12 col-md-3">
+                                    <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ field }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </form>
+                <button id="next-step-participant-creation" class="btn btn-primary">Дальше</button>
+            </div>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        let participantName = '';
+        document.querySelectorAll('.sidenav-link').forEach((a) => {
+            a.addEventListener('click', () => {
+                document.querySelectorAll('.tab-pane').forEach((tab) => {
+                    if (tab.classList.contains('active') && tab.id !== a.getAttribute('aria-controls')) {
+                        tab.classList.remove('active');
+                    }
+                    else if (!tab.classList.contains('active') && tab.id === a.getAttribute('aria-controls')) {
+                        tab.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        document.querySelectorAll('.add-new-participant').forEach((a) => {
+            a.addEventListener('click', (event) => {
+                participantName = event.target.parentNode.parentNode.querySelector('.col-form-label').textContent;
+                event.target.closest('.tab-pane').classList.remove('active');
+                document.getElementById('participant-create').classList.add('active');
+            });
+        });
+
+        document.getElementById('next-step-participant-creation').addEventListener('click', () => {
+            let participantType = document.getElementById('participant_type').value;
+            let subjectType = document.getElementById('subject_type').value;
+            document.getElementById('participant-create').classList.remove('active');
+            switch(subjectType) {
+                case 'ЮЛ':
+                    document.getElementById('legalEntity').classList.add('active');
+                    document.getElementById('legalEntity').querySelector('[name=participant_type]').value = participantType;
+                    document.getElementById('legalEntity').querySelector('[name=subject_type]').value = subjectType;
+                    break;
+
+                case 'ФЛ':
+                    document.getElementById('naturalPerson').classList.add('active');
+                    document.getElementById('naturalPerson').querySelector('[name=participant_type]').value = participantType;
+                    document.getElementById('naturalPerson').querySelector('[name=subject_type]').value = subjectType;
+                    break;
+
+                case 'ИП':
+                    document.getElementById('individualEntrepreneur').classList.add('active');
+                    document.getElementById('individualEntrepreneur').querySelector('[name=participant_type]').value = participantType;
+                    document.getElementById('individualEntrepreneur').querySelector('[name=subject_type]').value = subjectType;
+                    break;
+            }
+        });
+    </script>
 {% endblock %}

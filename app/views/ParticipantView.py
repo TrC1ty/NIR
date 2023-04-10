@@ -20,8 +20,9 @@ class ParticipantView(View):
                                                               'naturalPerson': naturalPerson})
 
     @staticmethod
-    def post(request: HttpRequest, project_id, participant) -> HttpResponse:
+    def post(request: HttpRequest, project_id) -> HttpResponse:
         form = ParticipantForm(request.POST)
+
         if form.is_valid():
             project = ProjectModel.objects.get(id=project_id)
 
@@ -61,7 +62,7 @@ class ParticipantView(View):
             print(participant_new.SubjectType[0])
             project.change_participant(participant_new, participant)
 
-            return HttpResponseRedirect(f'/projects/edit/{project_id}')
+            return HttpResponseRedirect(f'/projects/{project_id}')
 
     @staticmethod
     def index(request: HttpRequest) -> HttpResponse:

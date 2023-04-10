@@ -15,15 +15,19 @@ ParticipantType = (
     ('OTH', 'Другое'),
 )
 
+ParticipantTypeWithoutSup = (
+    ('DEV', 'Участник'),
+    ('REP', 'Представитель участника'),
+    ('OTH', 'Другое'),
+)
+
 
 class ParticipantForm(forms.Form):
-    # todo: нужно сделать поле с выбором типа участника
     participant_type = forms.CharField(
         label='Тип участника',
         max_length=6,
         widget=forms.Select(choices=ParticipantType, attrs={'class': 'form-select', 'id': 'participant_type'})
     )
-    # todo: нужно сделать поле с выбором Типа объекта
     subject_type = forms.CharField(
         label='Статус участника',
         max_length=2,
@@ -275,3 +279,16 @@ class Participant(ModelForm):
             'taxation_system': "Система налогообложения",
             'general_manager': "Генеральный директор"
         }
+
+
+class ParticipantTypeForm(forms.Form):
+    participant_type = forms.CharField(
+        label='Тип участника',
+        max_length=6,
+        widget=forms.Select(choices=ParticipantTypeWithoutSup, attrs={'class': 'form-select', 'id': 'participant_type'})
+    )
+    subject_type = forms.CharField(
+        label='Статус участника',
+        max_length=2,
+        widget=forms.Select(choices=SubjectType, attrs={'class': 'form-select', 'id': 'subject_type'})
+    )

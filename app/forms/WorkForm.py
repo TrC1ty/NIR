@@ -71,13 +71,7 @@ class WorkForm(forms.Form):
         attrs={'class': 'form-control'}),
         required=False,
     )
-    # todo: что это за поле вообще, какой его смысл
     other_details_project_drawing = forms.CharField(label='Другие реквизиты проектного чертежа', widget=forms.TextInput(
-        attrs={'class': 'form-control'}),
-        required=False,
-    )
-    # todo: что это за поле вообще, какой его смысл
-    other_details_working_drawing = forms.CharField(label='Другие реквизиты рабочего чертежа', widget=forms.TextInput(
         attrs={'class': 'form-control'}),
         required=False,
     )

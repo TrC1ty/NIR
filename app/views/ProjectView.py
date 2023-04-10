@@ -3,11 +3,12 @@ from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.views import View
 from django.shortcuts import render
 from ..forms.ProjectForm import ProjectForm, Project
-from ..forms.ParticipantForm import ParticipantForm
+from ..forms.ParticipantForm import ParticipantForm, ParticipantTypeForm
 from app.models.ProjectModel import ProjectModel
 from app.models.WorkModel import WorkModel
 from datetime import datetime
 
+from ..models.ProjectParticipant import ProjectParticipant
 from ..forms.IndividualEntrepreneur import IndividualEntrepreneurForm
 from ..forms.NaturalPerson import NaturalPersonForm
 from ..forms.LegalEntity import LegalEntityForm
@@ -23,8 +24,17 @@ class ProjectView(View):
     @staticmethod
     def view(request: HttpRequest, value) -> HttpResponse:
         project = ProjectModel.objects.get(id=value)
+        participants = ProjectParticipant.get_all_participants(project)
+        data = {
+            'project': project,
+            'participants': participants,
+            'individualEntrepreneur': IndividualEntrepreneurForm(),
+            'naturalPerson': NaturalPersonForm(),
+            'legalEntity': LegalEntityForm(),
+            'participantType': ParticipantTypeForm(),
+        }
 
-        return render(request, 'projects/project.html', {'project': project})
+        return render(request, 'projects/project.html', data)
 
     @staticmethod
     def create_project(request: HttpRequest) -> HttpResponse:
