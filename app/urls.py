@@ -7,6 +7,7 @@ from app.views.ProjectView import ProjectView
 from app.views.WorkView import WorkView
 from app.views.MaterialView import MaterialView
 from app.views.BCARView import BCARView
+from app.views.ProjectSectionView import ProjectSectionView
 
 
 urlpatterns = [
@@ -19,7 +20,7 @@ urlpatterns = [
     path('projects/delete/<int:value>', ProjectView.delete, name='project-delete'),
 
     # for participants
-    path('projects/<int:project_id>/add/<str:participant>', ParticipantView.as_view(), name='participant-create'),
+    path('projects/<int:project_id>/add/<int:participant_number>', ParticipantView.as_view(), name='participant-create'),
     path('participants/index', ParticipantView.index, name='participant-index'),
     path('participants/<int:value>', ParticipantView.view, name='participant-view'),
     path('participants/edit/<int:value>', ParticipantView.edit, name='participant-edit'),
@@ -46,7 +47,8 @@ urlpatterns = [
     path('work/<int:work_id>/bcar/create', BCARView.as_view(), name='bcar-create'),
     path('work/<int:work_id>/bcar/<int:bcar_id>/delete', BCARView.delete, name='bcar-delete'),
 
-    # for bcars
+    # for project sections
+    path('project/<int:project_id>/section/add/', ProjectSectionView.post, name='project-section-create')
 
 
 ]

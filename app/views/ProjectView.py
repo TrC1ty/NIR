@@ -9,6 +9,7 @@ from app.models.WorkModel import WorkModel
 from datetime import datetime
 
 from ..models.ProjectParticipant import ProjectParticipant
+from ..models.ProjectSection import ProjectSection
 from ..forms.IndividualEntrepreneur import IndividualEntrepreneurForm
 from ..forms.NaturalPerson import NaturalPersonForm
 from ..forms.LegalEntity import LegalEntityForm
@@ -25,6 +26,7 @@ class ProjectView(View):
     def view(request: HttpRequest, value) -> HttpResponse:
         project = ProjectModel.objects.get(id=value)
         participants = ProjectParticipant.get_all_participants(project)
+        sections = ProjectSection.objects.filter(project_id=project.id)
         data = {
             'project': project,
             'participants': participants,
@@ -32,6 +34,7 @@ class ProjectView(View):
             'naturalPerson': NaturalPersonForm(),
             'legalEntity': LegalEntityForm(),
             'participantType': ParticipantTypeForm(),
+            'sections': sections,
         }
 
         return render(request, 'projects/project.html', data)

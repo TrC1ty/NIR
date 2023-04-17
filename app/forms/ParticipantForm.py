@@ -88,6 +88,11 @@ class ParticipantForm(forms.Form):
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'legal_name'}),
         required=False,
     )
+    short_name = forms.CharField(
+        label='Краткое название',
+        widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'short_name'}),
+        required=False,
+    )
     details_admin_doc = forms.CharField(
         label='Реквизиты распорядительного документа',
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'details_admin_doc'}),
@@ -212,7 +217,7 @@ class Participant(ModelForm):
         fields = ['surname', 'name', 'patronymic', 'post', 'passport_data', 'register_of_specialists', 'ogrn', 'inn',
                   'address', 'phone', 'legal_name', 'details_admin_doc', 'participant_type', 'subject_type', 'sro_name',
                   'sro_inn', 'sro_ogrn', 'kpp', 'bic', 'payment_account', 'cor_account', 'okpo', 'okato', 'okved',
-                  'mail', 'site', 'post_address', 'bank_name', 'taxation_system', 'general_manager']
+                  'mail', 'site', 'post_address', 'bank_name', 'taxation_system', 'general_manager', 'short_name']
         widgets = {
             'surname': TextInput(attrs={'class': 'form-control', 'id': 'surname'}),
             'name': TextInput(attrs={'class': 'form-control', 'id': 'name'}),
@@ -244,7 +249,8 @@ class Participant(ModelForm):
             'post_address': TextInput(attrs={'class': 'form-control', 'id': 'post_address'}),
             'bank_name': TextInput(attrs={'class': 'form-control', 'id': 'bank_name'}),
             'taxation_system': TextInput(attrs={'class': 'form-control', 'id': 'taxation_system'}),
-            'general_manager': TextInput(attrs={'class': 'form-control', 'id': 'general_manager'})
+            'general_manager': TextInput(attrs={'class': 'form-control', 'id': 'general_manager'}),
+            'short_name': TextInput(attrs={'class': 'form-control', 'id': 'short_name'}),
         }
 
         labels = {
@@ -277,16 +283,12 @@ class Participant(ModelForm):
             'post_address': "Почтовый адрес",
             'bank_name': "Наименование банка",
             'taxation_system': "Система налогообложения",
-            'general_manager': "Генеральный директор"
+            'general_manager': "Генеральный директор",
+            'short_name': "Краткое название"
         }
 
 
 class ParticipantTypeForm(forms.Form):
-    participant_type = forms.CharField(
-        label='Тип участника',
-        max_length=6,
-        widget=forms.Select(choices=ParticipantTypeWithoutSup, attrs={'class': 'form-select', 'id': 'participant_type'})
-    )
     subject_type = forms.CharField(
         label='Статус участника',
         max_length=2,

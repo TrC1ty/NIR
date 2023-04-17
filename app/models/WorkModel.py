@@ -1,6 +1,6 @@
 from django.db import models
 from .BCARModel import BCARModel
-from .ProjectModel import ProjectModel
+from .ProjectSection import ProjectSection
 from .MaterialModel import MaterialModel
 from .LegalActModel import LegalActModel
 
@@ -24,7 +24,7 @@ class WorkModel(models.Model):
     bcars = models.ManyToManyField(BCARModel)
     acts = models.ManyToManyField(LegalActModel)
 
-    project = models.ForeignKey(ProjectModel, on_delete=models.CASCADE)
+    projectSection = models.ForeignKey(ProjectSection, on_delete=models.CASCADE)
 
     class Meta:
         db_table = "Works"

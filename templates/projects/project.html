@@ -38,8 +38,8 @@
                 Реестр ИД</a>
         </li>
         <li>
-            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="false">
+            <a class="sidenav-link" id="id-tab" data-bs-toggle="tab" data-bs-target="#id" type="button"
+                    role="tab" aria-controls="id" aria-selected="false">
                 Формирование объектов ИД</a>
         </li>
         <li>
@@ -79,15 +79,22 @@
                     {% for name, value in participants.items %}
                         <div class="row p-2">
                             <div class="col-12 col-md-4 label">
-                                <span class="col-form-label p-0" style="color: rgba(0, 0, 0, 0.54);">{{ name }}</span>
+                                <span class="col-form-label p-0" style="color: rgba(0, 0, 0, 0.54);" participant="{{ name }}">
+                                    {{ value.1 }}
+                                </span>
                             </div>
-                            {% if value == None %}
+
+                            {% if value.0 == None %}
                                 <div class="col-12 col-md-6">
                                     <a class="add-new-participant">Добавить</a>
                                 </div>
                             {% else %}
                                 <div class="col-12 col-md-6">
-                                    {{ value.surname }} {{ value.name }} {{ value.patronymic }}
+                                    {% if value.0.surname != null %}
+                                        {{ value.0.surname }} {{ value.0.name }} {{ value.0.patronymic }}
+                                    {% else %}
+                                        {{ value.0.name }}
+                                    {% endif %}
                                 </div>
                             {% endif %}
                         </div>
@@ -95,9 +102,49 @@
                 </div>
             </div>
 
+            <div class="tab-pane" id="id" role="tabpanel" aria-labelledby="id-tab">
+                <div class="row">
+                    <div class="col-2">
+                        <p style="color: rgba(0, 0, 0, 0.54);">Список ИД</p>
+                    </div>
+
+                    <div class="col">
+                        <button id="add-new-work" class="btn btn-primary" disabled>Добавить новую работу</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-9">
+                        <div class="information">
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="tag-list">
+                            {% for section in sections %}
+                                <a href="#" class="project-section">{{ section.name }}</a>
+                            {% endfor %}
+                        </div>
+
+                        <div class="row">
+                            <form action="{% url 'project-section-create' project.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="col">
+                                    <button type="submit"><img src="/static/images/bootstrap/plus.svg" alt="+" /></button>
+                                </div>
+
+                                <div class="col">
+                                    <input type="text" name="section_name" placeholder="Добавить раздел" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="tab-pane" id="naturalPerson" role="tabpanel" aria-labelledby="naturalPerson-tab">
                 <p class="participant-name" style="color: rgba(0, 0, 0, 0.54);"></p>
-                <form action="{% url 'project-post' %}" method="post">
+                <form method="post">
                     {% csrf_token %}
                     {% for field in naturalPerson.visible_fields %}
                         <div class="form-group">
@@ -115,22 +162,22 @@
                         </div>
                     {% endfor %}
 
-                    <select name="participant_type" class="form-select" maxlength="6" style="display: none">
+                    <select name="participant_type" class="form-select" style="display: none">
                         <option value="DEV">Участник</option>
                         <option value="REP">Представитель участника</option>
-                        <option value="OTH">Другое</option>
                     </select>
 
-                    <select name="subject_type" class="form-select" maxlength="2" style="display: none">
-                        <option value="ЮЛ">Юридическое лицо</option>
-                        <option value="ФЛ">Физическое лицо</option>
-                        <option value="ИП">Индивидуальный предприниматель</option>
+                    <select name="subject_type" class="form-select" style="display: none">
+                        <option value="ФЛ" selected>Физическое лицо</option>
                     </select>
+
+                    <button type="button" class="participant-creation btn btn-primary">Создать участника</button>
                 </form>
             </div>
 
             <div class="tab-pane" id="legalEntity" role="tabpanel" aria-labelledby="legalEntity-tab">
-                <form action="{% url 'project-post' %}" method="post">
+                <p class="participant-name" style="color: rgba(0, 0, 0, 0.54);"></p>
+                <form method="post">
                     {% csrf_token %}
                     {% for field in legalEntity.visible_fields %}
                         <div class="form-group">
@@ -148,22 +195,22 @@
                         </div>
                     {% endfor %}
 
-                    <select name="participant_type" class="form-select" maxlength="6" style="display: none">
+                    <select name="participant_type" class="form-select" style="display: none">
                         <option value="DEV">Участник</option>
                         <option value="REP">Представитель участника</option>
-                        <option value="OTH">Другое</option>
                     </select>
 
-                    <select name="subject_type" class="form-select" maxlength="2" style="display: none">
-                        <option value="ЮЛ">Юридическое лицо</option>
-                        <option value="ФЛ">Физическое лицо</option>
-                        <option value="ИП">Индивидуальный предприниматель</option>
+                    <select name="subject_type" class="form-select" style="display: none">
+                        <option value="ЮЛ" selected>Юридическое лицо</option>
                     </select>
+
+                    <button type="button" class="participant-creation btn btn-primary">Создать участника</button>
                 </form>
             </div>
 
             <div class="tab-pane" id="individualEntrepreneur" role="tabpanel" aria-labelledby="individualEntrepreneur-tab">
-                <form action="{% url 'project-post' %}" method="post">
+                <p class="participant-name" style="color: rgba(0, 0, 0, 0.54);"></p>
+                <form method="post">
                     {% csrf_token %}
                     {% for field in individualEntrepreneur.visible_fields %}
                         <div class="form-group">
@@ -184,18 +231,18 @@
                     <select name="participant_type" class="form-select" maxlength="6" style="display: none">
                         <option value="DEV">Участник</option>
                         <option value="REP">Представитель участника</option>
-                        <option value="OTH">Другое</option>
                     </select>
 
                     <select name="subject_type" class="form-select" maxlength="2" style="display: none">
-                        <option value="ЮЛ">Юридическое лицо</option>
-                        <option value="ФЛ">Физическое лицо</option>
-                        <option value="ИП">Индивидуальный предприниматель</option>
+                        <option value="ИП" selected>Индивидуальный предприниматель</option>
                     </select>
+
+                    <button type="button" class="participant-creation btn btn-primary">Создать участника</button>
                 </form>
             </div>
 
             <div class="tab-pane" id="participant-create" role="tabpanel" aria-labelledby="participant-create-tab">
+                <p class="participant-name" style="color: rgba(0, 0, 0, 0.54);"></p>
                 <form>
                     {% for field in participantType.visible_fields %}
                         <div class="form-group">
@@ -222,6 +269,16 @@
 {% block scripts %}
     <script>
         let participantName = '';
+        let participantNumber = 0;
+        let projectId = {{ project.id }};
+
+        function createParticipant(event) {
+            let action = '/projects/' + projectId + '/add/' + participantNumber;
+            let form = event.target.closest('form');
+            form.setAttribute('action', action);
+            form.submit();
+        }
+
         document.querySelectorAll('.sidenav-link').forEach((a) => {
             a.addEventListener('click', () => {
                 document.querySelectorAll('.tab-pane').forEach((tab) => {
@@ -238,34 +295,62 @@
         document.querySelectorAll('.add-new-participant').forEach((a) => {
             a.addEventListener('click', (event) => {
                 participantName = event.target.parentNode.parentNode.querySelector('.col-form-label').textContent;
+                participantNumber = event.target.parentNode.parentNode.querySelector('.col-form-label').getAttribute('participant')
                 event.target.closest('.tab-pane').classList.remove('active');
                 document.getElementById('participant-create').classList.add('active');
+                document.getElementById('participant-create').querySelector('.participant-name').innerHTML = participantName
             });
         });
 
         document.getElementById('next-step-participant-creation').addEventListener('click', () => {
-            let participantType = document.getElementById('participant_type').value;
             let subjectType = document.getElementById('subject_type').value;
+            let participantType = 'REP';
+            if (participantNumber < 5) {
+                participantType = 'DEV';
+            }
             document.getElementById('participant-create').classList.remove('active');
             switch(subjectType) {
                 case 'ЮЛ':
                     document.getElementById('legalEntity').classList.add('active');
+                    document.getElementById('legalEntity').querySelector('.participant-name').innerHTML = participantName
                     document.getElementById('legalEntity').querySelector('[name=participant_type]').value = participantType;
                     document.getElementById('legalEntity').querySelector('[name=subject_type]').value = subjectType;
+
+                    if (participantType === 'REP') {
+                        document.getElementById('sro_name').closest('.form-group').style.display = 'none';
+                        document.getElementById('sro_inn').closest('.form-group').style.display = 'none';
+                        document.getElementById('sro_ogrn').closest('.form-group').style.display = 'none';
+                    }
+
                     break;
 
                 case 'ФЛ':
                     document.getElementById('naturalPerson').classList.add('active');
+                    document.getElementById('naturalPerson').querySelector('.participant-name').innerHTML = participantName
                     document.getElementById('naturalPerson').querySelector('[name=participant_type]').value = participantType;
                     document.getElementById('naturalPerson').querySelector('[name=subject_type]').value = subjectType;
+
                     break;
 
                 case 'ИП':
                     document.getElementById('individualEntrepreneur').classList.add('active');
+                    document.getElementById('individualEntrepreneur').querySelector('.participant-name').innerHTML = participantName
                     document.getElementById('individualEntrepreneur').querySelector('[name=participant_type]').value = participantType;
                     document.getElementById('individualEntrepreneur').querySelector('[name=subject_type]').value = subjectType;
+
+                    if (participantType === 'REP') {
+                        document.getElementById('sro_name').closest('.form-group').style.display = 'none';
+                        document.getElementById('sro_inn').closest('.form-group').style.display = 'none';
+                        document.getElementById('sro_ogrn').closest('.form-group').style.display = 'none';
+                    }
+
                     break;
             }
         });
+
+        document.querySelectorAll('.participant-creation').forEach(el => el.addEventListener('click', createParticipant));
+        document.querySelectorAll('.project-section').forEach(el => el.addEventListener('click', function () {
+            document.getElementById('add-new-work').disabled = false;
+        }));
     </script>
 {% endblock %}

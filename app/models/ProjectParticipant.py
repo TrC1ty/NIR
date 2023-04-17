@@ -29,31 +29,33 @@ class ProjectParticipant(models.Model):
 
     @staticmethod
     def get_all_participants(project):
-        participants = ProjectParticipant.objects.filter(project=project).order_by('participant_type')
+        projectParticipants = ProjectParticipant.objects.filter(project=project).order_by('participant_type')
         data = {
-            1: None,
-            2: None,
-            3: None,
-            4: None,
-            5: None,
-            6: None,
-            7: None,
-            8: None,
-            9: None,
-            10: None,
+            1: [None],
+            2: [None],
+            3: [None],
+            4: [None],
+            5: [None],
+            6: [None],
+            7: [None],
+            8: [None],
+            9: [None],
+            10: [None],
         }
 
-        for participant in participants:
-            data[participant.participant_type] = participant
+        for projectParticipant in projectParticipants:
+            participant = ParticipantModel.objects.get(id=projectParticipant.participant_id)
+            data[int(projectParticipant.participant_type)] = [participant]
 
-        participant_data = {'Застройщик': data[1], 'Лицо, осуществляющее строительство': data[2],
-                            'Лицо, осуществляющее подготовку проектной документации': data[3],
-                            'Лицо, выполнившее работы': data[4], 'Представитель застройщика': data[5],
-                            'Представитель лица, осуществляющего строительство': data[6],
-                            'Представитель лица, осуществляющего строительство, по вопросам строительного контроля':
-                                data[7],
-                            'Представитель лица, осуществляющего подготовку проектной документации': data[8],
-                            'Представитель лица, выполнившего работы, подлежащие освидетельствованию': data[9],
-                            'Иные представители лиц, участвующих в освидетельствовании': data[10]}
+        data[1].append('Застройщик')
+        data[2].append('Лицо, осуществляющее строительство')
+        data[3].append('Лицо, осуществляющее подготовку проектной документации')
+        data[4].append('Лицо, выполнившее работы')
+        data[5].append('Представитель застройщика')
+        data[6].append('Представитель лица, осуществляющего строительство')
+        data[7].append('Представитель лица, осуществляющего строительство, по вопросам строительного контроля')
+        data[8].append('Представитель лица, осуществляющего подготовку проектной документации')
+        data[9].append('Представитель лица, выполнившего работы, подлежащие освидетельствованию')
+        data[10].append('Иные представители лиц, участвующих в освидетельствовании')
 
-        return participant_data
+        return data
