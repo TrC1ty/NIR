@@ -4,6 +4,7 @@ from django.views import View
 from django.shortcuts import render
 from ..forms.ProjectForm import ProjectForm, Project
 from ..forms.ParticipantForm import ParticipantForm, ParticipantTypeForm
+from ..forms.WorkForm import WorkForm
 from app.models.ProjectModel import ProjectModel
 from app.models.WorkModel import WorkModel
 from datetime import datetime
@@ -27,6 +28,7 @@ class ProjectView(View):
         project = ProjectModel.objects.get(id=value)
         participants = ProjectParticipant.get_all_participants(project)
         sections = ProjectSection.objects.filter(project_id=project.id)
+        work_form = WorkForm()
         data = {
             'project': project,
             'participants': participants,
@@ -35,6 +37,7 @@ class ProjectView(View):
             'legalEntity': LegalEntityForm(),
             'participantType': ParticipantTypeForm(),
             'sections': sections,
+            'workForm': work_form
         }
 
         return render(request, 'projects/project.html', data)

@@ -2,9 +2,8 @@ from django.urls import path
 
 from app.views.LegalActView import LegalActView
 from app.views.ParticipantView import ParticipantView
-from app.views.HomeView import HomeView
 from app.views.ProjectView import ProjectView
-from app.views.WorkView import WorkView
+from app.views.WorkView import WorkView, GetWorkInfoView
 from app.views.MaterialView import MaterialView
 from app.views.BCARView import BCARView
 from app.views.ProjectSectionView import ProjectSectionView
@@ -27,7 +26,7 @@ urlpatterns = [
     path('participants/delete/<int:value>', ParticipantView.delete, name='participant-delete'),
 
     # for works
-    path('projects/<int:project_id>/add-work', WorkView.as_view(), name='work-create'),
+    path('project-section/<int:project_section_id>/add-work', WorkView.as_view(), name='work-create'),
     path('works/index', WorkView.index, name='work-index'),
     path('works/<int:value>', WorkView.view, name='work-view'),
     path('works/edit/<int:value>', WorkView.edit, name='work-edit'),
@@ -48,8 +47,9 @@ urlpatterns = [
     path('work/<int:work_id>/bcar/<int:bcar_id>/delete', BCARView.delete, name='bcar-delete'),
 
     # for project sections
-    path('project/<int:project_id>/section/add/', ProjectSectionView.post, name='project-section-create')
+    path('project/<int:project_id>/section/add/', ProjectSectionView.post, name='project-section-create'),
 
-
+    # api
+    path('api/works/<int:project_section_id>', GetWorkInfoView.get),
 ]
 

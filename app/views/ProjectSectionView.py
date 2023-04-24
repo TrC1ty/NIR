@@ -1,8 +1,7 @@
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.views import View
-from django.shortcuts import render
 from app.models.ProjectModel import ProjectModel
-from ..models.ProjectSection import ProjectSection
+from app.models.ProjectSection import ProjectSection
 
 
 class ProjectSectionView(View):
@@ -10,9 +9,10 @@ class ProjectSectionView(View):
     def post(request: HttpRequest, project_id) -> HttpResponse:
         form = request.POST.dict()
         project = ProjectModel.objects.get(id=project_id)
-        ProjectSection.objects.create(
-            project=project,
-            name=form['section_name']
-        )
+        if form['section_name']:
+            ProjectSection.objects.create(
+                project=project,
+                name=form['section_name']
+            )
 
         return HttpResponseRedirect(f'/projects/{project_id}')

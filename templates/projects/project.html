@@ -8,6 +8,14 @@
 
 {% block pageName %} {{ project.name_project }} {% endblock %}
 
+{% block styles %}
+    <style>
+        details > summary {
+          list-style: none;
+        }
+    </style>
+{% endblock %}
+
 {% block content %}
     <!-- Nav tabs -->
     <ul class="sidenav nav-tabs" id="myTab" role="tablist">
@@ -77,6 +85,10 @@
                 <p style="color: rgba(0, 0, 0, 0.54);">Участники проекта проекта</p>
                 <div class="information">
                     {% for name, value in participants.items %}
+                        {% if value.0 != None %}
+                            <details>
+                                <summary>
+                        {% endif %}
                         <div class="row p-2">
                             <div class="col-12 col-md-4 label">
                                 <span class="col-form-label p-0" style="color: rgba(0, 0, 0, 0.54);" participant="{{ name }}">
@@ -98,46 +110,68 @@
                                 </div>
                             {% endif %}
                         </div>
+                        {% if value.0 != None %}
+                                </summary>
+                                <div class="row p-2">
+                                    <div class="col-12">
+                                        <p>Будущая информация</p>
+                                    </div>
+                                </div>
+                            </details>
+                        {% endif %}
                     {% endfor %}
                 </div>
             </div>
 
             <div class="tab-pane" id="id" role="tabpanel" aria-labelledby="id-tab">
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-1">
                         <p style="color: rgba(0, 0, 0, 0.54);">Список ИД</p>
                     </div>
 
+                    <div class="col-md-auto section-label">
+                        <p style="color: rgba(0, 0, 0, 0.54);"></p>
+                    </div>
+
                     <div class="col">
-                        <button id="add-new-work" class="btn btn-primary" disabled>Добавить новую работу</button>
+                        <button id="add-new-work" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#workModal" disabled>Добавить новую работу</button>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-9">
                         <div class="information">
+                            <table class="table work-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Наименование</th>
+                                        <th scope="col">Дата окончания работы</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
 
                     <div class="col">
-                        <div class="tag-list">
+                        <input class="form-control p-2" type="text" placeholder="Поиск" id="search-text" onkeyup="tableSearch()">
+                        <div class="list-group list-group-flush">
                             {% for section in sections %}
-                                <a href="#" class="project-section">{{ section.name }}</a>
+                                <a href="#" class="list-group-item list-group-item-action project-section"
+                                   section="{{ section.id }}">{{ section.name }}</a>
                             {% endfor %}
                         </div>
 
-                        <div class="row">
-                            <form action="{% url 'project-section-create' project.id %}" method="post">
-                                {% csrf_token %}
-                                <div class="col">
-                                    <button type="submit"><img src="/static/images/bootstrap/plus.svg" alt="+" /></button>
-                                </div>
 
-                                <div class="col">
-                                    <input type="text" name="section_name" placeholder="Добавить раздел" />
-                                </div>
-                            </form>
-                        </div>
+                        <form action="{% url 'project-section-create' project.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="text" name="section_name" placeholder="Добавить раздел" required />
+                            <button type="submit" class="btn p-0"><img src="/static/images/bootstrap/plus.svg" alt="+" width="30" height="30" /></button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -266,10 +300,53 @@
     </div>
 {% endblock %}
 
+{% block customModals %}
+    <div class="modal fade" id="workModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Создание работы</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{% url 'work-create' project.id %}" method="post">
+                    {% csrf_token %}
+
+                    <div class="form-error" style="color:red"> {{workForm.non_field_errors}}</div>
+
+                    <div id="work-form" class="modal-body">
+                        {% for field in workForm.visible_fields %}
+                            <div class="form-group">
+                                {{ field.errors }}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-12 col-md-3">
+                                        <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ field }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button id="workModalBtn" class="btn btn-primary my-2">Сохранить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 {% block scripts %}
     <script>
         let participantName = '';
         let participantNumber = 0;
+        let activeProjectSection = 0;
         let projectId = {{ project.id }};
 
         function createParticipant(event) {
@@ -277,6 +354,72 @@
             let form = event.target.closest('form');
             form.setAttribute('action', action);
             form.submit();
+        }
+
+        function createWork() {
+            let form = document.getElementById('workModal').querySelector('form');
+            form.setAttribute('action', '/project-section/' + activeProjectSection + '/add-work');
+            form.submit();
+        }
+
+        async function getWorkInformation(event) {
+            let projectSectionId = Number(event.target.getAttribute('section'));
+            activeProjectSection = projectSectionId;
+            document.querySelector('.section-label').querySelector('p').innerHTML = event.target.innerHTML;
+
+            await fetch("/api/works/" + projectSectionId, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              })
+            .then((response) => response.json())
+            .then((data) => {
+                createWorkTable(data);
+            });
+        }
+
+        function createWorkTable(data) {
+            let table = document.querySelector('.work-table');
+            let tBody = table.querySelector('tbody');
+            tBody.innerHTML = '';
+            data.forEach((row) => {
+                let tr = document.createElement("tr");
+                let fragment = document.createDocumentFragment();
+                let keys = Object.keys(row)
+                keys.forEach((col) => {
+                    let td;
+                    if (col === "id"){
+                        td = document.createElement("th");
+                        td.scope = "row";
+                    } else {
+                        td = document.createElement("td");
+                    }
+                    td.innerText = row[col];
+                    fragment.appendChild(td);
+                });
+                tr.appendChild(fragment);
+                tBody.appendChild(tr);
+            });
+        }
+
+        function tableSearch() {
+            let phrase = document.getElementById('search-text');
+            let sectionsList = phrase.parentElement.querySelector('.list-group');
+            let regPhrase = new RegExp(phrase.value, 'i');
+            let flag = false;
+
+            for (let i = 0; i < sectionsList.children.length; i++) {
+                flag = regPhrase.test(sectionsList.children[i].innerHTML);
+                console.log(flag);
+
+                if (flag) {
+                    sectionsList.children[i].style.display = "";
+                } else {
+                    console.log(2);
+                    sectionsList.children[i].style.display = "none";
+                }
+            }
         }
 
         document.querySelectorAll('.sidenav-link').forEach((a) => {
@@ -352,5 +495,7 @@
         document.querySelectorAll('.project-section').forEach(el => el.addEventListener('click', function () {
             document.getElementById('add-new-work').disabled = false;
         }));
+        document.querySelectorAll('.project-section').forEach((el) => el.addEventListener('click', getWorkInformation));
+        document.getElementById('workModalBtn').addEventListener('click', createWork);
     </script>
 {% endblock %}

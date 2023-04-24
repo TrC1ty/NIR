@@ -1,5 +1,6 @@
 from django.db import models
 from .ProjectModel import ProjectModel
+from rest_framework import serializers
 
 
 class ProjectSection(models.Model):

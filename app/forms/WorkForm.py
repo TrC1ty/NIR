@@ -71,20 +71,11 @@ class WorkForm(forms.Form):
         attrs={'class': 'form-control'}),
         required=False,
     )
-    other_details_project_drawing = forms.CharField(label='Другие реквизиты проектного чертежа', widget=forms.TextInput(
-        attrs={'class': 'form-control'}),
-        required=False,
-    )
     name_project_doc = forms.CharField(label='Наименование проектной документации', widget=forms.TextInput(
         attrs={'class': 'form-control'}),
         required=False,
     )
     name_working_doc = forms.CharField(label='Наименование рабочей документации', widget=forms.TextInput(
-        attrs={'class': 'form-control'}),
-        required=False,
-    )
-    information_persons_prepare_doc = forms.CharField(label='Сведения о лицах, осуществялющих подготовку '
-                                                            'раздела документации', widget=forms.TextInput(
         attrs={'class': 'form-control'}),
         required=False,
     )
@@ -95,18 +86,6 @@ class WorkForm(forms.Form):
     end_date_work = forms.DateField(label='Дата окончания работ', widget=forms.DateInput(
         format='%d-%m-%Y',
         attrs={'type': 'date', 'class': 'form-control'}),
-    )
-    permitted_works = forms.CharField(label='Разрешенные работы', widget=forms.TextInput(
-        attrs={'class': 'form-control'}),
-        required=False,
-    )
-    additional_information = forms.CharField(label='Дополнительная информация', widget=forms.TextInput(
-        attrs={'class': 'form-control'}),
-        required=False,
-    )
-    number_instances = forms.IntegerField(label='Количество экземпляров', widget=forms.NumberInput(
-        attrs={'class': 'form-control'}),
-        required=False,
     )
 
     def clean(self):

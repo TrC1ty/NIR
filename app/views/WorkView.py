@@ -13,8 +13,28 @@ from docxtpl import DocxTemplate
 
 from app.models.LegalActModel import LegalActModel
 from app.models.ProjectModel import ProjectModel
-from app.models.WorkModel import WorkModel
+from app.models.WorkModel import WorkModel, WorkSerializer
+from app.models.ProjectSection import ProjectSection
 from ..forms.WorkForm import WorkForm, Work
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer
+from rest_framework import status
+
+
+class GetWorkInfoView(APIView):
+    @staticmethod
+    @api_view(('GET',))
+    def get(request, project_section_id):
+        project_section = ProjectSection.objects.get(id=project_section_id)
+        queryset = WorkModel.objects.filter(projectSection=project_section)
+        serializer_for_queryset = WorkSerializer(
+            instance=queryset,
+            many=True
+        )
+
+        return Response(serializer_for_queryset.data)
 
 
 class WorkView(View):
@@ -25,42 +45,26 @@ class WorkView(View):
         return render(request, 'works/creation.html', {'form': form, 'project_id': project_id})
 
     @staticmethod
-    def post(request: HttpRequest, project_id) -> HttpResponse:
+    def post(request: HttpRequest, project_section_id) -> HttpResponse:
         form = WorkForm(request.POST)
+        print(project_section_id)
+        project_section = ProjectSection.objects.get(id=project_section_id)
         if form.is_valid():
-            project = ProjectModel.objects.get(id=project_id)
-            actForm = request.POST.dict()
-            actNames = re.findall(r'act\d+', ", ".join(actForm.keys()))
-            acts = []
-            for actName in actNames:
-                act = LegalActModel.objects.create(
-                    name=actForm[actName],
-                )
-                act.save()
-                acts.append(act)
-
+            print(1)
             work = WorkModel.objects.create(
                 name_hidden_works=form.cleaned_data["name_hidden_works"],
                 number_project_doc=form.cleaned_data["number_project_doc"],
                 number_working_doc=form.cleaned_data["number_working_doc"],
-                other_details_project_drawing=form.cleaned_data["other_details_project_drawing"],
-                other_details_working_drawing=form.cleaned_data["other_details_working_drawing"],
                 name_project_doc=form.cleaned_data["name_project_doc"],
                 name_working_doc=form.cleaned_data["name_working_doc"],
-                information_persons_prepare_doc=form.cleaned_data["information_persons_prepare_doc"],
                 start_date_work=form.cleaned_data["start_date_work"],
                 end_date_work=form.cleaned_data["end_date_work"],
-                permitted_works=form.cleaned_data["permitted_works"],
-                additional_information=form.cleaned_data["additional_information"],
-                number_instances=form.cleaned_data["number_instances"],
-                project=project,
+                projectSection=project_section,
             )
-            work.acts.add(*acts)
+
             work.save()
 
-            return HttpResponseRedirect(f'/works/{work.id}')
-
-        return render(request, 'works/creation.html', {'form': form, 'project_id': project_id})
+        return HttpResponseRedirect(f'/projects/{project_section.project_id}')
 
     @staticmethod
     def index(request: HttpRequest) -> HttpResponse:
