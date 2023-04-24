@@ -1,9 +1,11 @@
 from django.urls import path
 
+from app.controllers.ProjectSectionController import ProjectSectionController
+from app.controllers.WorkController import WorkController
 from app.views.LegalActView import LegalActView
 from app.views.ParticipantView import ParticipantView
 from app.views.ProjectView import ProjectView
-from app.views.WorkView import WorkView, GetWorkInfoView
+from app.views.WorkView import WorkView
 from app.views.MaterialView import MaterialView
 from app.views.BCARView import BCARView
 from app.views.ProjectSectionView import ProjectSectionView
@@ -50,6 +52,7 @@ urlpatterns = [
     path('project/<int:project_id>/section/add/', ProjectSectionView.post, name='project-section-create'),
 
     # api
-    path('api/works/<int:project_section_id>', GetWorkInfoView.get),
+    path('api/works/<int:project_section_id>', WorkController.get),
+    path('api/sections/<int:project_id>', ProjectSectionController.post, name='create-section'),
 ]
 

@@ -1,7 +1,6 @@
 import datetime
 import io
 import os
-import re
 import zipfile
 from pathlib import Path
 
@@ -11,30 +10,10 @@ from django.utils.encoding import escape_uri_path
 from django.views import View
 from docxtpl import DocxTemplate
 
-from app.models.LegalActModel import LegalActModel
 from app.models.ProjectModel import ProjectModel
-from app.models.WorkModel import WorkModel, WorkSerializer
+from app.models.WorkModel import WorkModel
 from app.models.ProjectSection import ProjectSection
 from ..forms.WorkForm import WorkForm, Work
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.decorators import api_view, renderer_classes
-from rest_framework.renderers import JSONRenderer
-from rest_framework import status
-
-
-class GetWorkInfoView(APIView):
-    @staticmethod
-    @api_view(('GET',))
-    def get(request, project_section_id):
-        project_section = ProjectSection.objects.get(id=project_section_id)
-        queryset = WorkModel.objects.filter(projectSection=project_section)
-        serializer_for_queryset = WorkSerializer(
-            instance=queryset,
-            many=True
-        )
-
-        return Response(serializer_for_queryset.data)
 
 
 class WorkView(View):

@@ -10,3 +10,14 @@ class ProjectSection(models.Model):
 
     class Meta:
         db_table = "ProjectSection"
+
+
+class ProjectSectionSerializer(serializers.Serializer):
+    def create(self, validated_data):
+        pass
+
+    def update(self, instance, validated_data):
+        pass
+
+    id = serializers.IntegerField()
+    name = serializers.CharField()

@@ -56,8 +56,8 @@
                 Работы</a>
         </li>
         <li>
-            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="false">
+            <a class="sidenav-link" id="materials-tab" data-bs-toggle="tab" data-bs-target="#materials" type="button"
+                    role="tab" aria-controls="materials" aria-selected="false">
                 Материалы</a>
         </li>
     </ul>
@@ -167,12 +167,32 @@
                         </div>
 
 
-                        <form action="{% url 'project-section-create' project.id %}" method="post">
-                            {% csrf_token %}
-                            <input type="text" name="section_name" placeholder="Добавить раздел" required />
-                            <button type="submit" class="btn p-0"><img src="/static/images/bootstrap/plus.svg" alt="+" width="30" height="30" /></button>
-                        </form>
+                        <div>
+                            <input type="text" placeholder="Добавить раздел" />
+                            <button id="create-section" class="btn p-0">
+                                <img src="/static/images/bootstrap/plus.svg" alt="+" width="30" height="30" />
+                            </button>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="materials" role="tabpanel" aria-labelledby="materials-tab">
+                <p style="color: rgba(0, 0, 0, 0.54);">Материалы</p>
+                <div class="information">
+                    <table class="table work-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Название</th>
+                                <th scope="col">Дата окончания действия сертификата</th>
+                                <th scope="col">Количество материалов</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
@@ -411,15 +431,58 @@
 
             for (let i = 0; i < sectionsList.children.length; i++) {
                 flag = regPhrase.test(sectionsList.children[i].innerHTML);
-                console.log(flag);
 
                 if (flag) {
                     sectionsList.children[i].style.display = "";
                 } else {
-                    console.log(2);
                     sectionsList.children[i].style.display = "none";
                 }
             }
+        }
+
+        async function createSection(event) {
+            let input = event.target.parentElement.parentElement.querySelector('input');
+            let sectionName = input.value;
+            input.value = '';
+
+            if (sectionName === '') {
+                return false;
+            }
+            else {
+                let data = JSON.stringify({
+                    section_name: sectionName
+                });
+
+                await fetch("/api/sections/" + {{ project.id }}, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: data,
+                  })
+                .then((response) => response.json())
+                .then((data) => {
+                    createSectionList(data);
+                });
+            }
+        }
+
+        function createSectionList(data) {
+            let list = document.querySelector('.project-section').parentElement;
+            list.innerHTML = '';
+            data.forEach((row) => {
+                let a = document.createElement("a");
+                a.classList.add('list-group-item', 'list-group-item-action', 'project-section');
+                a.href = '#';
+                a.setAttribute('section', row['id']);
+                a.innerHTML = row['name'];
+                a.addEventListener('click', function (event) {
+                    document.getElementById('add-new-work').disabled = false;
+                    getWorkInformation(event);
+                });
+
+                list.appendChild(a);
+            });
         }
 
         document.querySelectorAll('.sidenav-link').forEach((a) => {
@@ -492,10 +555,11 @@
         });
 
         document.querySelectorAll('.participant-creation').forEach(el => el.addEventListener('click', createParticipant));
-        document.querySelectorAll('.project-section').forEach(el => el.addEventListener('click', function () {
+        document.querySelectorAll('.project-section').forEach(el => el.addEventListener('click', function (event) {
             document.getElementById('add-new-work').disabled = false;
+            getWorkInformation(event);
         }));
-        document.querySelectorAll('.project-section').forEach((el) => el.addEventListener('click', getWorkInformation));
         document.getElementById('workModalBtn').addEventListener('click', createWork);
+        document.getElementById('create-section').addEventListener('click', createSection);
     </script>
 {% endblock %}
