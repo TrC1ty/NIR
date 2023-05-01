@@ -13,7 +13,9 @@ from docxtpl import DocxTemplate
 from app.models.ProjectModel import ProjectModel
 from app.models.WorkModel import WorkModel
 from app.models.ProjectSection import ProjectSection
+from app.models.MaterialModel import MaterialModel
 from ..forms.WorkForm import WorkForm, Work
+from app.forms.MaterialForm import MaterialForm
 
 
 class WorkView(View):
@@ -26,10 +28,8 @@ class WorkView(View):
     @staticmethod
     def post(request: HttpRequest, project_section_id) -> HttpResponse:
         form = WorkForm(request.POST)
-        print(project_section_id)
         project_section = ProjectSection.objects.get(id=project_section_id)
         if form.is_valid():
-            print(1)
             work = WorkModel.objects.create(
                 name_hidden_works=form.cleaned_data["name_hidden_works"],
                 number_project_doc=form.cleaned_data["number_project_doc"],
@@ -54,8 +54,37 @@ class WorkView(View):
     @staticmethod
     def view(request: HttpRequest, value) -> HttpResponse:
         work = WorkModel.objects.get(id=value)
+        materials = MaterialModel.objects.filter(work=work)
 
-        return render(request, 'works/work.html', {'work': work})
+        if request.method == 'POST':
+            form = WorkForm(request.POST)
+            if form.is_valid():
+                work.name_hidden_works = form.cleaned_data["name_hidden_works"]
+                work.number_project_doc = form.cleaned_data["number_project_doc"]
+                work.number_working_doc = form.cleaned_data["number_working_doc"]
+                work.other_details_project_drawing = form.cleaned_data["other_details_project_drawing"]
+                work.other_details_working_drawing = form.cleaned_data["other_details_working_drawing"]
+                work.name_project_doc = form.cleaned_data["name_project_doc"]
+                work.name_working_doc = form.cleaned_data["name_working_doc"]
+                work.information_persons_prepare_doc = form.cleaned_data["information_persons_prepare_doc"]
+                work.start_date_work = form.cleaned_data["start_date_work"]
+                work.end_date_work = form.cleaned_data["end_date_work"]
+                work.permitted_works = form.cleaned_data["permitted_works"]
+                work.additional_information = form.cleaned_data["additional_information"]
+                work.number_instances = form.cleaned_data["number_instances"]
+
+                work.save()
+
+        form = Work(instance=work)
+        material_form = MaterialForm()
+        data = {
+            'work': work,
+            'form': form,
+            'material_form': material_form,
+            'materials': materials
+        }
+
+        return render(request, 'works/View.html', data)
 
     @staticmethod
     def edit(request: HttpRequest, value) -> HttpResponse:
@@ -80,11 +109,11 @@ class WorkView(View):
 
                 work.save()
 
-                return render(request, 'works/work.html', {'work': work})
+                return render(request, 'works/View.html', {'work': work})
 
         form = Work(instance=work)
 
-        return render(request, 'works/edit.html', {'work': work,
+        return render(request, 'works/View.html', {'work': work,
                                                    'form': form})
 
     @staticmethod

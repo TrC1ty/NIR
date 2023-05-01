@@ -1,5 +1,6 @@
 from django.urls import path
 
+from app.controllers.MaterialController import MaterialController
 from app.controllers.ProjectSectionController import ProjectSectionController
 from app.controllers.WorkController import WorkController
 from app.views.LegalActView import LegalActView
@@ -54,5 +55,7 @@ urlpatterns = [
     # api
     path('api/works/<int:project_section_id>', WorkController.get),
     path('api/sections/<int:project_id>', ProjectSectionController.post, name='create-section'),
+    path('api/materials/<int:work_id>', MaterialController.post),
+    path('api/materials', MaterialController.get_by_filter)
 ]
 

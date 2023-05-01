@@ -2,18 +2,19 @@ from django.core.exceptions import ValidationError
 from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.views import View
 from django.shortcuts import render
-from ..forms.ProjectForm import ProjectForm, Project
-from ..forms.ParticipantForm import ParticipantForm, ParticipantTypeForm
 from ..forms.WorkForm import WorkForm
-from app.models.ProjectModel import ProjectModel
-from app.models.WorkModel import WorkModel
 from datetime import datetime
 
-from ..models.ProjectParticipant import ProjectParticipant
-from ..models.ProjectSection import ProjectSection
-from ..forms.IndividualEntrepreneur import IndividualEntrepreneurForm
-from ..forms.NaturalPerson import NaturalPersonForm
-from ..forms.LegalEntity import LegalEntityForm
+from app.models.ProjectModel import ProjectModel
+from app.models.WorkModel import WorkModel
+from app.models.ProjectParticipant import ProjectParticipant
+from app.models.ProjectSection import ProjectSection
+from app.models.MaterialModel import MaterialModel
+from ..forms.ProjectForm import ProjectForm, Project
+from ..forms.ParticipantForm import ParticipantTypeForm
+from app.forms.IndividualEntrepreneur import IndividualEntrepreneurForm
+from app.forms.NaturalPerson import NaturalPersonForm
+from app.forms.LegalEntity import LegalEntityForm
 
 
 class ProjectView(View):
@@ -21,13 +22,15 @@ class ProjectView(View):
     def index(request: HttpRequest) -> HttpResponse:
         projects = ProjectModel.objects.all().order_by('-id')
 
-        return render(request, 'projects/index.html', {'projects': projects})
+        return render(request, 'projects/Index.html', {'projects': projects})
 
     @staticmethod
     def view(request: HttpRequest, value) -> HttpResponse:
         project = ProjectModel.objects.get(id=value)
         participants = ProjectParticipant.get_all_participants(project)
         sections = ProjectSection.objects.filter(project_id=project.id)
+        materials = MaterialModel.objects.filter(work__projectSection__project_id=value)
+        works = WorkModel.objects.filter(projectSection__project__id=value)
         work_form = WorkForm()
         data = {
             'project': project,
@@ -37,10 +40,12 @@ class ProjectView(View):
             'legalEntity': LegalEntityForm(),
             'participantType': ParticipantTypeForm(),
             'sections': sections,
-            'workForm': work_form
+            'workForm': work_form,
+            'materials': materials,
+            'works': works
         }
 
-        return render(request, 'projects/project.html', data)
+        return render(request, 'projects/View.html', data)
 
     @staticmethod
     def create_project(request: HttpRequest) -> HttpResponse:
@@ -50,7 +55,7 @@ class ProjectView(View):
         )
         form = Project(instance=project)
 
-        return render(request, 'projects/creation.html', {'form': form})
+        return render(request, 'projects/CreateProject.html', {'form': form})
 
     @staticmethod
     def post(request: HttpRequest) -> HttpResponse:
@@ -88,7 +93,7 @@ class ProjectView(View):
         works = WorkModel.objects.filter(project=project)
         form = Project(instance=project)
 
-        return render(request, 'projects/edit.html', {'project': project,
+        return render(request, 'projects/EditProject.html', {'project': project,
                                                       'works': works,
                                                       'form': form})
 
@@ -98,4 +103,4 @@ class ProjectView(View):
         project.delete()
         projects = ProjectModel.objects.all()
 
-        return render(request, 'projects/index.html', {'projects': projects})
+        return render(request, 'projects/Index.html', {'projects': projects})

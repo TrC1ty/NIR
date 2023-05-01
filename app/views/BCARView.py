@@ -14,7 +14,7 @@ class BCARView(View):
     def get(request: HttpRequest, work_id) -> HttpResponse:
         form = BCARForm()
 
-        return render(request, 'bcars/creation.html', {'form': form, 'work_id': work_id})
+        return render(request, 'bcars/CreateProject.html', {'form': form, 'work_id': work_id})
 
     @staticmethod
     def post(request: HttpRequest, work_id) -> HttpResponse:
@@ -47,7 +47,7 @@ class BCARView(View):
 
         form = Work(instance=work)
 
-        return render(request, 'works/edit.html', {'work': work, 'form': form})
+        return render(request, 'works/View.html', {'work': work, 'form': form})
 
     @staticmethod
     def delete(request: HttpRequest, work_id, bcar_id) -> HttpResponse:

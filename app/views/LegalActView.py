@@ -44,4 +44,4 @@ class LegalActView(View):
 
         form = Work(instance=work)
 
-        return render(request, 'works/edit.html', {'work': work, 'form': form})
+        return render(request, 'works/View.html', {'work': work, 'form': form})

@@ -1,8 +1,5 @@
 from django.db import models
-from .BCARModel import BCARModel
 from .ProjectSection import ProjectSection
-from .MaterialModel import MaterialModel
-from .LegalActModel import LegalActModel
 from rest_framework import serializers
 
 
@@ -21,9 +18,6 @@ class WorkModel(models.Model):
     permitted_works = models.TextField(null=True)
     additional_information = models.TextField(null=True)
     number_instances = models.IntegerField(default=0, null=True)
-    materials = models.ManyToManyField(MaterialModel)
-    bcars = models.ManyToManyField(BCARModel)
-    acts = models.ManyToManyField(LegalActModel)
 
     projectSection = models.ForeignKey(ProjectSection, on_delete=models.CASCADE)
 

@@ -46,13 +46,13 @@
                 Реестр ИД</a>
         </li>
         <li>
-            <a class="sidenav-link" id="id-tab" data-bs-toggle="tab" data-bs-target="#id" type="button"
-                    role="tab" aria-controls="id" aria-selected="false">
+            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="false">
                 Формирование объектов ИД</a>
         </li>
         <li>
-            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="false">
+            <a class="sidenav-link" id="works-tab" data-bs-toggle="tab" data-bs-target="#works" type="button"
+                    role="tab" aria-controls="works" aria-selected="false">
                 Работы</a>
         </li>
         <li>
@@ -123,10 +123,10 @@
                 </div>
             </div>
 
-            <div class="tab-pane" id="id" role="tabpanel" aria-labelledby="id-tab">
+            <div class="tab-pane" id="works" role="tabpanel" aria-labelledby="works-tab">
                 <div class="row">
                     <div class="col-1">
-                        <p style="color: rgba(0, 0, 0, 0.54);">Список ИД</p>
+                        <p style="color: rgba(0, 0, 0, 0.54);">Список Работ</p>
                     </div>
 
                     <div class="col-md-auto section-label">
@@ -143,10 +143,11 @@
                         <div class="information">
                             <table class="table work-table">
                                 <thead>
-                                    <tr>
+                                    <tr >
                                         <th scope="col">#</th>
                                         <th scope="col">Наименование</th>
                                         <th scope="col">Дата окончания работы</th>
+                                        <th scope="col" style="text-align: center">Просмотр</th>
                                     </tr>
                                 </thead>
 
@@ -159,7 +160,7 @@
 
                     <div class="col">
                         <input class="form-control p-2" type="text" placeholder="Поиск" id="search-text" onkeyup="tableSearch()">
-                        <div class="list-group list-group-flush">
+                        <div class="list-group list-group-flush sections">
                             {% for section in sections %}
                                 <a href="#" class="list-group-item list-group-item-action project-section"
                                    section="{{ section.id }}">{{ section.name }}</a>
@@ -179,8 +180,27 @@
 
             <div class="tab-pane" id="materials" role="tabpanel" aria-labelledby="materials-tab">
                 <p style="color: rgba(0, 0, 0, 0.54);">Материалы</p>
+                <div class="row g-3 p-1">
+                    <div class="col-auto text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z" /></svg>
+                    </div>
+
+                    <div class="col-auto">
+                        <select class="form-select form-select-sm filter" id="material-filter">
+                            <option value="">все работы</option>
+                            {% for work in works %}
+                                <option value="{{ work.id }}">{{ work.name_hidden_works }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="col-auto">
+                        <button class="btn btn-sm btn-outline-primary" id="btn-material-filter">Обновить</button>
+                    </div>
+
+                </div>
                 <div class="information">
-                    <table class="table work-table">
+                    <table class="table material-table">
                         <thead>
                             <tr>
                                 <th scope="col">Название</th>
@@ -190,7 +210,13 @@
                         </thead>
 
                         <tbody>
-
+                        {% for material in materials %}
+                            <tr>
+                                <td>{{ material.name }}</td>
+                                <td>{{ material.date_end }}</td>
+                                <td>{{ material.count }}  {{ material.units_of_measurement }}</td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -418,6 +444,19 @@
                     td.innerText = row[col];
                     fragment.appendChild(td);
                 });
+                let td = document.createElement('td');
+                td.style.textAlign = 'center';
+                let btn = document.createElement('a');
+                btn.setAttribute('href', '/works/' + row['id']);
+                btn.classList.add('btn', 'p-0');
+                let img = document.createElement('img');
+                img.setAttribute('src', '/static/images/look.svg');
+                img.setAttribute('alt', 'Просмотр');
+                img.setAttribute('width', '40');
+                img.setAttribute('height', '20');
+                btn.appendChild(img);
+                td.appendChild(btn)
+                fragment.appendChild(td)
                 tr.appendChild(fragment);
                 tBody.appendChild(tr);
             });
@@ -468,7 +507,7 @@
         }
 
         function createSectionList(data) {
-            let list = document.querySelector('.project-section').parentElement;
+            let list = document.querySelector('.sections');
             list.innerHTML = '';
             data.forEach((row) => {
                 let a = document.createElement("a");
@@ -482,6 +521,47 @@
                 });
 
                 list.appendChild(a);
+            });
+        }
+
+        async function filterMaterials() {
+            let workId = document.getElementById('material-filter').value;
+            if (workId !== '') {
+                await fetch("/api/materials?work_id=" + workId, {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  })
+                .then((response) => response.json())
+                .then((data) => {
+                    createMaterialsTable(data);
+                });
+            }
+        }
+
+        function createMaterialsTable(data) {
+            let table = document.querySelector('.material-table');
+            let tBody = table.querySelector('tbody');
+            tBody.innerHTML = '';
+            data.forEach((row) => {
+                let tr = document.createElement("tr");
+                let fragment = document.createDocumentFragment();
+
+                let td = document.createElement("td");
+                td.innerText = row['name'];
+                fragment.appendChild(td);
+
+                td = document.createElement("td");
+                td.innerText = row['date_end'];
+                fragment.appendChild(td);
+
+                td = document.createElement("td");
+                td.innerText = row['count'] + " " + row['units_of_measurement'];
+                fragment.appendChild(td);
+
+                tr.appendChild(fragment);
+                tBody.appendChild(tr);
             });
         }
 
@@ -561,5 +641,6 @@
         }));
         document.getElementById('workModalBtn').addEventListener('click', createWork);
         document.getElementById('create-section').addEventListener('click', createSection);
+        document.getElementById('btn-material-filter').addEventListener('click', filterMaterials);
     </script>
 {% endblock %}

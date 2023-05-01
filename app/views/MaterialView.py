@@ -1,9 +1,7 @@
-from django.core.mail.backends import console
-from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse
 from django.views import View
 from django.shortcuts import render
 from ..forms.MaterialForm import MaterialForm, Material
-from ..forms.ParticipantForm import ParticipantForm, Participant
 from ..models.MaterialModel import MaterialModel
 from app.models.WorkModel import WorkModel
 from ..models.ParticipantModel import ParticipantModel
@@ -66,7 +64,7 @@ class MaterialView(View):
 
             form = Work(instance=work)
 
-            return render(request, 'works/edit.html', {'work': work, 'form': form})
+            return render(request, 'works/View.html', {'work': work, 'form': form})
 
         return render(request, 'materials/creation.html', {'form_material': form, 'work_id': work_id,
                                                            'participants': participants})

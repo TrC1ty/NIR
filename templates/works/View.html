@@ -1,0 +1,212 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}Работа № {{ work.id }}{% endblock %}
+
+{% block navbar %}
+    <a class="navbar-link" href="{% url 'project-view' work.projectSection.project_id %}"><i class="bi bi-arrow-left"></i>К проекту</a>
+{% endblock %}
+
+{% block pageName %} {{ work.name_hidden_works }} {% endblock %}
+
+{% block content %}
+    <!-- Nav tabs -->
+    <ul class="sidenav nav-tabs" id="myTab" role="tablist">
+        <li>
+            <a class="sidenav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="true">
+                <i class="bi bi-house"></i>Паспорт работы</a>
+        </li>
+        <li>
+            <a class="sidenav-link" id="materials-tab" data-bs-toggle="tab" data-bs-target="#materials"
+               type="button" role="tab" aria-controls="materials" aria-selected="false">
+                <i class="bi bi-people"></i>Материалы</a>
+        </li>
+        <li>
+            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="false">
+                <i class="bi bi-file-earmark"></i>Пункт 4</a>
+        </li>
+        <li>
+            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="false">
+                <i class="bi bi-wrench-adjustable"></i>Пункт 6</a>
+        </li>
+    </ul>
+
+    <div class="content">
+        <div class="tab-content">
+            <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <p style="color: rgba(0, 0, 0, 0.54);">Паспорт работы</p>
+                <form method="post">
+{#                    href="{% url 'work-create-doc' work.id %}"#}
+                    <a class="btn btn-outline-primary btn-sm">Создать акт</a>
+                    <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить эту работу?');" class="btn btn-outline-secondary btn-sm float-end" formaction="{% url 'work-delete' work.id %}"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>
+                </form>
+                <div class="information">
+                    <form action="{% url 'work-edit' work.id %}" method="post" class="p-3">
+                        {% csrf_token %}
+                        <div class="form-error" style="color:red"> {{form.errors}}</div>
+                        {% for field in form.visible_fields %}
+                        <div class="form-group">
+                            {{ field.errors }}
+                            <div class="row mb-4 align-items-center">
+                                <div class="col-12 col-md-3">
+                                    <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    {{ field }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                        <button type="submit" class="btn btn-primary my-2" disabled>Сохранить</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="materials" role="tabpanel" aria-labelledby="materials-tab">
+                <div class="row">
+                    <div class="col-1">
+                        <p style="color: rgba(0, 0, 0, 0.54);">Материалы</p>
+                    </div>
+
+                    <div class="col">
+                        <button id="add-new-material" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#materialModal">Добавить материал</button>
+                    </div>
+                </div>
+
+                <div class="information">
+                    <table class="table material-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Название</th>
+                                <th scope="col">Дата окончания действия сертификата</th>
+                                <th scope="col">Количество материалов</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for material in materials %}
+                                <tr>
+                                    <td>{{ material.name }}</td>
+                                    <td>{{ material.date_end }}</td>
+                                    <td>{{ material.count }}  {{ material.units_of_measurement }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block customModals %}
+    <div class="modal fade" id="materialModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Создание материала</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="material-form">
+                    <div class="form-error" style="color:red"> {{material_form.non_field_errors}}</div>
+
+                    <div id="material-form" class="modal-body">
+                        {% for field in material_form.visible_fields %}
+                            <div class="form-group">
+                                {{ field.errors }}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-12 col-md-3">
+                                        <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ field }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="button" id="materialModalBtn" class="btn btn-primary my-2 close"
+                                    data-bs-dismiss="modal" aria-label="Close">Сохранить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        // for date in form
+        let start = $("#start")[0].getAttribute("value");
+        let end = $("#end")[0].getAttribute("value");
+        let dateStart = start.split(".")
+        let dateEnd = end.split(".")
+        document.getElementById('start').valueAsDate = new Date(dateStart[2] + "-" + dateStart[1] + "-" + dateStart[0]);
+        document.getElementById('end').valueAsDate = new Date(dateEnd[2] + "-" + dateEnd[1] + "-" + dateEnd[0]);
+    </script>
+
+    <script>
+        async function createMaterial() {
+            let data = JSON.stringify({
+                name: document.getElementById('id_name').value,
+                certificate: document.getElementById('id_certificate').value,
+                date_start: document.getElementById('id_date_start').value,
+                date_end: document.getElementById('id_date_end').value,
+                count: document.getElementById('id_count').value,
+                units_of_measurement: document.getElementById('id_units_of_measurement').value,
+                list_count: document.getElementById('id_list_count').value
+            });
+
+            document.getElementById('material-form').reset();
+
+            await fetch("/api/materials/" + {{ work.id }}, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: data,
+              })
+            .then((response) => response.json())
+            .then((data) => {
+                createMaterialsTable(data);
+            });
+        }
+
+        function createMaterialsTable(data) {
+            let table = document.querySelector('.material-table');
+            let tBody = table.querySelector('tbody');
+            tBody.innerHTML = '';
+            data.forEach((row) => {
+                let tr = document.createElement("tr");
+                let fragment = document.createDocumentFragment();
+
+                let td = document.createElement("td");
+                td.innerText = row['name'];
+                fragment.appendChild(td);
+
+                td = document.createElement("td");
+                td.innerText = row['date_end'];
+                fragment.appendChild(td);
+
+                td = document.createElement("td");
+                td.innerText = row['count'] + row['units_of_measurement'];
+                fragment.appendChild(td);
+
+                tr.appendChild(fragment);
+                tBody.appendChild(tr);
+            });
+        }
+
+        document.getElementById('materialModalBtn').addEventListener('click', createMaterial);
+    </script>
+{% endblock %}
