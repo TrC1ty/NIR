@@ -3,13 +3,13 @@
 {% block title %}Проект №{{ project.id }}{% endblock %}
 
 {% block navbar %}
-    <a class="navbar-link" href="{% url 'project-index' %}"><i class="bi bi-arrow-left"></i>К проектам</a>
+<a class="navbar-link" href="{% url 'project-index' %}"><i class="bi bi-arrow-left"></i>К проектам</a>
 {% endblock %}
 
 {% block pageName %} {{ project.name_project }} {% endblock %}
 
 {% block styles %}
-    <style>
+<style>
         details > summary {
           list-style: none;
         }
@@ -17,77 +17,77 @@
 {% endblock %}
 
 {% block content %}
-    <!-- Nav tabs -->
-    <ul class="sidenav nav-tabs" id="myTab" role="tablist">
-        <li>
-            <a class="sidenav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="true">
-                <i class="bi bi-house"></i>Паспорт проекта
-            </a>
-        </li>
-        <li>
-            <a class="sidenav-link" id="participants-tab" data-bs-toggle="tab" data-bs-target="#participants"
-               type="button" role="tab" aria-controls="participants" aria-selected="false">
-                <i class="bi bi-people"></i>Участники</a>
-        </li>
-        <li>
-            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="false">
-                <i class="bi bi-file-earmark"></i>Документация</a>
-        </li>
-        <li>
-            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="false">
-                <i class="bi bi-wrench-adjustable"></i>ИТД<i class="bi bi-caret-down bi-caret-down-sidenav"></i></a>
-        </li>
-        <li>
-            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="false">
-                Реестр ИД</a>
-        </li>
-        <li>
-            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="false">
-                Формирование объектов ИД</a>
-        </li>
-        <li>
-            <a class="sidenav-link" id="works-tab" data-bs-toggle="tab" data-bs-target="#works" type="button"
-                    role="tab" aria-controls="works" aria-selected="false">
-                Работы</a>
-        </li>
-        <li>
-            <a class="sidenav-link" id="materials-tab" data-bs-toggle="tab" data-bs-target="#materials" type="button"
-                    role="tab" aria-controls="materials" aria-selected="false">
-                Материалы</a>
-        </li>
-    </ul>
+<!-- Nav tabs -->
+<ul class="sidenav nav-tabs" id="myTab" role="tablist">
+    <li>
+        <a class="sidenav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+           role="tab" aria-controls="profile" aria-selected="true">
+            <i class="bi bi-house"></i>Паспорт проекта
+        </a>
+    </li>
+    <li>
+        <a class="sidenav-link" id="participants-tab" data-bs-toggle="tab" data-bs-target="#participants"
+           type="button" role="tab" aria-controls="participants" aria-selected="false">
+            <i class="bi bi-people"></i>Участники</a>
+    </li>
+    <li>
+        <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+           role="tab" aria-controls="profile" aria-selected="false">
+            <i class="bi bi-file-earmark"></i>Документация</a>
+    </li>
+    <li>
+        <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+           role="tab" aria-controls="profile" aria-selected="false">
+            <i class="bi bi-wrench-adjustable"></i>ИТД<i class="bi bi-caret-down bi-caret-down-sidenav"></i></a>
+    </li>
+    <li>
+        <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+           role="tab" aria-controls="profile" aria-selected="false">
+            Реестр ИД</a>
+    </li>
+    <li>
+        <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+           role="tab" aria-controls="profile" aria-selected="false">
+            Формирование объектов ИД</a>
+    </li>
+    <li>
+        <a class="sidenav-link" id="works-tab" data-bs-toggle="tab" data-bs-target="#works" type="button"
+           role="tab" aria-controls="works" aria-selected="false">
+            Работы</a>
+    </li>
+    <li>
+        <a class="sidenav-link" id="materials-tab" data-bs-toggle="tab" data-bs-target="#materials" type="button"
+           role="tab" aria-controls="materials" aria-selected="false">
+            Материалы</a>
+    </li>
+</ul>
 
-    <!-- Tab panes -->
-    <div class="content">
-        <div class="tab-content">
-            <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                <p style="color: rgba(0, 0, 0, 0.54);">Паспорт проекта</p>
-                <div class="information">
-                    {% for name, value in project.get_attributes.items %}
-                        <div class="row p-2">
-                            <div class="col-12 col-md-4 label">
-                                <span class="col-form-label p-0" style="color: rgba(0, 0, 0, 0.54);">{{ name }}</span>
-                            </div>
-                            <div class="col-12 col-md-6">
-                                {{ value }}
-                            </div>
-                        </div>
-                    {% endfor %}
+<!-- Tab panes -->
+<div class="content">
+    <div class="tab-content">
+        <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <p style="color: rgba(0, 0, 0, 0.54);">Паспорт проекта</p>
+            <div class="information">
+                {% for name, value in project.get_attributes.items %}
+                <div class="row p-2">
+                    <div class="col-12 col-md-4 label">
+                        <span class="col-form-label p-0" style="color: rgba(0, 0, 0, 0.54);">{{ name }}</span>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        {{ value }}
+                    </div>
                 </div>
+                {% endfor %}
             </div>
+        </div>
 
-            <div class="tab-pane" id="participants" role="tabpanel" aria-labelledby="participants-tab">
-                <p style="color: rgba(0, 0, 0, 0.54);">Участники проекта проекта</p>
-                <div class="information">
-                    {% for name, value in participants.items %}
-                        {% if value.0 != None %}
-                            <details>
-                                <summary>
+        <div class="tab-pane" id="participants" role="tabpanel" aria-labelledby="participants-tab">
+            <p style="color: rgba(0, 0, 0, 0.54);">Участники проекта</p>
+            <div class="information">
+                {% for name, value in participants.items %}
+                {% if value.0 != None %}
+                <details id="details_{{value.0.id}}" onclick="OpenInformation({{value.0.id}})">
+                    <summary>
                         {% endif %}
                         <div class="row p-2">
                             <div class="col-12 col-md-4 label">
@@ -97,299 +97,330 @@
                             </div>
 
                             {% if value.0 == None %}
-                                <div class="col-12 col-md-6">
-                                    <a class="add-new-participant">Добавить</a>
-                                </div>
+                            <div class="col-12 col-md-6">
+                                <a class="add-new-participant">Добавить</a>
+                            </div>
                             {% else %}
-                                <div class="col-12 col-md-6">
-                                    {% if value.0.surname != null %}
-                                        {{ value.0.surname }} {{ value.0.name }} {{ value.0.patronymic }}
-                                    {% else %}
-                                        {{ value.0.name }}
-                                    {% endif %}
-                                </div>
+                            <div class="col-12 col-md-6">
+                                {% if value.0.surname != null %}
+                                {{ value.0.surname }} {{ value.0.name }} {{ value.0.patronymic }}
+                                {% else %}
+                                {{ value.0.name }}
+                                {% endif %}
+                            </div>
                             {% endif %}
+                            <div class="col-12 col-md-1" style="cursor: pointer;" >
+                                <i id="caret_{{value.0.id}}" class="bi bi-caret-down"></i>
+                            </div>
                         </div>
                         {% if value.0 != None %}
-                                </summary>
-                                <div class="row p-2">
-                                    <div class="col-12">
-                                        <p>Будущая информация</p>
-                                    </div>
-                                </div>
-                            </details>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
-
-            <div class="tab-pane" id="works" role="tabpanel" aria-labelledby="works-tab">
-                <div class="row">
-                    <div class="col-1">
-                        <p style="color: rgba(0, 0, 0, 0.54);">Список Работ</p>
-                    </div>
-
-                    <div class="col-md-auto section-label">
-                        <p style="color: rgba(0, 0, 0, 0.54);"></p>
-                    </div>
-
-                    <div class="col">
-                        <button id="add-new-work" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#workModal" disabled>Добавить новую работу</button>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-9">
-                        <div class="information">
-                            <table class="table work-table">
-                                <thead>
-                                    <tr >
-                                        <th scope="col">#</th>
-                                        <th scope="col">Наименование</th>
-                                        <th scope="col">Дата окончания работы</th>
-                                        <th scope="col" style="text-align: center">Просмотр</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <input class="form-control p-2" type="text" placeholder="Поиск" id="search-text" onkeyup="tableSearch()">
-                        <div class="list-group list-group-flush sections">
-                            {% for section in sections %}
-                                <a href="#" class="list-group-item list-group-item-action project-section"
-                                   section="{{ section.id }}">{{ section.name }}</a>
-                            {% endfor %}
+                    </summary>
+                    <div class="row p-2">
+                        <div class="col-12 col-md-2 label">
+                            <img src="#">
                         </div>
 
-
-                        <div>
-                            <input type="text" placeholder="Добавить раздел" />
-                            <button id="create-section" class="btn p-0">
-                                <img src="/static/images/bootstrap/plus.svg" alt="+" width="30" height="30" />
-                            </button>
+                        <div class="col-12 col-md-5">
+                            <div style="color: rgba(0, 0, 0, 0.54);">{{ value.0.surname }} {{ value.0.name }} {{ value.0.patronymic }}</div>
+                            <div style="color: rgba(0, 0, 0, 0.54);">{{ value.0.mail }}</div>
+                            <div style="color: rgba(0, 0, 0, 0.54);">Статус участника: {{ value.0.subject_type }}</div>
+                            <div style="color: rgba(0, 0, 0, 0.54);">Паспорт: {{value.0.passport_data}}</div>
+                            <div style="color: rgba(0, 0, 0, 0.54);">ИНН: {{value.0.inn}}</div>
                         </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="tab-pane" id="materials" role="tabpanel" aria-labelledby="materials-tab">
-                <p style="color: rgba(0, 0, 0, 0.54);">Материалы</p>
-                <div class="row g-3 p-1">
-                    <div class="col-auto text-secondary">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z" /></svg>
-                    </div>
-
-                    <div class="col-auto">
-                        <select class="form-select form-select-sm filter" id="material-filter">
-                            <option value="">все работы</option>
-                            {% for work in works %}
-                                <option value="{{ work.id }}">{{ work.name_hidden_works }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="col-auto">
-                        <button class="btn btn-sm btn-outline-primary" id="btn-material-filter">Обновить</button>
-                    </div>
-
-                </div>
-                <div class="information">
-                    <table class="table material-table">
-                        <thead>
-                            <tr>
-                                <th scope="col">Название</th>
-                                <th scope="col">Дата окончания действия сертификата</th>
-                                <th scope="col">Количество материалов</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                        {% for material in materials %}
-                            <tr>
-                                <td>{{ material.name }}</td>
-                                <td>{{ material.date_end }}</td>
-                                <td>{{ material.count }}  {{ material.units_of_measurement }}</td>
-                            </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="tab-pane" id="naturalPerson" role="tabpanel" aria-labelledby="naturalPerson-tab">
-                <p class="participant-name" style="color: rgba(0, 0, 0, 0.54);"></p>
-                <form method="post">
-                    {% csrf_token %}
-                    {% for field in naturalPerson.visible_fields %}
-                        <div class="form-group">
-                            <div class="form-error">
-                                <span class="text-danger"> {{ field.errors }}</span>
-                            </div>
-                            <div class="row mb-4 align-items-center">
-                                <div class="col-12 col-md-3">
-                                    <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    {{ field }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-
-                    <select name="participant_type" class="form-select" style="display: none">
-                        <option value="DEV">Участник</option>
-                        <option value="REP">Представитель участника</option>
-                    </select>
-
-                    <select name="subject_type" class="form-select" style="display: none">
-                        <option value="ФЛ" selected>Физическое лицо</option>
-                    </select>
-
-                    <button type="button" class="participant-creation btn btn-primary">Создать участника</button>
-                </form>
-            </div>
-
-            <div class="tab-pane" id="legalEntity" role="tabpanel" aria-labelledby="legalEntity-tab">
-                <p class="participant-name" style="color: rgba(0, 0, 0, 0.54);"></p>
-                <form method="post">
-                    {% csrf_token %}
-                    {% for field in legalEntity.visible_fields %}
-                        <div class="form-group">
-                            <div class="form-error">
-                                <span class="text-danger"> {{ field.errors }}</span>
-                            </div>
-                            <div class="row mb-4 align-items-center">
-                                <div class="col-12 col-md-3">
-                                    <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    {{ field }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-
-                    <select name="participant_type" class="form-select" style="display: none">
-                        <option value="DEV">Участник</option>
-                        <option value="REP">Представитель участника</option>
-                    </select>
-
-                    <select name="subject_type" class="form-select" style="display: none">
-                        <option value="ЮЛ" selected>Юридическое лицо</option>
-                    </select>
-
-                    <button type="button" class="participant-creation btn btn-primary">Создать участника</button>
-                </form>
-            </div>
-
-            <div class="tab-pane" id="individualEntrepreneur" role="tabpanel" aria-labelledby="individualEntrepreneur-tab">
-                <p class="participant-name" style="color: rgba(0, 0, 0, 0.54);"></p>
-                <form method="post">
-                    {% csrf_token %}
-                    {% for field in individualEntrepreneur.visible_fields %}
-                        <div class="form-group">
-                            <div class="form-error">
-                                <span class="text-danger"> {{ field.errors }}</span>
-                            </div>
-                            <div class="row mb-4 align-items-center">
-                                <div class="col-12 col-md-3">
-                                    <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    {{ field }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-
-                    <select name="participant_type" class="form-select" maxlength="6" style="display: none">
-                        <option value="DEV">Участник</option>
-                        <option value="REP">Представитель участника</option>
-                    </select>
-
-                    <select name="subject_type" class="form-select" maxlength="2" style="display: none">
-                        <option value="ИП" selected>Индивидуальный предприниматель</option>
-                    </select>
-
-                    <button type="button" class="participant-creation btn btn-primary">Создать участника</button>
-                </form>
-            </div>
-
-            <div class="tab-pane" id="participant-create" role="tabpanel" aria-labelledby="participant-create-tab">
-                <p class="participant-name" style="color: rgba(0, 0, 0, 0.54);"></p>
-                <form>
-                    {% for field in participantType.visible_fields %}
-                        <div class="form-group">
-                            <div class="form-error">
-                                <span class="text-danger"> {{ field.errors }}</span>
-                            </div>
-                            <div class="row mb-4 align-items-center">
-                                <div class="col-12 col-md-3">
-                                    <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    {{ field }}
-                                </div>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </form>
-                <button id="next-step-participant-creation" class="btn btn-primary">Дальше</button>
+                </details>
+                {% endif %}
+                {% endfor %}
             </div>
         </div>
+
+        <div class="tab-pane" id="works" role="tabpanel" aria-labelledby="works-tab">
+            <div class="row">
+                <div class="col-1">
+                    <p style="color: rgba(0, 0, 0, 0.54);">Список Работ</p>
+                </div>
+
+                <div class="col-md-auto section-label">
+                    <p style="color: rgba(0, 0, 0, 0.54);"></p>
+                </div>
+
+                <div class="col">
+                    <button id="add-new-work" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#workModal" disabled>Добавить новую работу</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-9">
+                    <div class="information">
+                        <table class="table work-table">
+                            <thead>
+                            <tr >
+                                <th scope="col">#</th>
+                                <th scope="col">Наименование</th>
+                                <th scope="col">Дата окончания работы</th>
+                                <th scope="col" style="text-align: center">Просмотр</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <input class="form-control p-2" type="text" placeholder="Поиск" id="search-text" onkeyup="tableSearch()">
+                    <div class="list-group list-group-flush sections">
+                        {% for section in sections %}
+                        <div style="display: flex;flex-direction: row;justify-content: flex-start;">
+                            <a href="#" class="list-group-item list-group-item-action project-section"
+                               section="{{ section.id }}">{{ section.name }}
+
+                            </a>
+
+                            <div style="width: 26px; height: 26px; background: rgba(67, 73, 97, 0.04);
+border-radius: 8px;" onclick="ShowWindow({{ section.id }})"> <i style="position: relative; left: 6px; top:2px;"
+                                                                class="bi bi-three-dots-vertical"></i>
+
+                                <div id="{{section.id}}" style="display: none"  class="selection-window">
+                                    <div class="selection-window-item"><i class="bi bi-pencil"><div class="selection-window-item-text">Редактировать</div></i></div>
+                                    <!--                                    <div class="selection-window-item"><i class="bi bi-files"><div class="selection-window-item-text">Duplicate</div></i></div>-->
+                                    <div class="selection-window-item"><i class="bi bi-trash"><div class="selection-window-item-text">Удалить</div></i></div>
+                                </div>
+                            </div>
+
+                            <div style="width: 26px; height: 26px; background: rgba(67, 73, 97, 0.04);
+border-radius: 8px; margin-left: 2px;">
+                                <i style="font-family: 'Roboto';font-style: normal;font-weight: 400;font-size: 14px;line-height: 24px; position: relative; left: 7px; top:1px;">2</i>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+
+                    <div>
+                        <input type="text" placeholder="Добавить раздел" />
+                        <button id="create-section" class="btn p-0">
+                            <img src="/static/images/bootstrap/plus.svg" alt="+" width="30" height="30" />
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="materials" role="tabpanel" aria-labelledby="materials-tab">
+            <p style="color: rgba(0, 0, 0, 0.54);">Материалы</p>
+            <div class="row g-3 p-1">
+                <div class="col-auto text-secondary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z" /></svg>
+                </div>
+
+                <div class="col-auto">
+                    <select class="form-select form-select-sm filter" id="material-filter">
+                        <option value="">все работы</option>
+                        {% for work in works %}
+                        <option value="{{ work.id }}">{{ work.name_hidden_works }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-auto">
+                    <button class="btn btn-sm btn-outline-primary" id="btn-material-filter">Обновить</button>
+                </div>
+
+            </div>
+            <div class="information">
+                <table class="table material-table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Название</th>
+                        <th scope="col">Дата окончания действия сертификата</th>
+                        <th scope="col">Количество материалов</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for material in materials %}
+                    <tr>
+                        <td>{{ material.name }}</td>
+                        <td>{{ material.date_end }}</td>
+                        <td>{{ material.count }}  {{ material.units_of_measurement }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="naturalPerson" role="tabpanel" aria-labelledby="naturalPerson-tab">
+            <p class="participant-name" style="color: rgba(0, 0, 0, 0.54);"></p>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in naturalPerson.visible_fields %}
+                <div class="form-group">
+                    <div class="form-error">
+                        <span class="text-danger"> {{ field.errors }}</span>
+                    </div>
+                    <div class="row mb-4 align-items-center">
+                        <div class="col-12 col-md-3">
+                            <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ field }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <select name="participant_type" class="form-select" style="display: none">
+                    <option value="DEV">Участник</option>
+                    <option value="REP">Представитель участника</option>
+                </select>
+
+                <select name="subject_type" class="form-select" style="display: none">
+                    <option value="ФЛ" selected>Физическое лицо</option>
+                </select>
+
+                <button type="button" class="participant-creation btn btn-primary">Создать участника</button>
+            </form>
+        </div>
+
+        <div class="tab-pane" id="legalEntity" role="tabpanel" aria-labelledby="legalEntity-tab">
+            <p class="participant-name" style="color: rgba(0, 0, 0, 0.54);"></p>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in legalEntity.visible_fields %}
+                <div class="form-group">
+                    <div class="form-error">
+                        <span class="text-danger"> {{ field.errors }}</span>
+                    </div>
+                    <div class="row mb-4 align-items-center">
+                        <div class="col-12 col-md-3">
+                            <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ field }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <select name="participant_type" class="form-select" style="display: none">
+                    <option value="DEV">Участник</option>
+                    <option value="REP">Представитель участника</option>
+                </select>
+
+                <select name="subject_type" class="form-select" style="display: none">
+                    <option value="ЮЛ" selected>Юридическое лицо</option>
+                </select>
+
+                <button type="button" class="participant-creation btn btn-primary">Создать участника</button>
+            </form>
+        </div>
+
+        <div class="tab-pane" id="individualEntrepreneur" role="tabpanel" aria-labelledby="individualEntrepreneur-tab">
+            <p class="participant-name" style="color: rgba(0, 0, 0, 0.54);"></p>
+            <form method="post">
+                {% csrf_token %}
+                {% for field in individualEntrepreneur.visible_fields %}
+                <div class="form-group">
+                    <div class="form-error">
+                        <span class="text-danger"> {{ field.errors }}</span>
+                    </div>
+                    <div class="row mb-4 align-items-center">
+                        <div class="col-12 col-md-3">
+                            <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ field }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <select name="participant_type" class="form-select" maxlength="6" style="display: none">
+                    <option value="DEV">Участник</option>
+                    <option value="REP">Представитель участника</option>
+                </select>
+
+                <select name="subject_type" class="form-select" maxlength="2" style="display: none">
+                    <option value="ИП" selected>Индивидуальный предприниматель</option>
+                </select>
+
+                <button type="button" class="participant-creation btn btn-primary">Создать участника</button>
+            </form>
+        </div>
+
+        <div class="tab-pane" id="participant-create" role="tabpanel" aria-labelledby="participant-create-tab">
+            <p class="participant-name" style="color: rgba(0, 0, 0, 0.54);"></p>
+            <form>
+                {% for field in participantType.visible_fields %}
+                <div class="form-group">
+                    <div class="form-error">
+                        <span class="text-danger"> {{ field.errors }}</span>
+                    </div>
+                    <div class="row mb-4 align-items-center">
+                        <div class="col-12 col-md-3">
+                            <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            {{ field }}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </form>
+            <button id="next-step-participant-creation" class="btn btn-primary">Дальше</button>
+        </div>
     </div>
+</div>
 {% endblock %}
 
 {% block customModals %}
-    <div class="modal fade" id="workModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
+<div class="modal fade" id="workModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Создание работы</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="{% url 'work-create' project.id %}" method="post">
-                    {% csrf_token %}
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{% url 'work-create' project.id %}" method="post">
+                {% csrf_token %}
 
-                    <div class="form-error" style="color:red"> {{workForm.non_field_errors}}</div>
+                <div class="form-error" style="color:red"> {{workForm.non_field_errors}}</div>
 
-                    <div id="work-form" class="modal-body">
-                        {% for field in workForm.visible_fields %}
-                            <div class="form-group">
-                                {{ field.errors }}
-                                <div class="row mb-4 align-items-center">
-                                    <div class="col-12 col-md-3">
-                                        <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        {{ field }}
-                                    </div>
-                                </div>
+                <div id="work-form" class="modal-body">
+                    {% for field in workForm.visible_fields %}
+                    <div class="form-group">
+                        {{ field.errors }}
+                        <div class="row mb-4 align-items-center">
+                            <div class="col-12 col-md-3">
+                                <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
                             </div>
-                        {% endfor %}
-                    </div>
-
-                    <div class="modal-footer">
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button id="workModalBtn" class="btn btn-primary my-2">Сохранить</button>
+                            <div class="col-12 col-md-6">
+                                {{ field }}
+                            </div>
                         </div>
                     </div>
-                </form>
-            </div>
+                    {% endfor %}
+                </div>
+
+                <div class="modal-footer">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button id="workModalBtn" class="btn btn-primary my-2">Сохранить</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
-    <script>
+<script>
         let participantName = '';
         let participantNumber = 0;
         let activeProjectSection = 0;
@@ -642,5 +673,30 @@
         document.getElementById('workModalBtn').addEventListener('click', createWork);
         document.getElementById('create-section').addEventListener('click', createSection);
         document.getElementById('btn-material-filter').addEventListener('click', filterMaterials);
-    </script>
+
+
+
+          function ShowWindow( i ) {
+
+            var window = document.getElementById(i);
+            if (window.style.display === 'none'){
+              window.style.display = 'block';
+            }
+          }
+
+          $(document).mouseup(function (event) {
+                if ($(".selection-window").has(event.target).length === 0){
+                    $(".selection-window").hide();
+                }
+            });
+
+          function OpenInformation(id){
+            var caret_id = 'caret_' + id;
+            console.log(caret_id);
+            console.log(document.getElementById(caret_id));
+            document.getElementById(caret_id).classList.toggle('bi-caret-down');
+            document.getElementById(caret_id).classList.toggle('bi-caret-up');
+          }
+
+</script>
 {% endblock %}
