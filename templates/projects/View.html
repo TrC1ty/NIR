@@ -168,19 +168,20 @@
                         </table>
                     </div>
                 </div>
-
-                <div class="col">
-                    <input class="form-control p-2" type="text" placeholder="Поиск" id="search-text" onkeyup="tableSearch()">
-                    <div class="list-group list-group-flush sections">
+                <div class="col-3">
+                    <div class="col search-background">
+                        <div style="border-bottom: 1px solid;">
+                            <i style="margin-left:10px" class="bi bi-search"></i>
+                            <input style="all: unset;" class="form-control p-2" type="text" placeholder="Поиск" id="search-text" onkeyup="tableSearch()">
+                        </div>
+                        <div class="list-group list-group-flush sections">
                         {% for section in sections %}
                         <div style="display: flex;flex-direction: row;justify-content: flex-start;">
-                            <a href="#" class="list-group-item list-group-item-action project-section"
+                            <a href="#" style="border: none;width:50%" class="list-group-item list-group-item-action project-section"
                                section="{{ section.id }}">{{ section.name }}
-
                             </a>
 
-                            <div style="width: 26px; height: 26px; background: rgba(67, 73, 97, 0.04);
-border-radius: 8px;" onclick="ShowWindow({{ section.id }})"> <i style="position: relative; left: 6px; top:2px;"
+                            <div class="background_i" onclick="ShowWindow({{ section.id }})"> <i style="position: relative; left: 6px; top:2px;"
                                                                 class="bi bi-three-dots-vertical"></i>
 
                                 <div id="{{section.id}}" style="display: none"  class="selection-window">
@@ -190,8 +191,7 @@ border-radius: 8px;" onclick="ShowWindow({{ section.id }})"> <i style="position:
                                 </div>
                             </div>
 
-                            <div style="width: 26px; height: 26px; background: rgba(67, 73, 97, 0.04);
-border-radius: 8px; margin-left: 2px;">
+                            <div class="background_i">
                                 <i style="font-family: 'Roboto';font-style: normal;font-weight: 400;font-size: 14px;line-height: 24px; position: relative; left: 7px; top:1px;">2</i>
                             </div>
                         </div>
@@ -200,11 +200,13 @@ border-radius: 8px; margin-left: 2px;">
 
 
                     <div>
-                        <input type="text" placeholder="Добавить раздел" />
-                        <button id="create-section" class="btn p-0">
-                            <img src="/static/images/bootstrap/plus.svg" alt="+" width="30" height="30" />
+                        <button style="margin-bottom:3px" id="create-section" class="btn p-0">
+                            <i style="margin-left:10px" class="bi bi-plus-square"></i>
                         </button>
+                        <input style="all: unset;" type="text" placeholder="Добавить раздел" />
+
                     </div>
+                </div>
                 </div>
             </div>
         </div>
