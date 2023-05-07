@@ -22,14 +22,14 @@
                 <i class="bi bi-people"></i>Материалы</a>
         </li>
         <li>
-            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="false">
-                <i class="bi bi-file-earmark"></i>Пункт 4</a>
+            <a class="sidenav-link" id="point4-tab" data-bs-toggle="tab" data-bs-target="#point4" type="button"
+                    role="tab" aria-controls="point4" aria-selected="false">
+                <i class="bi bi-file-earmark"></i>Исполнительные схемы</a>
         </li>
         <li>
-            <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="false">
-                <i class="bi bi-wrench-adjustable"></i>Пункт 6</a>
+            <a class="sidenav-link" id="point6-tab" data-bs-toggle="tab" data-bs-target="#point6" type="button"
+                    role="tab" aria-controls="point6" aria-selected="false">
+                <i class="bi bi-wrench-adjustable"></i>СНИПы</a>
         </li>
     </ul>
 
@@ -81,9 +81,10 @@
                     <table class="table material-table">
                         <thead>
                             <tr>
-                                <th scope="col">Название</th>
+                                <th scope="col">Наименование</th>
                                 <th scope="col">Дата окончания действия сертификата</th>
                                 <th scope="col">Количество материалов</th>
+                                <th scope="col">Сертификат</th>
                             </tr>
                         </thead>
 
@@ -93,6 +94,87 @@
                                     <td>{{ material.name }}</td>
                                     <td>{{ material.date_end }}</td>
                                     <td>{{ material.count }}  {{ material.units_of_measurement }}</td>
+                                    <td>
+                                        <a href="/materials/{{ material.id }}/certificate" class="btn p-0">
+                                            <img src="/static/images/look.svg" alt="Просмотр" width="40" height="20">
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="point4" role="tabpanel" aria-labelledby="point4-tab">
+                <div class="col-1">
+                    <p style="color: rgba(0, 0, 0, 0.54);">Пункт 4</p>
+                </div>
+
+                <div class="row g-3 p-1">
+                    <div class="col-auto text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z" /></svg>
+                    </div>
+
+                    <div class="col-auto">
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                data-bs-target="#legalActModal">Добавить документ</button>
+                    </div>
+                </div>
+
+                <div class="information">
+                    <table class="table legal-acts-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Наименование</th>
+                                <th scope="col">Исполнительный документ</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for legal_act in legal_acts %}
+                                <tr>
+                                    <td>{{ legal_act.name }}</td>
+                                    <td>
+                                        <a href="/legal-acts/view/{{ legal_act.id }}" class="btn p-0">
+                                            <img src="/static/images/look.svg" alt="Просмотр" width="40" height="20">
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="point6" role="tabpanel" aria-labelledby="point6-tab">
+                <div class="col-1">
+                    <p style="color: rgba(0, 0, 0, 0.54);">Пункт 6</p>
+                </div>
+
+                <div class="row g-3 p-1">
+                    <div class="col-auto text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z" /></svg>
+                    </div>
+
+                    <div class="col-auto">
+                        <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                data-bs-target="#bcarModal">Добавить документ</button>
+                    </div>
+                </div>
+
+                <div class="information">
+                    <table class="table bcar-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Наименование</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            {% for bcar in bcars %}
+                                <tr>
+                                    <td>{{ bcar.name }}</td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -104,11 +186,11 @@
 {% endblock %}
 
 {% block customModals %}
-    <div class="modal fade" id="materialModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="materialModal" tabindex="-1" role="dialog" aria-labelledby="materialModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Создание материала</h5>
+                <h5 class="modal-title" id="materialModalLabel">Создание материала</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -116,8 +198,82 @@
                 <form id="material-form">
                     <div class="form-error" style="color:red"> {{material_form.non_field_errors}}</div>
 
-                    <div id="material-form" class="modal-body">
+                    <div class="modal-body">
                         {% for field in material_form.visible_fields %}
+                            <div class="form-group">
+                                {{ field.errors }}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-12 col-md-3">
+                                        <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ field }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+                        <div class="form-group">
+                            <label for="materialFile">Выберите сертификат</label>
+                            <input type="file" class="form-control-file" id="materialFile">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button type="button" id="materialModalBtn" class="btn btn-primary my-2 close"
+                                    data-bs-dismiss="modal" aria-label="Close">Сохранить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="legalActModal" tabindex="-1" role="dialog" aria-labelledby="legalActLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="legalActModalLabel">Создание исполнительного документа</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="legal-act-form" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="legalActName">Наименование</label>
+                            <input type="text" class="form-control" id="legalActName" placeholder="Введите наименование">
+                        </div>
+                        <div class="form-group">
+                            <label for="legalActFile">Выберите документ</label>
+                            <input type="file" class="form-control-file" id="legalActFile">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <button id="legalActModalBtn" class="btn btn-primary my-2 close"
+                                    data-bs-dismiss="modal" aria-label="Close">Сохранить</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="bcarModal" tabindex="-1" role="dialog" aria-labelledby="bcarModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="bcarModalLabel">Создание СНИПа</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form id="bcar-form" method="post">
+                    <div class="modal-body">
+                        {% for field in bcar_form.visible_fields %}
                             <div class="form-group">
                                 {{ field.errors }}
                                 <div class="row mb-4 align-items-center">
@@ -134,7 +290,7 @@
 
                     <div class="modal-footer">
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="button" id="materialModalBtn" class="btn btn-primary my-2 close"
+                            <button id="bcarModalBtn" class="btn btn-primary my-2 close"
                                     data-bs-dismiss="modal" aria-label="Close">Сохранить</button>
                         </div>
                     </div>
@@ -156,30 +312,45 @@
     </script>
 
     <script>
-        async function createMaterial() {
-            let data = JSON.stringify({
-                name: document.getElementById('id_name').value,
-                certificate: document.getElementById('id_certificate').value,
-                date_start: document.getElementById('id_date_start').value,
-                date_end: document.getElementById('id_date_end').value,
-                count: document.getElementById('id_count').value,
-                units_of_measurement: document.getElementById('id_units_of_measurement').value,
-                list_count: document.getElementById('id_list_count').value
-            });
+        function createMaterial() {
+            let certificate = document.getElementById('materialFile').files[0];
+            let file_name = certificate['name'];
+            let mimeType = certificate['type'];
+            let fileReader = new FileReader()
 
-            document.getElementById('material-form').reset();
+            if (fileReader && certificate) {
+                fileReader.readAsArrayBuffer(certificate);
+                fileReader.onload = async function () {
+                    let fileData = fileReader.result;
+                    console.log(fileData);
+                    console.log(document.getElementById('id_name'));
+                    let data = JSON.stringify({
+                        name: document.getElementById('id_name').value,
+                        date_start: document.getElementById('id_date_start').value,
+                        date_end: document.getElementById('id_date_end').value,
+                        count: document.getElementById('id_count').value,
+                        units_of_measurement: document.getElementById('id_units_of_measurement').value,
+                        list_count: document.getElementById('id_list_count').value,
+                        file_name: file_name,
+                        file_type: mimeType,
+                        file_data: Array.from(new Uint8Array(fileData))
+                    });
 
-            await fetch("/api/materials/" + {{ work.id }}, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: data,
-              })
-            .then((response) => response.json())
-            .then((data) => {
-                createMaterialsTable(data);
-            });
+                    document.getElementById('material-form').reset();
+
+                    await fetch("/api/materials/" + {{ work.id }}, {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: data,
+                      })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        createMaterialsTable(data);
+                    });
+                }
+            }
         }
 
         function createMaterialsTable(data) {
@@ -202,11 +373,127 @@
                 td.innerText = row['count'] + row['units_of_measurement'];
                 fragment.appendChild(td);
 
+                td = document.createElement('td');
+                let btn = document.createElement('a');
+                btn.setAttribute('href', '/materials/' + row['id'] + '/certificate');
+                btn.classList.add('btn', 'p-0');
+                let img = document.createElement('img');
+                img.setAttribute('src', '/static/images/look.svg');
+                img.setAttribute('alt', 'Просмотр');
+                img.setAttribute('width', '40');
+                img.setAttribute('height', '20');
+                btn.appendChild(img);
+                td.appendChild(btn)
+                fragment.appendChild(td)
+
+                tr.appendChild(fragment);
+                tBody.appendChild(tr);
+            });
+        }
+
+        async function createBCAR() {
+            let data = JSON.stringify({
+                bcar_name: document.getElementById('bcar_name').value,
+            });
+
+            document.getElementById('bcar-form').reset();
+
+            await fetch("/api/works/" + {{ work.id }} + "/bcar", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: data,
+              })
+            .then((response) => response.json())
+            .then((data) => {
+                createBCARsTable(data);
+            });
+        }
+
+        function createBCARsTable(data) {
+            let table = document.querySelector('.bcar-table');
+            let tBody = table.querySelector('tbody');
+            tBody.innerHTML = '';
+            data.forEach((row) => {
+                let tr = document.createElement("tr");
+                let fragment = document.createDocumentFragment();
+
+                let td = document.createElement("td");
+                td.innerText = row['name'];
+                fragment.appendChild(td);
+
+                tr.appendChild(fragment);
+                tBody.appendChild(tr);
+            });
+        }
+
+        function CreateLegalAct() {
+            let actFile = document.getElementById('legalActFile').files[0];
+            let name = document.getElementById('legalActName').value;
+            let file_name = actFile['name'];
+            let mimeType = actFile['type'];
+            let fileReader = new FileReader()
+
+            if (fileReader && actFile) {
+                fileReader.readAsArrayBuffer(actFile);
+                fileReader.onload = async function() {
+                    let fileData = fileReader.result;
+                    console.log(fileData);
+                    let data = JSON.stringify({
+                        name: name,
+                        act_name: file_name,
+                        act_type: mimeType,
+                        act_data: Array.from(new Uint8Array(fileData))
+                    });
+
+                    await fetch("/api/works/" + {{ work.id }} + "/act", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: data,
+                      })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        createLegalActsTable(data);
+                    });
+                }
+            }
+        }
+
+        function createLegalActsTable(data) {
+            let table = document.querySelector('.legal-acts-table');
+            let tBody = table.querySelector('tbody');
+            tBody.innerHTML = '';
+            data.forEach((row) => {
+                let tr = document.createElement("tr");
+                let fragment = document.createDocumentFragment();
+
+                let td = document.createElement("td");
+                td.innerText = row['name'];
+                fragment.appendChild(td);
+
+                td = document.createElement('td');
+                let btn = document.createElement('a');
+                btn.setAttribute('href', '/legal-acts/view/' + row['id']);
+                btn.classList.add('btn', 'p-0');
+                let img = document.createElement('img');
+                img.setAttribute('src', '/static/images/look.svg');
+                img.setAttribute('alt', 'Просмотр');
+                img.setAttribute('width', '40');
+                img.setAttribute('height', '20');
+                btn.appendChild(img);
+                td.appendChild(btn)
+                fragment.appendChild(td)
+
                 tr.appendChild(fragment);
                 tBody.appendChild(tr);
             });
         }
 
         document.getElementById('materialModalBtn').addEventListener('click', createMaterial);
+        document.getElementById('bcarModalBtn').addEventListener('click', createBCAR);
+        document.getElementById('legalActModalBtn').addEventListener('click', CreateLegalAct);
     </script>
 {% endblock %}

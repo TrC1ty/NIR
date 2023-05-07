@@ -10,10 +10,13 @@ from django.utils.encoding import escape_uri_path
 from django.views import View
 from docxtpl import DocxTemplate
 
+from app.models.BCARModel import BCARModel
 from app.models.ProjectModel import ProjectModel
 from app.models.WorkModel import WorkModel
 from app.models.ProjectSection import ProjectSection
 from app.models.MaterialModel import MaterialModel
+from app.models.LegalActModel import LegalActModel
+from app.forms.BCARForm import BCARForm
 from ..forms.WorkForm import WorkForm, Work
 from app.forms.MaterialForm import MaterialForm
 
@@ -55,6 +58,8 @@ class WorkView(View):
     def view(request: HttpRequest, value) -> HttpResponse:
         work = WorkModel.objects.get(id=value)
         materials = MaterialModel.objects.filter(work=work)
+        bcars = BCARModel.objects.filter(work=work)
+        legal_acts = LegalActModel.objects.filter(work=work)
 
         if request.method == 'POST':
             form = WorkForm(request.POST)
@@ -77,11 +82,15 @@ class WorkView(View):
 
         form = Work(instance=work)
         material_form = MaterialForm()
+        bcar_form = BCARForm()
         data = {
             'work': work,
             'form': form,
             'material_form': material_form,
-            'materials': materials
+            'materials': materials,
+            'bcar_form': bcar_form,
+            'bcars': bcars,
+            'legal_acts': legal_acts
         }
 
         return render(request, 'works/View.html', data)

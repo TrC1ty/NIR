@@ -44,6 +44,7 @@ urlpatterns = [
     path('materials/<int:value>', MaterialView.view, name='material-view'),
     path('materials/edit/<int:value>', MaterialView.edit, name='material-edit'),
     path('materials/delete/<int:value>', MaterialView.delete, name='material-delete'),
+    path('materials/<int:material_id>/certificate', MaterialView.view_certificate, name='view-certificate'),
 
     # for bcars
     path('work/<int:work_id>/bcar/create', BCARView.as_view(), name='bcar-create'),
@@ -52,8 +53,13 @@ urlpatterns = [
     # for project sections
     path('project/<int:project_id>/section/add/', ProjectSectionView.post, name='project-section-create'),
 
+    # for legal acts
+    path('legal-acts/view/<int:act_id>', LegalActView.view_act, name='view-legal-act'),
+
     # api
     path('api/works/<int:project_section_id>', WorkController.get),
+    path('api/works/<int:work_id>/bcar', WorkController.create_bcar),
+    path('api/works/<int:work_id>/act', WorkController.create_act),
     path('api/sections/<int:project_id>', ProjectSectionController.post, name='create-section'),
     path('api/materials/<int:work_id>', MaterialController.post),
     path('api/materials', MaterialController.get_by_filter)

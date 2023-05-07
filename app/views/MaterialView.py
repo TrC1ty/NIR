@@ -1,6 +1,8 @@
 from django.http import HttpRequest, HttpResponse
 from django.views import View
 from django.shortcuts import render
+from django.utils.encoding import escape_uri_path
+
 from ..forms.MaterialForm import MaterialForm, Material
 from ..models.MaterialModel import MaterialModel
 from app.models.WorkModel import WorkModel
@@ -9,6 +11,16 @@ from app.forms.WorkForm import Work
 
 
 class MaterialView(View):
+    @staticmethod
+    def view_certificate(request: HttpRequest, material_id):
+        material = MaterialModel.objects.get(id=material_id)
+
+        response = HttpResponse(material.file_data)
+        response['Content-Type'] = material.file_type
+        response['Content-Disposition'] = "attachment; filename=" + escape_uri_path(material.file_name)
+
+        return response
+
     @staticmethod
     def get(request: HttpRequest, work_id) -> HttpResponse:
         form_material = MaterialForm()
@@ -31,7 +43,6 @@ class MaterialView(View):
         print(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
-            certificate = form.cleaned_data['certificate']
             date_start = form.cleaned_data['date_start']
             date_end = form.cleaned_data['date_end']
             count = form.cleaned_data['count']
@@ -50,7 +61,6 @@ class MaterialView(View):
 
             new_material = MaterialModel.objects.create(
                 name=name,
-                certificate=certificate,
                 date_start=date_start,
                 date_end=date_end,
                 provider=provider,

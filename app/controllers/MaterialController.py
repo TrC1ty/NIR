@@ -28,13 +28,15 @@ class MaterialController(APIView):
         work = WorkModel.objects.get(id=work_id)
         MaterialModel.objects.create(
             name=form['name'],
-            certificate=form['certificate'],
             date_start=form['date_start'],
             date_end=form['date_end'],
             provider='',
             count=form['count'],
             units_of_measurement=form['units_of_measurement'],
             list_count=form['list_count'],
+            file_name=form['file_name'],
+            file_type=form['file_type'],
+            file_data=bytearray(form['file_data']),
             work=work
         )
 

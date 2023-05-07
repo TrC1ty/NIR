@@ -14,10 +14,9 @@ class Material(ModelForm):
 
     class Meta:
         model = MaterialModel
-        fields = ['name', 'certificate', 'date_start', 'date_end', 'count', 'units_of_measurement', 'list_count']
+        fields = ['name', 'date_start', 'date_end', 'count', 'units_of_measurement', 'list_count']
         widgets = {
             'name': TextInput(attrs={'class': 'form-control'}),
-            'certificate': TextInput(attrs={'class': 'form-control'}),
             'date_start': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'start'}),
             'date_end': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'end'}),
             'count': TextInput(attrs={'class': 'form-control'}),
@@ -27,7 +26,6 @@ class Material(ModelForm):
 
         labels = {
             "name": "Название материала",
-            "certificate": "Сертификат",
             "date_start": "Дата выдачи сертификата",
             "date_end": "Дата окончания действия сертификата",
             "count": "Количество материалов",
@@ -38,9 +36,6 @@ class Material(ModelForm):
 
 class MaterialForm(forms.Form):
     name = forms.CharField(label='Название', widget=forms.TextInput(
-        attrs={'class': 'form-control'}
-    ))
-    certificate = forms.CharField(label='Сертификат', widget=forms.TextInput(
         attrs={'class': 'form-control'}
     ))
     date_start = forms.DateField(label='Дата выдачи сертификата', widget=forms.DateInput(
