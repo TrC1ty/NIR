@@ -214,8 +214,14 @@
                         {% endfor %}
 
                         <div class="form-group">
-                            <label for="materialFile">Выберите сертификат</label>
-                            <input type="file" class="form-control-file" id="materialFile">
+                            <div class="row mb-4 align-items-center">
+                                <div class="col-12 col-md-3">
+                                    <label class="col-form-label p-0" for="materialFile">Выберите сертификат</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <input type="file" class="form-control-file" id="materialFile">
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -241,13 +247,29 @@
                 </div>
                 <form id="legal-act-form" method="post">
                     <div class="modal-body">
+                        {% for field in legal_act_form.visible_fields %}
+                            <div class="form-group">
+                                {{ field.errors }}
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-12 col-md-3">
+                                        <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ field }}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+
                         <div class="form-group">
-                            <label for="legalActName">Наименование</label>
-                            <input type="text" class="form-control" id="legalActName" placeholder="Введите наименование">
-                        </div>
-                        <div class="form-group">
-                            <label for="legalActFile">Выберите документ</label>
-                            <input type="file" class="form-control-file" id="legalActFile">
+                            <div class="row mb-4 align-items-center">
+                                <div class="col-12 col-md-3">
+                                    <label class="col-form-label p-0" for="legalActFile">Выберите документ</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <input type="file" class="form-control-file" id="legalActFile">
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -322,15 +344,16 @@
                 fileReader.readAsArrayBuffer(certificate);
                 fileReader.onload = async function () {
                     let fileData = fileReader.result;
-                    console.log(fileData);
-                    console.log(document.getElementById('id_name'));
                     let data = JSON.stringify({
                         name: document.getElementById('id_name').value,
-                        date_start: document.getElementById('id_date_start').value,
-                        date_end: document.getElementById('id_date_end').value,
                         count: document.getElementById('id_count').value,
                         units_of_measurement: document.getElementById('id_units_of_measurement').value,
                         list_count: document.getElementById('id_list_count').value,
+                        provider: document.getElementById('id_provider').value,
+                        certificate_name: document.getElementById('id_certificate_name').value,
+                        certificate_number: document.getElementById('id_certificate_number').value,
+                        date_start: document.getElementById('id_date_start').value,
+                        date_end: document.getElementById('id_date_end').value,
                         file_name: file_name,
                         file_type: mimeType,
                         file_data: Array.from(new Uint8Array(fileData))
@@ -428,9 +451,12 @@
             });
         }
 
-        function CreateLegalAct() {
+        function CreateLegalAct(event) {
+            event.preventDefault();
             let actFile = document.getElementById('legalActFile').files[0];
-            let name = document.getElementById('legalActName').value;
+            let name = document.getElementById('document_name').value;
+            let document_number = document.getElementById('document_number').value;
+            let document_date = document.getElementById('document_date').value;
             let file_name = actFile['name'];
             let mimeType = actFile['type'];
             let fileReader = new FileReader()
@@ -442,6 +468,8 @@
                     console.log(fileData);
                     let data = JSON.stringify({
                         name: name,
+                        document_number: document_number,
+                        document_date: document_date,
                         act_name: file_name,
                         act_type: mimeType,
                         act_data: Array.from(new Uint8Array(fileData))

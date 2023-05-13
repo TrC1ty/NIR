@@ -19,6 +19,7 @@ from app.models.LegalActModel import LegalActModel
 from app.forms.BCARForm import BCARForm
 from ..forms.WorkForm import WorkForm, Work
 from app.forms.MaterialForm import MaterialForm
+from app.forms.LegalActForm import LegalActForm
 
 
 class WorkView(View):
@@ -83,6 +84,7 @@ class WorkView(View):
         form = Work(instance=work)
         material_form = MaterialForm()
         bcar_form = BCARForm()
+        legal_act_form = LegalActForm()
         data = {
             'work': work,
             'form': form,
@@ -90,7 +92,8 @@ class WorkView(View):
             'materials': materials,
             'bcar_form': bcar_form,
             'bcars': bcars,
-            'legal_acts': legal_acts
+            'legal_acts': legal_acts,
+            'legal_act_form': legal_act_form,
         }
 
         return render(request, 'works/View.html', data)

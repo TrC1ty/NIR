@@ -60,7 +60,6 @@ class ProjectView(View):
     @staticmethod
     def post(request: HttpRequest) -> HttpResponse:
         form = ProjectForm(request.POST)
-        print(123)
         if form.is_valid():
             name_project = form.cleaned_data['name_project']
             name_project_documentation = form.cleaned_data['name_project_documentation']

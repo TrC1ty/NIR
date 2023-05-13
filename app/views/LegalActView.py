@@ -23,36 +23,3 @@ class LegalActView(View):
         response['Content-Disposition'] = "attachment; filename=" + escape_uri_path(legalAct.file_name)
 
         return response
-
-    @staticmethod
-    def edit_acts(request: HttpRequest, work_id) -> HttpResponse:
-        work = WorkModel.objects.get(id=work_id)
-        actForm = request.POST.dict()
-        actIds = re.findall(r'act\d+', ", ".join(actForm.keys()))
-        acts = []
-        for actId in actIds:
-            elementId = re.search(r"\d+", actId).group()
-            querySet = work.acts.filter(id=elementId)
-            if querySet:
-                act = querySet.get()
-                act.name = actForm[actId]
-                act.save()
-                acts.append(act)
-            else:
-                act = LegalActModel.objects.create(
-                    name=actForm[actId],
-                )
-                act.save()
-                acts.append(act)
-
-        for el in work.acts.all():
-            if el not in acts:
-                el.delete()
-
-        work.acts.clear()
-        work.acts.add(*acts)
-        work.save()
-
-        form = Work(instance=work)
-
-        return render(request, 'works/View.html', {'work': work, 'form': form})

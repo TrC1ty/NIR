@@ -18,7 +18,7 @@ class Project(ModelForm):
             "name_project": "Наименование проекта",
             "name_project_documentation": "Наименование проектной документации",
             "building_address": "Адрес объекта строительства",
-            "number_document": "Номер документа",
+            "number_document": "Шифр проекта",
         }
 
 
