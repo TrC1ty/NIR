@@ -28,6 +28,7 @@ share/python-wheels/
 MANIFEST
 .idea
 app/migrations/
+documentation/pdf/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

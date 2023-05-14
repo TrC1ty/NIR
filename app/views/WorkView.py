@@ -16,6 +16,7 @@ from app.models.WorkModel import WorkModel
 from app.models.ProjectSection import ProjectSection
 from app.models.MaterialModel import MaterialModel
 from app.models.LegalActModel import LegalActModel
+from app.models.ProjectParticipant import ProjectParticipant
 from app.forms.BCARForm import BCARForm
 from ..forms.WorkForm import WorkForm, Work
 from app.forms.MaterialForm import MaterialForm
@@ -137,16 +138,13 @@ class WorkView(View):
         return render(request, 'works/index.html', {'works': works})
 
     @staticmethod
-    def create_doc(request: HttpRequest, value) -> HttpResponse:
-        filepath, filename = create_documentation(value)
-        file = open(filepath, 'rb')
-        content = file.read()
+    def create_doc(request: HttpRequest, work_id) -> HttpResponse:
+        file_stream, filename = create_documentation(work_id)
 
-        response = HttpResponse(
-            content,
-            content_type='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-        )
+        response = HttpResponse(file_stream)
+        response['Content-Type'] = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
         response['Content-Disposition'] = "attachment; filename=" + escape_uri_path(filename)
+
         return response
 
     @staticmethod
@@ -158,11 +156,9 @@ class WorkView(View):
         name_zip = f'{project_get.name_project}.zip'
 
         for i in range(works.count()):
-            filepath, filename = create_documentation(works[i].id)
-            file = open(filepath, 'rb')
-            content = file.read()
+            file_stream, filename = create_documentation(works[i].id)
 
-            my_zip.writestr(filename, content)
+            my_zip.writestr(filename, file_stream)
         my_zip.close()
 
         # Return zip
@@ -182,7 +178,7 @@ def create_documentation(work_id):
     doc = DocxTemplate(path)
 
     work = WorkModel.objects.get(id=work_id)
-    project = work.project
+    project = work.projectSection.project
 
     # добавление объекта капитального строительства
     # добавление застройщика
@@ -198,28 +194,37 @@ def create_documentation(work_id):
     context = {
         'name_project_documentation': project.name_project_documentation,
         'building_address': project.building_address,
-        'builder': get_performer(project.builder),
-        'person_the_construction': get_performer(project.person_the_construction),
-        'person_prepares_doc': get_performer(project.person_prepares_doc),
-        'person_performing_work': get_performer(project.person_performed_work),
+        'builder':
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=1).first()),
+        'person_the_construction':
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=2).first()),
+        'person_prepares_doc':
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=3).first()),
+        'person_performing_work':
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first()),
         'number': work.id,
         'name_project': project.name_project,
         'date_day': datetime.date.today().day,
         'date_month': months[str(datetime.date.today().month)],
         'date_year': datetime.date.today().year,
-        'representative_builder': get_performer(project.representative_builder),
-        'representative_person_the_construction': get_performer(project.representative_person_the_construction),
-        'specialist_organization_construction': get_performer(project.specialist_organization_construction),
-        'representative_person_preparing_project_doc': get_performer(
-            project.representative_person_preparing_project_doc),
-        'representative_person_performed_examined': get_performer(
-            project.representative_person_performed_examined),
-        'other_persons_participated_examination': get_performer(project.other_persons_participated_examination)
+        'representative_builder':
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=5).first()),
+        'representative_person_the_construction':
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=6).first()),
+        'specialist_organization_construction':
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=7).first()),
+        'representative_person_preparing_project_doc':
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=8).first()),
+        'representative_person_performed_examined':
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=9).first()),
+        'other_persons_participated_examination':
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=10).first())
     }
 
     # добавление названия субъекта, которое осуществляло строительство
-    if project.person_performed_work:
-        context['person_the_construction_name'] = project.person_performed_work.legal_name
+    if ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first():
+        context['person_the_construction_name'] = \
+            ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().legal_name
 
     # добавление названия работ
     context['name_hidden_works'] = work.name_hidden_works
@@ -235,11 +240,13 @@ def create_documentation(work_id):
 
     # добавление материалов
     row = ""
-    for material in work.materials.all():
-        row += f"{material.name}, {material.certificate}, срок действия c {material.date_start} по " \
+    for material in MaterialModel.objects.filter(work=work):
+        row += f"{material.name}, {material.certificate_name}, срок действия c {material.date_start} по " \
                f"{material.date_end}, "
 
-    row = f"{row[:-2]}."
+    if len(row) > 2:
+        row = f"{row[:-2]}."
+
     context['materials'] = row
 
     # добавление начала работ
@@ -254,11 +261,12 @@ def create_documentation(work_id):
 
     # работы выполнены в соответствии с...(добавление СНИПОВ)
     row = ""
-    for bcar in work.bcars.all():
+    for bcar in BCARModel.objects.filter(work=work):
         row += f"{bcar.name}, "
 
     # [:-2] Для удаления лишней запятой и пробела
-    context['bcars'] = row[:-2]
+    if len(row) > 2:
+        context['bcars'] = row[:-2]
 
     # добавление разрешенных работ
     context['permitted_works'] = work.permitted_works
@@ -270,34 +278,36 @@ def create_documentation(work_id):
     context['number_instances'] = work.number_instances
 
     # добавление инициалов представителя застройщика
-    context['representative_builder_name'] = get_participant_name(project.representative_builder)
+    context['representative_builder_name'] = \
+        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=5).first())
 
     # добавление инициалов представителя лица, осуществляющего строительство
     context['representative_person_the_construction_name'] = \
-        get_participant_name(project.representative_person_the_construction)
+        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=6).first())
 
     # добавление инициалов специалиста по организации строительства
     context['specialist_organization_construction_name'] = \
-        get_participant_name(project.specialist_organization_construction)
+        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=7).first())
 
     # добавление инициалов представителя лица, осуществляющего подготовку проектной документации
     context['representative_person_preparing_project_doc_name'] = \
-        get_participant_name(project.representative_person_preparing_project_doc)
+        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=8).first())
 
     # добавление инициалов представителя лица, выполнившего работы, подлежащие освидетельствованию
     context['representative_person_performed_examined_name'] = \
-        get_participant_name(project.representative_person_performed_examined)
+        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=9).first())
 
     # добавление инициалов представителей иных лиц
     context['other_persons_participated_examination_name'] = \
-        get_participant_name(project.other_persons_participated_examination)
+        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=10).first())
 
     # добавление приложения
-    add_application(work, context, project.builder)
+    add_application(work, context, ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first())
 
     doc.render(context)
-    path = os.path.join(base_path, 'documentation/new_act.docx')
-    doc.save(path)
+    file_stream = io.BytesIO()
+    doc.save(file_stream)
+    file_stream.seek(0)
 
     act_name = "акт_"
     if len(work.name_hidden_works) > 20:
@@ -305,41 +315,46 @@ def create_documentation(work_id):
     else:
         act_name += work.name_hidden_works + ".docx"
 
-    return path, act_name
+    return file_stream, act_name
 
 
 # добавление актов
 def add_application(work, context, builder):
     table = []
-    acts = work.acts.all()
+    acts = LegalActModel.objects.filter(work=work)
+    materials = MaterialModel.objects.filter(work=work)
     act_person = ""
     if builder:
         act_person = builder.legal_name
 
+    cur_page = 4
     if len(acts) > 1:
         context['has_application'] = True
         context['new_page'] = '\f'
-        last_i = 0
-        for i in range(len(acts)):
+        index = 1
+        for act in acts:
             table.append({
-                'index': i + 1,
-                'name': acts[i].name,
-                'number': f"от {work.end_date_work.strftime('%d.%m.%Y')}",
+                'index': index,
+                'name': act.name,
+                'number': f"{act.document_number} от {work.end_date_work.strftime('%d.%m.%Y')}",
                 'person': act_person,
-                'count': 1,
+                'count': act.list_count,
+                'list_numbers': calculate_the_number_of_pages(int(act.list_count), cur_page)
             })
-            last_i = i
+            cur_page += int(act.list_count)
+            index += 1
 
-        materials = work.materials.all()
         for material in materials:
-            last_i += 1
             table.append({
-                'index': last_i + 1,
-                'name': "Сертификат соответствия",
-                'number': material.certificate.replace("Сертификат соответствия", "").strip(),
-                'person': material.provider.legal_name,
+                'index': index,
+                'name': material.certificate_name,
+                'number': material.certificate_number,
+                'person': material.provider,
                 'count': material.list_count,
+                'list_numbers': calculate_the_number_of_pages(int(material.list_count), cur_page)
             })
+            index += 1
+            cur_page += int(material.list_count)
 
         context['table'] = table
         context['submitted_doc'] = "Приложен реестр документов, " \
@@ -394,3 +409,10 @@ def get_representative(representative):
         return " ".join(attributes)
 
     return ""
+
+
+def calculate_the_number_of_pages(list_count, cur_page):
+    if list_count > 1:
+        return f"{cur_page}-{cur_page+list_count-1}"
+    else:
+        return f"{cur_page}"

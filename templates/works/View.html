@@ -37,11 +37,10 @@
         <div class="tab-content">
             <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <p style="color: rgba(0, 0, 0, 0.54);">Паспорт работы</p>
-{#                <form method="post">#}
-{#                    href="{% url 'work-create-doc' work.id %}"#}
-{#                    <a class="btn btn-outline-primary btn-sm">Создать акт</a>#}
+                <form method="post">
+                    <a href="{% url 'work-create-doc' work.id %}" class="btn btn-outline-primary btn-sm">Создать акт</a>
 {#                    <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить эту работу?');" class="btn btn-outline-secondary btn-sm float-end" formaction="{% url 'work-delete' work.id %}"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>#}
-{#                </form>#}
+                </form>
                 <div class="information">
                     <form action="" method="post" class="p-3">
                         {% csrf_token %}

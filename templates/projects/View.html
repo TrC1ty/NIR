@@ -144,8 +144,16 @@
                     <p style="color: rgba(0, 0, 0, 0.54);"></p>
                 </div>
 
-                <div class="col">
+                <div class="col-md-auto">
                     <button id="add-new-work" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#workModal" disabled>Добавить новую работу</button>
+                </div>
+
+                <div class="col-md-auto">
+                    <a id="get-registry" class="btn btn-primary" disabled>Сформировать реестр</a>
+                </div>
+
+                <div class="col-md-auto">
+                    <a id="get-pdf" class="btn btn-primary" disabled>Получить pdf</a>
                 </div>
             </div>
 
@@ -669,7 +677,12 @@
 
         document.querySelectorAll('.participant-creation').forEach(el => el.addEventListener('click', createParticipant));
         document.querySelectorAll('.project-section').forEach(el => el.addEventListener('click', function (event) {
+            let sectionId = event.target.getAttribute('section');
             document.getElementById('add-new-work').disabled = false;
+            document.getElementById('get-registry').disabled = false;
+            document.getElementById('get-pdf').disabled = false;
+            document.getElementById('get-registry').setAttribute('href', '/project-section/' + sectionId + '/get-registry')
+            document.getElementById('get-pdf').setAttribute('href', '/project-section/' + sectionId + '/get-pdf')
             getWorkInformation(event);
         }));
         document.getElementById('workModalBtn').addEventListener('click', createWork);
@@ -678,27 +691,27 @@
 
 
 
-          function ShowWindow( i ) {
-
-            var window = document.getElementById(i);
-            if (window.style.display === 'none'){
-              window.style.display = 'block';
+        function ShowWindow( i ) {
+            let window = document.getElementById(i);
+                if (window.style.display === 'none'){
+                  window.style.display = 'block';
+                }
             }
-          }
 
-          $(document).mouseup(function (event) {
-                if ($(".selection-window").has(event.target).length === 0){
-                    $(".selection-window").hide();
+            $(document).mouseup(function (event) {
+                let selectionWindow = $(".selection-window");
+                if (selectionWindow.has(event.target).length === 0){
+                    selectionWindow.hide();
                 }
             });
 
-          function OpenInformation(id){
-            var caret_id = 'caret_' + id;
+            function OpenInformation(id){
+            let caret_id = 'caret_' + id;
             console.log(caret_id);
             console.log(document.getElementById(caret_id));
             document.getElementById(caret_id).classList.toggle('bi-caret-down');
             document.getElementById(caret_id).classList.toggle('bi-caret-up');
-          }
+        }
 
 </script>
 {% endblock %}

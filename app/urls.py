@@ -8,6 +8,7 @@ from app.views.ParticipantView import ParticipantView
 from app.views.ProjectView import ProjectView
 from app.views.WorkView import WorkView
 from app.views.MaterialView import MaterialView
+from app.views.ProjectSectionView import ProjectSectionView
 
 
 urlpatterns = [
@@ -23,7 +24,7 @@ urlpatterns = [
     # for works
     path('project-section/<int:project_section_id>/add-work', WorkView.as_view(), name='work-create'),
     path('works/<int:value>', WorkView.view, name='work-view'),
-    path('works/create_doc/<int:value>', WorkView.create_doc, name='work-create-doc'),
+    path('works/create_doc/<int:work_id>', WorkView.create_doc, name='work-create-doc'),
     path('works/create_docs/<int:value>', WorkView.create_acts_in_project, name='work-create-acts'),
 
     # for materials
@@ -31,6 +32,10 @@ urlpatterns = [
 
     # for legal acts
     path('legal-acts/view/<int:act_id>', LegalActView.view_act, name='view-legal-act'),
+
+    # for project sections
+    path('project-section/<int:project_section_id>/get-registry', ProjectSectionView.get_registry, name='get-registry'),
+    path('project-section/<int:project_section_id>/get-pdf', ProjectSectionView.get_pdfs, name='get-pdf'),
 
     # api
     path('api/works/<int:project_section_id>', WorkController.get),
