@@ -49,7 +49,7 @@ class Work(ModelForm):
             'other_details_working_drawing': 'Другие реквизиты рабочего чертежа',
             'name_project_doc': 'Наименование проектной документации',
             'name_working_doc': 'Наименование рабочей документации',
-            'information_persons_prepare_doc': 'Сведения о лицах, осуществялющих подготовку раздела документации',
+            'information_persons_prepare_doc': 'Сведения о лицах, осуществляющих подготовку раздела документации',
             'start_date_work': 'Дата начала работ',
             'end_date_work': 'Дата окончания работ',
             'permitted_works': 'Разрешенные работы',

@@ -26,6 +26,8 @@ urlpatterns = [
     path('works/<int:value>', WorkView.view, name='work-view'),
     path('works/create_doc/<int:work_id>', WorkView.create_doc, name='work-create-doc'),
     path('works/create_docs/<int:value>', WorkView.create_acts_in_project, name='work-create-acts'),
+    path('works/<int:value>/edit', WorkView.edit, name='edit-work'),
+    path('works/<int:value>/delete', WorkView.delete, name='delete-work'),
 
     # for materials
     path('materials/<int:material_id>/certificate', MaterialView.view_certificate, name='view-certificate'),

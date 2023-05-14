@@ -104,38 +104,34 @@ class WorkView(View):
         work = WorkModel.objects.get(id=value)
 
         if request.method == 'POST':
-            form = WorkForm(request.POST)
+            form = Work(request.POST)
+
             if form.is_valid():
-                work.name_hidden_works = form.cleaned_data["name_hidden_works"]
-                work.number_project_doc = form.cleaned_data["number_project_doc"]
-                work.number_working_doc = form.cleaned_data["number_working_doc"]
-                work.other_details_project_drawing = form.cleaned_data["other_details_project_drawing"]
-                work.other_details_working_drawing = form.cleaned_data["other_details_working_drawing"]
-                work.name_project_doc = form.cleaned_data["name_project_doc"]
-                work.name_working_doc = form.cleaned_data["name_working_doc"]
-                work.information_persons_prepare_doc = form.cleaned_data["information_persons_prepare_doc"]
+                work.name_hidden_works = form.cleaned_data.get("name_hidden_works", "")
+                work.number_project_doc = form.cleaned_data.get("number_project_doc", "")
+                work.number_working_doc = form.cleaned_data.get("number_working_doc", "")
+                work.other_details_project_drawing = form.cleaned_data.get("other_details_project_drawing", "")
+                work.other_details_working_drawing = form.cleaned_data.get("other_details_working_drawing", "")
+                work.name_project_doc = form.cleaned_data.get("name_project_doc", "")
+                work.name_working_doc = form.cleaned_data.get("name_working_doc", "")
+                work.information_persons_prepare_doc = form.cleaned_data.get("information_persons_prepare_doc", "")
                 work.start_date_work = form.cleaned_data["start_date_work"]
                 work.end_date_work = form.cleaned_data["end_date_work"]
-                work.permitted_works = form.cleaned_data["permitted_works"]
-                work.additional_information = form.cleaned_data["additional_information"]
-                work.number_instances = form.cleaned_data["number_instances"]
+                work.permitted_works = form.cleaned_data.get("permitted_works", "")
+                work.additional_information = form.cleaned_data.get("additional_information", "")
+                work.number_instances = form.cleaned_data.get("number_instances", 0)
 
                 work.save()
 
-                return render(request, 'works/View.html', {'work': work})
-
-        form = Work(instance=work)
-
-        return render(request, 'works/View.html', {'work': work,
-                                                   'form': form})
+        return HttpResponseRedirect(f'/works/{work.id}')
 
     @staticmethod
     def delete(request: HttpRequest, value) -> HttpResponse:
         work = WorkModel.objects.get(id=value)
+        project_id = work.projectSection.project_id
         work.delete()
-        works = WorkModel.objects.all()
 
-        return render(request, 'works/index.html', {'works': works})
+        return HttpResponseRedirect(f'/projects/{project_id}')
 
     @staticmethod
     def create_doc(request: HttpRequest, work_id) -> HttpResponse:

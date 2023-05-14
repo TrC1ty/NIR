@@ -38,11 +38,12 @@
             <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <p style="color: rgba(0, 0, 0, 0.54);">Паспорт работы</p>
                 <form method="post">
+                    {% csrf_token %}
                     <a href="{% url 'work-create-doc' work.id %}" class="btn btn-outline-primary btn-sm">Создать акт</a>
-{#                    <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить эту работу?');" class="btn btn-outline-secondary btn-sm float-end" formaction="{% url 'work-delete' work.id %}"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>#}
+                    <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить эту работу?');" class="btn btn-outline-secondary btn-sm float-end" formaction="{% url 'delete-work' work.id %}"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>
                 </form>
                 <div class="information">
-                    <form action="" method="post" class="p-3">
+                    <form action="{% url 'edit-work' work.id %}" method="post" class="p-3">
                         {% csrf_token %}
                         <div class="form-error" style="color:red"> {{form.errors}}</div>
                         {% for field in form.visible_fields %}
@@ -59,7 +60,7 @@
                         </div>
                         {% endfor %}
 
-                        <button type="submit" class="btn btn-primary my-2" disabled>Сохранить</button>
+                        <button type="submit" class="btn btn-primary my-2">Сохранить</button>
                     </form>
                 </div>
             </div>
