@@ -10,7 +10,7 @@ class ProjectModel(models.Model):
     name_project_documentation = models.TextField()
     building_address = models.TextField()
     date = models.DateTimeField()
-    number_document = models.TextField()
+    project_code = models.TextField()
 
     class Meta:
         db_table = "Projects"
@@ -19,7 +19,7 @@ class ProjectModel(models.Model):
         attributes = {
             "Наименование проектной документации": self.name_project_documentation,
             "Адрес объекта строительства": self.building_address,
-            "Номер документа": self.number_document,
+            "Шифр проекта": self.project_code,
             "Дата": self.date
         }
 

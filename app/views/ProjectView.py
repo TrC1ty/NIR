@@ -65,13 +65,13 @@ class ProjectView(View):
             name_project_documentation = form.cleaned_data['name_project_documentation']
             building_address = form.cleaned_data['building_address']
             date = datetime.now()
-            number_document = form.cleaned_data['number_document']
+            project_code = form.cleaned_data['project_code']
             ProjectModel.objects.create(
                 name_project=name_project,
                 name_project_documentation=name_project_documentation,
                 building_address=building_address,
                 date=date,
-                number_document=number_document
+                project_code=project_code
             ).save()
 
             return HttpResponseRedirect('/')

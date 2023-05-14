@@ -8,6 +8,7 @@ class LegalActModel(models.Model):
     name = models.TextField()
     document_number = models.TextField()
     document_date = models.DateField()
+    list_count = models.TextField()
     file_name = models.TextField()
     file_type = models.TextField()
     file_data = models.BinaryField()

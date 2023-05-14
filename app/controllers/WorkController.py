@@ -53,6 +53,7 @@ class WorkController(APIView):
             name=form['name'],
             document_number=form['document_number'],
             document_date=form['document_date'],
+            list_count=form['list_count'],
             file_name=form['act_name'],
             file_type=form['act_type'],
             file_data=bytearray(form['act_data']),

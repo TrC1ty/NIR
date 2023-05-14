@@ -37,13 +37,13 @@
         <div class="tab-content">
             <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <p style="color: rgba(0, 0, 0, 0.54);">Паспорт работы</p>
-                <form method="post">
+{#                <form method="post">#}
 {#                    href="{% url 'work-create-doc' work.id %}"#}
-                    <a class="btn btn-outline-primary btn-sm">Создать акт</a>
-                    <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить эту работу?');" class="btn btn-outline-secondary btn-sm float-end" formaction="{% url 'work-delete' work.id %}"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>
-                </form>
+{#                    <a class="btn btn-outline-primary btn-sm">Создать акт</a>#}
+{#                    <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить эту работу?');" class="btn btn-outline-secondary btn-sm float-end" formaction="{% url 'work-delete' work.id %}"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>#}
+{#                </form>#}
                 <div class="information">
-                    <form action="{% url 'work-edit' work.id %}" method="post" class="p-3">
+                    <form action="" method="post" class="p-3">
                         {% csrf_token %}
                         <div class="form-error" style="color:red"> {{form.errors}}</div>
                         {% for field in form.visible_fields %}
@@ -453,10 +453,12 @@
 
         function CreateLegalAct(event) {
             event.preventDefault();
+            console.log(123);
             let actFile = document.getElementById('legalActFile').files[0];
             let name = document.getElementById('document_name').value;
             let document_number = document.getElementById('document_number').value;
             let document_date = document.getElementById('document_date').value;
+            let list_count = document.getElementById('document_list_count').value;
             let file_name = actFile['name'];
             let mimeType = actFile['type'];
             let fileReader = new FileReader()
@@ -465,11 +467,12 @@
                 fileReader.readAsArrayBuffer(actFile);
                 fileReader.onload = async function() {
                     let fileData = fileReader.result;
-                    console.log(fileData);
+                    document.getElementById('legal-act-form').reset();
                     let data = JSON.stringify({
                         name: name,
                         document_number: document_number,
                         document_date: document_date,
+                        list_count: list_count,
                         act_name: file_name,
                         act_type: mimeType,
                         act_data: Array.from(new Uint8Array(fileData))

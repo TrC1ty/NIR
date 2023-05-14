@@ -7,17 +7,19 @@ from app.models.LegalActModel import LegalActModel
 class LegalAct(ModelForm):
     class Meta:
         model = LegalActModel
-        fields = ['name', 'document_number', 'document_date']
+        fields = ['name', 'document_number', 'document_date', 'list_count']
         widgets = {
-            'name': TextInput(attrs={'class': 'form-control'}),
-            'document_number': TextInput(attrs={'class': 'form-control'}),
+            'name': TextInput(attrs={'class': 'form-control', 'id': 'document_name'}),
+            'document_number': TextInput(attrs={'class': 'form-control', 'id': 'document_number'}),
             'document_date': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'document_date'}),
+            'list_count': TextInput(attrs={'class': 'form-control', 'id': 'document_list_count'}),
         }
 
         labels = {
             "name": "Наименование",
             "document_number": "Номер документа",
             "document_date": "Дата составления",
+            "list_count": "Количество страниц",
         }
 
 
@@ -39,5 +41,11 @@ class LegalActForm(forms.Form):
         widget=forms.DateInput(
             format='%d-%m-%Y',
             attrs={'type': 'date', 'class': 'form-control', 'id': 'document_date'}
+        )
+    )
+    list_count = forms.CharField(
+        label='Количество страниц',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control', 'id': 'document_list_count'}
         )
     )
