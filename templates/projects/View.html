@@ -20,44 +20,44 @@
 <!-- Nav tabs -->
 <ul class="sidenav nav-tabs" id="myTab" role="tablist">
     <li>
-        <a class="sidenav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-           role="tab" aria-controls="profile" aria-selected="true">
+        <a class="sidenav-link sidenav-link-active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+           role="tab" aria-controls="profile" aria-selected="true" onclick="ChangeTheState(this)">
             <i class="bi bi-house"></i>Паспорт проекта
         </a>
     </li>
     <li>
         <a class="sidenav-link" id="participants-tab" data-bs-toggle="tab" data-bs-target="#participants"
-           type="button" role="tab" aria-controls="participants" aria-selected="false">
+           type="button" role="tab" aria-controls="participants" aria-selected="false" onclick="ChangeTheState(this)">
             <i class="bi bi-people"></i>Участники</a>
     </li>
     <li>
         <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-           role="tab" aria-controls="profile" aria-selected="false">
+           role="tab" aria-controls="profile" aria-selected="false" onclick="ChangeTheState(this)">
             <i class="bi bi-file-earmark"></i>Документация</a>
     </li>
     <li>
         <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-           role="tab" aria-controls="profile" aria-selected="false">
+           role="tab" aria-controls="profile" aria-selected="false" onclick="ChangeTheState(this)">
             <i class="bi bi-wrench-adjustable"></i>ИТД<i class="bi bi-caret-down bi-caret-down-sidenav"></i></a>
     </li>
     <li>
         <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-           role="tab" aria-controls="profile" aria-selected="false">
+           role="tab" aria-controls="profile" aria-selected="false" onclick="ChangeTheState(this)">
             Реестр ИД</a>
     </li>
     <li>
         <a class="sidenav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-           role="tab" aria-controls="profile" aria-selected="false">
+           role="tab" aria-controls="profile" aria-selected="false" onclick="ChangeTheState(this)">
             Формирование объектов ИД</a>
     </li>
     <li>
         <a class="sidenav-link" id="works-tab" data-bs-toggle="tab" data-bs-target="#works" type="button"
-           role="tab" aria-controls="works" aria-selected="false">
+           role="tab" aria-controls="works" aria-selected="false" onclick="ChangeTheState(this)">
             Работы</a>
     </li>
     <li>
         <a class="sidenav-link" id="materials-tab" data-bs-toggle="tab" data-bs-target="#materials" type="button"
-           role="tab" aria-controls="materials" aria-selected="false">
+           role="tab" aria-controls="materials" aria-selected="false" onclick="ChangeTheState(this)">
             Материалы</a>
     </li>
 </ul>
@@ -711,6 +711,16 @@
             console.log(document.getElementById(caret_id));
             document.getElementById(caret_id).classList.toggle('bi-caret-down');
             document.getElementById(caret_id).classList.toggle('bi-caret-up');
+        }
+
+        function ChangeTheState(section){
+            sections = document.getElementsByClassName('sidenav-link-active');
+
+            for (let i = 0, length = sections.length; i<length; i++){
+              sections[i].classList.remove("sidenav-link-active");
+            }
+
+            section.classList.add("sidenav-link-active");
         }
 
 </script>
