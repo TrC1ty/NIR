@@ -12,23 +12,23 @@
     <!-- Nav tabs -->
     <ul class="sidenav nav-tabs" id="myTab" role="tablist">
         <li>
-            <a class="sidenav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
-                    role="tab" aria-controls="profile" aria-selected="true">
+            <a class="sidenav-link sidenav-link-active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="true" onclick="ChangeTheState(this)">
                 <i class="bi bi-house"></i>Паспорт работы</a>
         </li>
         <li>
             <a class="sidenav-link" id="materials-tab" data-bs-toggle="tab" data-bs-target="#materials"
-               type="button" role="tab" aria-controls="materials" aria-selected="false">
+               type="button" role="tab" aria-controls="materials" aria-selected="false" onclick="ChangeTheState(this)">
                 <i class="bi bi-people"></i>Материалы</a>
         </li>
         <li>
             <a class="sidenav-link" id="point4-tab" data-bs-toggle="tab" data-bs-target="#point4" type="button"
-                    role="tab" aria-controls="point4" aria-selected="false">
+                    role="tab" aria-controls="point4" aria-selected="false" onclick="ChangeTheState(this)">
                 <i class="bi bi-file-earmark"></i>Исполнительные схемы</a>
         </li>
         <li>
             <a class="sidenav-link" id="point6-tab" data-bs-toggle="tab" data-bs-target="#point6" type="button"
-                    role="tab" aria-controls="point6" aria-selected="false">
+                    role="tab" aria-controls="point6" aria-selected="false" onclick="ChangeTheState(this)">
                 <i class="bi bi-wrench-adjustable"></i>СНИПы</a>
         </li>
     </ul>
@@ -521,6 +521,16 @@
                 tr.appendChild(fragment);
                 tBody.appendChild(tr);
             });
+        }
+
+        function ChangeTheState(section){
+            sections = document.getElementsByClassName('sidenav-link-active');
+
+            for (let i = 0, length = sections.length; i<length; i++){
+              sections[i].classList.remove("sidenav-link-active");
+            }
+
+            section.classList.add("sidenav-link-active");
         }
 
         document.getElementById('materialModalBtn').addEventListener('click', createMaterial);
