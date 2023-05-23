@@ -191,36 +191,36 @@ def create_documentation(work_id):
         'name_project_documentation': project.name_project_documentation,
         'building_address': project.building_address,
         'builder':
-            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=1).first()),
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=1).first().participant),
         'person_the_construction':
-            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=2).first()),
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=2).first().participant),
         'person_prepares_doc':
-            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=3).first()),
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=3).first().participant),
         'person_performing_work':
-            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first()),
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().participant),
         'number': work.id,
         'name_project': project.name_project,
         'date_day': datetime.date.today().day,
         'date_month': months[str(datetime.date.today().month)],
         'date_year': datetime.date.today().year,
         'representative_builder':
-            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=5).first()),
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=5).first().participant),
         'representative_person_the_construction':
-            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=6).first()),
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=6).first().participant),
         'specialist_organization_construction':
-            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=7).first()),
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=7).first().participant),
         'representative_person_preparing_project_doc':
-            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=8).first()),
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=8).first().participant),
         'representative_person_performed_examined':
-            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=9).first()),
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=9).first().participant),
         'other_persons_participated_examination':
-            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=10).first())
+            get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=10).first().participant)
     }
 
     # добавление названия субъекта, которое осуществляло строительство
     if ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first():
         context['person_the_construction_name'] = \
-            ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().legal_name
+            ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().participant.legal_name
 
     # добавление названия работ
     context['name_hidden_works'] = work.name_hidden_works
@@ -275,30 +275,30 @@ def create_documentation(work_id):
 
     # добавление инициалов представителя застройщика
     context['representative_builder_name'] = \
-        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=5).first())
+        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=5).first().participant)
 
     # добавление инициалов представителя лица, осуществляющего строительство
     context['representative_person_the_construction_name'] = \
-        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=6).first())
+        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=6).first().participant)
 
     # добавление инициалов специалиста по организации строительства
     context['specialist_organization_construction_name'] = \
-        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=7).first())
+        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=7).first().participant)
 
     # добавление инициалов представителя лица, осуществляющего подготовку проектной документации
     context['representative_person_preparing_project_doc_name'] = \
-        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=8).first())
+        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=8).first().participant)
 
     # добавление инициалов представителя лица, выполнившего работы, подлежащие освидетельствованию
     context['representative_person_performed_examined_name'] = \
-        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=9).first())
+        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=9).first().participant)
 
     # добавление инициалов представителей иных лиц
     context['other_persons_participated_examination_name'] = \
-        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=10).first())
+        get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=10).first().participant)
 
     # добавление приложения
-    add_application(work, context, ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first())
+    add_application(work, context, ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().participant)
 
     doc.render(context)
     file_stream = io.BytesIO()
