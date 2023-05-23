@@ -219,8 +219,9 @@ def create_documentation(work_id):
 
     # добавление названия субъекта, которое осуществляло строительство
     if ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first():
-        context['person_the_construction_name'] = \
-            ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().legal_name
+        if ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().participant:
+            context['person_the_construction_name'] = \
+                ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().participant.legal_name
 
     # добавление названия работ
     context['name_hidden_works'] = work.name_hidden_works
