@@ -316,13 +316,14 @@ def create_documentation(work_id):
 
 
 # добавление актов
-def add_application(work, context, builder):
+def add_application(work, context, project_participant):
     table = []
     acts = LegalActModel.objects.filter(work=work)
     materials = MaterialModel.objects.filter(work=work)
     act_person = ""
-    if builder:
-        act_person = builder.legal_name
+    if project_participant:
+        if project_participant.participant:
+            act_person = project_participant.participant.legal_name
 
     cur_page = 4
     if len(acts) > 1:
