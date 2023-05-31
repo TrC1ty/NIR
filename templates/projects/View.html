@@ -66,7 +66,14 @@
 <div class="content">
     <div class="tab-content">
         <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <p style="color: rgba(0, 0, 0, 0.54);">Паспорт проекта</p>
+            <div class="row">
+                <div class="col-md-auto">
+                    <p style="color: rgba(0, 0, 0, 0.54);">Паспорт проекта</p>
+                </div>
+                <div class="col-md-auto">
+                    <a class="btn btn-outline-primary btn-sm" href="{% url 'project-edit' project.id %}">Редактировать</a>
+                </div>
+            </div>
             <div class="information">
                 {% for name, value in project.get_attributes.items %}
                 <div class="row p-2">
@@ -79,6 +86,9 @@
                 </div>
                 {% endfor %}
             </div>
+            <div class="project-edit">
+
+            </div>
         </div>
 
         <div class="tab-pane" id="participants" role="tabpanel" aria-labelledby="participants-tab">
@@ -86,7 +96,7 @@
             <div class="information">
                 {% for name, value in participants.items %}
                 {% if value.0 != None %}
-                <details id="details_{{value.0.id}}" onclick="OpenInformation({{value.0.id}})">
+                <details id="details_{{value.0.id}}">
                     <summary>
                         {% endif %}
                         <div class="row p-2">
@@ -101,15 +111,26 @@
                                 <a class="add-new-participant">Добавить</a>
                             </div>
                             {% else %}
-                            <div class="col-12 col-md-6">
-                                {% if value.0.surname != null %}
-                                {{ value.0.surname }} {{ value.0.name }} {{ value.0.patronymic }}
-                                {% else %}
-                                {{ value.0.name }}
+                            <div class="col-12 col-md-4">
+                                {% if value.0.subject_type == 'ЮЛ' %}
+                                    {% if value.0.legal_name != null %}
+                                    {{ value.0.legal_name }}
+                                    {% endif %}
+                                {% elif value.0.subject_type == 'ФЛ' %}
+                                    {{ value.0.surname }} {{ value.0.name }} {{ value.0.patronymic }}
+                                {% elif value.0.subject_type == 'ИП' %}
+                                    {% if value.0.short_name != null %}
+                                    {{ value.0.short_name }}
+                                    {% else %}
+                                    {{ value.0.legal_name }}
+                                    {% endif %}
                                 {% endif %}
                             </div>
+                            <div class="col-12 col-md-2">
+                                <a class="btn btn-outline-primary btn-sm" href="">Редактировать</a>
+                            </div>
                             {% endif %}
-                            <div class="col-12 col-md-1" style="cursor: pointer;" >
+                            <div class="col-12 col-md-1" style="cursor: pointer;" onclick="OpenInformation({{value.0.id}})">
                                 <i id="caret_{{value.0.id}}" class="bi bi-caret-down"></i>
                             </div>
                         </div>
@@ -119,14 +140,71 @@
                         <div class="col-12 col-md-2 label">
                             <img src="#">
                         </div>
-
-                        <div class="col-12 col-md-5">
-                            <div style="color: rgba(0, 0, 0, 0.54);">{{ value.0.surname }} {{ value.0.name }} {{ value.0.patronymic }}</div>
-                            <div style="color: rgba(0, 0, 0, 0.54);">{{ value.0.mail }}</div>
+                        {% if value.0.subject_type == 'ЮЛ' %}
+                        <div id="information_legal_{{value.0.id}}" class="col-12 col-md-5">
+                            <div style="color: rgba(0, 0, 0, 0.54);">{{ value.0.legal_name }}</div>
                             <div style="color: rgba(0, 0, 0, 0.54);">Статус участника: {{ value.0.subject_type }}</div>
-                            <div style="color: rgba(0, 0, 0, 0.54);">Паспорт: {{value.0.passport_data}}</div>
+                            <div style="color: rgba(0, 0, 0, 0.54);">Юр. адрес: {{ value.0.address }}</div>
                             <div style="color: rgba(0, 0, 0, 0.54);">ИНН: {{value.0.inn}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">КПП: {{value.0.kpp}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">БИК: {{value.0.bic}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Р/С: {{value.0.payment_account}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">К/С: {{value.0.cor_account}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОКПО: {{value.0.okpo}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОКАТО: {{value.0.okato}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОКВЭД: {{value.0.okved}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОГРН: {{value.0.ogrn}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Ген. менеджер: {{value.0.general_manager}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Почта: {{value.0.mail}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Телефон: {{value.0.phone}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Сайт: {{value.0.site}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Наименование СРО: {{value.0.sro_name}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ИНН СРО: {{value.0.sro_inn}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОГРН СРО: {{value.0.sro_ogrn}}</div>
+                            <button id="button_more_legal_{{value.0.id}}" type="button" style="display:inline-block" class="btn btn-link more" onclick='MoreInformation({{value.0.id}},"ЮЛ")'>Все сведения</button>
+                            <button id="button_hide_legal_{{value.0.id}}" type="button" style="display:none" class="btn btn-link hide" onclick='HideInformation({{value.0.id}},"ЮЛ")'>Скрыть</button>
                         </div>
+                        {% elif value.0.subject_type == 'ИП'%}
+                            <div id="information_ip_{{value.0.id}}" class="col-12 col-md-5">
+                                <div style="color: rgba(0, 0, 0, 0.54);">{{ value.0.legal_name }}</div>
+                                <div style="color: rgba(0, 0, 0, 0.54);">Статус участника: {{ value.0.subject_type }}</div>
+                                <div style="color: rgba(0, 0, 0, 0.54);">Краткое наименование: {{value.0.short_name}}</div>
+                                <div style="color: rgba(0, 0, 0, 0.54);">Адресс регистрации: {{ value.0.address }}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Факт. адрес: {{value.0.post_address}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Почта: {{value.0.mail}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Телефон: {{value.0.phone}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ИНН: {{value.0.inn}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОГРНИП: {{value.0.ogrn}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Наименование банка: {{value.0.bank_name}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">БИК: {{value.0.bic}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">К/С: {{value.0.cor_account}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Р/С: {{value.0.payment_account}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОКВЭД: {{value.0.okved}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Ситсема налогооблажения: {{value.0.taxation_system}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Наименование СРО: {{value.0.sro_name}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ИНН СРО: {{value.0.sro_inn}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОГРН СРО: {{value.0.sro_ogrn}}</div>
+
+                                <button id="button_more_ip_{{value.0.id}}" type="button" style="display:inline-block" class="btn btn-link more" onclick='MoreInformation({{value.0.id}},"ИП")'>Все сведения</button>
+                                <button id="button_hide_ip_{{value.0.id}}" type="button" style="display:none" class="btn btn-link hide" onclick='HideInformation({{value.0.id}},"ИП")'>Скрыть</button>
+                            </div>
+                        {% elif value.0.subject_type == 'ФЛ'%}
+                            <div id="information_ind_{{value.0.id}}" class="col-12 col-md-5">
+                                <div style="color: rgba(0, 0, 0, 0.54);">{{ value.0.surname }}</div>
+                                <div style="color: rgba(0, 0, 0, 0.54);">Статус участника: {{ value.0.subject_type }}</div>
+                                <div style="color: rgba(0, 0, 0, 0.54);">Паспорт: {{value.0.passport_data}}</div>
+                                <div style="color: rgba(0, 0, 0, 0.54);">Адресс: {{ value.0.address }}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ИНН: {{value.0.inn}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Р/С: {{value.0.payment_account}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Должность: {{value.0.post}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Номер с соц. реестре специалситов: {{value.0.register_of_specialists}}</div>
+                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Реквизиты распорядительного документа: {{value.0.details_admin_doc}}</div>
+
+                                <button id="button_more_ind_{{value.0.id}}" type="button" style="display:inline-block" class="btn btn-link more" onclick='MoreInformation({{value.0.id}},"ФЛ")'>Все сведения</button>
+                                <button id="button_hide_ind_{{value.0.id}}" type="button" style="display:none" class="btn btn-link hide" onclick='HideInformation({{value.0.id}},"ФЛ")'>Скрыть</button>
+                            </div>
+
+                        {% endif %}
                     </div>
                 </details>
                 {% endif %}
@@ -693,25 +771,99 @@
 
         function ShowWindow( i ) {
             let window = document.getElementById(i);
-                if (window.style.display === 'none'){
-                  window.style.display = 'block';
-                }
+            if (window.style.display === 'none'){
+              window.style.display = 'block';
             }
+        }
 
-            $(document).mouseup(function (event) {
-                let selectionWindow = $(".selection-window");
-                if (selectionWindow.has(event.target).length === 0){
-                    selectionWindow.hide();
-                }
-            });
+        $(document).mouseup(function (event) {
+            let selectionWindow = $(".selection-window");
+            if (selectionWindow.has(event.target).length === 0){
+                selectionWindow.hide();
+            }
+        });
 
-            function OpenInformation(id){
+        function OpenInformation(id){
             let caret_id = 'caret_' + id;
-            console.log(caret_id);
-            console.log(document.getElementById(caret_id));
+<!--            console.log(caret_id);-->
+<!--            console.log(document.getElementById(caret_id));-->
             document.getElementById(caret_id).classList.toggle('bi-caret-down');
             document.getElementById(caret_id).classList.toggle('bi-caret-up');
         }
+
+        function MoreInformation(id, type){
+
+            if(type == 'ЮЛ'){
+                 new_id_button_more = `button_more_legal_${id}`;
+                 new_id_button_hide = `button_hide_legal_${id}`;
+            } else if(type == 'ИП'){
+                 new_id_button_more = `button_more_ip_${id}`;
+                 new_id_button_hide = `button_hide_ip_${id}`;
+            } else if(type == 'ФЛ'){
+                 new_id_button_more = `button_more_ind_${id}`;
+                 new_id_button_hide = `button_hide_ind_${id}`;
+            }
+
+            let more_button = document.getElementById(new_id_button_more)
+            let hide_button = document.getElementById(new_id_button_hide)
+            console.log(hide_button)
+
+            if(type == 'ЮЛ'){
+                new_id = `information_legal_${id}`;
+            } else if(type == 'ИП'){
+                new_id = `information_ip_${id}`;
+            } else if(type == 'ФЛ'){
+                new_id = `information_ind_${id}`;
+            }
+            console.log(new_id);
+            let participant_information = document.getElementById(new_id)
+            console.log(participant_information);
+            const children = participant_information.querySelectorAll('div[hidden]')
+            children.forEach(child => child.removeAttribute('hidden'))
+
+            more_button.style.display = "none";
+            hide_button.style.display = "inline-block";
+
+        }
+
+        function HideInformation(id, type){
+
+        if(type == 'ЮЛ'){
+             new_id_button_more = `button_more_legal_${id}`;
+             new_id_button_hide = `button_hide_legal_${id}`;
+            } else if(type == 'ИП'){
+                 new_id_button_more = `button_more_ip_${id}`;
+                 new_id_button_hide = `button_hide_ip_${id}`;
+            } else if(type == 'ФЛ'){
+             new_id_button_more = `button_more_ind_${id}`;
+             new_id_button_hide = `button_hide_ind_${id}`;
+            }
+
+            let more_button = document.getElementById(new_id_button_more)
+            let hide_button = document.getElementById(new_id_button_hide)
+
+            if(type == 'ЮЛ'){
+                new_id = `information_legal_${id}`;
+            } else if(type == 'ИП'){
+                new_id = `information_ip_${id}`;
+            } else if(type == 'ФЛ'){
+                new_id = `information_ind_${id}`;
+            }
+
+            let participant_information = document.getElementById(new_id)
+
+            console.log(participant_information);
+
+            const children = participant_information.querySelectorAll('div.extra')
+            console.log(children);
+            children.forEach(child => child.setAttribute('hidden',''))
+            console.log(participant_information);
+
+            more_button.style.display = "inline-block";
+            hide_button.style.display = "none";
+
+        }
+
 
         function ChangeTheState(section){
             sections = document.getElementsByClassName('sidenav-link-active');

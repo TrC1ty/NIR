@@ -89,12 +89,13 @@ class ProjectView(View):
                 project.number_document = form.cleaned_data['number_document']
                 project.save()
 
-        works = WorkModel.objects.filter(project=project)
+        # works = WorkModel.objects.filter(project=project)
         form = Project(instance=project)
 
         return render(request, 'projects/EditProject.html', {'project': project,
-                                                      'works': works,
+                                                      # 'works': works,
                                                       'form': form})
+
 
     @staticmethod
     def delete(request: HttpRequest, value) -> HttpResponse:

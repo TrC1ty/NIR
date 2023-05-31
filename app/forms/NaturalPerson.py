@@ -25,7 +25,7 @@ class NaturalPersonForm(forms.Form):
         required=False,
     )
     address = forms.CharField(
-        label='Юридический адрес',
+        label='Адрес',
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'address'}),
         required=False,
     )
