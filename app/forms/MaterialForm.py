@@ -14,30 +14,30 @@ class Material(ModelForm):
 
     class Meta:
         model = MaterialModel
-        fields = ['name', 'count', 'units_of_measurement', 'list_count', 'provider', 'certificate_name',
-                  'certificate_number', 'date_start', 'date_end']
+        fields = ['name', 'count', 'units_of_measurement', 'provider', 'certificate_name',
+                  'certificate_number', 'date_start', 'date_end', 'list_count']
         widgets = {
             'name': TextInput(attrs={'class': 'form-control'}),
             'count': TextInput(attrs={'class': 'form-control'}),
             'units_of_measurement': TextInput(attrs={'class': 'form-control'}),
-            'list_count': TextInput(attrs={'class': 'form-control'}),
             'provider': TextInput(attrs={'class': 'form-control'}),
             'certificate_name': TextInput(attrs={'class': 'form-control'}),
             'certificate_number': TextInput(attrs={'class': 'form-control'}),
             'date_start': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'start'}),
             'date_end': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'end'}),
+            'list_count': TextInput(attrs={'class': 'form-control'}),
         }
 
         labels = {
             "name": "Наименование материала",
             "count": "Количество материалов",
             "units_of_measurement": "Единицы измерения",
-            "list_count": "Количество листов",
             "provider": "Сертификат выдан",
             "certificate_name": "Наименование сертификата",
             "certificate_number": "Номер сертификата",
             "date_start": "Дата выдачи сертификата",
             "date_end": "Дата окончания действия сертификата",
+            "list_count": "Количество листов",
         }
 
 
@@ -59,13 +59,7 @@ class MaterialForm(forms.Form):
         ),
         required=False,
     )
-    list_count = forms.CharField(
-        label='Количество листов',
-        widget=forms.TextInput(
-            attrs={'class': 'form-control'}
-        ),
-        required=False,
-    )
+
     provider = forms.CharField(
         label='Сертификат выдан',
         widget=forms.TextInput(
@@ -92,6 +86,13 @@ class MaterialForm(forms.Form):
         format='%d-%m-%Y',
         attrs={'type': 'date', 'class': 'form-control'}
     ))
+    list_count = forms.CharField(
+        label='Количество листов',
+        widget=forms.TextInput(
+            attrs={'class': 'form-control'}
+        ),
+        required=False,
+    )
 
     def clean(self):
         cleaned_data = super(MaterialForm, self).clean()

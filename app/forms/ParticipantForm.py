@@ -89,7 +89,7 @@ class ParticipantForm(forms.Form):
         required=False,
     )
     short_name = forms.CharField(
-        label='Краткое название',
+        label='Краткое наименование',
         widget=forms.TextInput(attrs={'class': 'form-control', 'id': 'short_name'}),
         required=False,
     )
@@ -284,7 +284,7 @@ class Participant(ModelForm):
             'bank_name': "Наименование банка",
             'taxation_system': "Система налогообложения",
             'general_manager': "Генеральный директор",
-            'short_name': "Краткое название"
+            'short_name': "Краткое наименование"
         }
 
 

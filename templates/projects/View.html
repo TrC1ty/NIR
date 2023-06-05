@@ -231,7 +231,7 @@
                 </div>
 
                 <div class="col-md-auto">
-                    <a id="get-pdf" class="btn btn-primary" disabled>Получить pdf</a>
+                    <a id="get-pdf" class="btn btn-primary" disabled>Сформировать pdf</a>
                 </div>
             </div>
 
@@ -262,25 +262,26 @@
                         </div>
                         <div class="list-group list-group-flush sections">
                         {% for section in sections %}
-                        <div style="display: flex;flex-direction: row;justify-content: flex-start;">
-                            <a href="#" style="border: none;width:50%" class="list-group-item list-group-item-action project-section"
-                               section="{{ section.id }}">{{ section.name }}
-                            </a>
+                            <div style="display: flex;flex-direction: row;justify-content: flex-start;">
+                                <a href="#" style="border: none;width:50%" class="list-group-item list-group-item-action project-section" onclick="SelectSection(this)"
+                                   section="{{ section.id }}">{{ section.name }}
+                                </a>
 
-                            <div class="background_i" onclick="ShowWindow({{ section.id }})"> <i style="position: relative; left: 6px; top:2px;"
-                                                                class="bi bi-three-dots-vertical"></i>
+                                <div onclick="ShowWindow({{ section.id }})"> <span class="badge bg-secondary rounded-pill">
+                                <i  class="bi-three-dots-vertical"></i>
+                            </span>
+                                    <div id="{{section.id}}" style="display: none"  class="selection-window">
+                                <div class="selection-window-item"><i class="bi bi-pencil"><div class="selection-window-item-text">Редактировать</div></i></div>
+                                <!--                                    <div class="selection-window-item"><i class="bi bi-files"><div class="selection-window-item-text">Duplicate</div></i></div>-->
+                                <div class="selection-window-item"><i class="bi bi-trash"><div class="selection-window-item-text">Удалить</div></i></div>
+                            </div>
+                                </div>
 
-                                <div id="{{section.id}}" style="display: none"  class="selection-window">
-                                    <div class="selection-window-item"><i class="bi bi-pencil"><div class="selection-window-item-text">Редактировать</div></i></div>
-                                    <!--                                    <div class="selection-window-item"><i class="bi bi-files"><div class="selection-window-item-text">Duplicate</div></i></div>-->
-                                    <div class="selection-window-item"><i class="bi bi-trash"><div class="selection-window-item-text">Удалить</div></i></div>
+                                <div>
+                                    <span class="badge bg-primary rounded-pill">2</span>
                                 </div>
                             </div>
 
-                            <div class="background_i">
-                                <i style="font-family: 'Roboto';font-style: normal;font-weight: 400;font-size: 14px;line-height: 24px; position: relative; left: 7px; top:1px;">2</i>
-                            </div>
-                        </div>
                         {% endfor %}
                     </div>
 
@@ -772,7 +773,7 @@
         function ShowWindow( i ) {
             let window = document.getElementById(i);
             if (window.style.display === 'none'){
-              window.style.display = 'block';
+              window.style.display = 'inline-block';
             }
         }
 
@@ -873,6 +874,19 @@
             }
 
             section.classList.add("sidenav-link-active");
+        }
+
+        function SelectSection(section){
+            sections = document.querySelectorAll('a.active');
+
+            for (let i = 0, length = sections.length; i<length; i++){
+              sections[i].classList.remove("active");
+              sections[i].classList.remove("bg-success");
+            }
+
+            section.classList.add("active");
+            section.classList.add("bg-success");
+
         }
 
 </script>
