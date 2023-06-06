@@ -95,14 +95,15 @@
                                     <td>{{ material.date_end }}</td>
                                     <td>{{ material.count }}  {{ material.units_of_measurement }}</td>
                                     <td>
-                                        <a href="/materials/{{ material.id }}/certificate" class="btn p-0">
+                                        <button material="{{ material.id }}" class="btn p-0 certificate-pdf">
                                             <img src="/static/images/look.svg" alt="Просмотр" width="40" height="20">
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
                     </table>
+                    <canvas id="pdf_renderer"></canvas>
                 </div>
             </div>
 
@@ -323,6 +324,10 @@
 {% endblock %}
 
 {% block scripts %}
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js">
+    </script>
+
     <script>
         // for date in form
         let start = $("#start")[0].getAttribute("value");
@@ -453,7 +458,6 @@
 
         function CreateLegalAct(event) {
             event.preventDefault();
-            console.log(123);
             let actFile = document.getElementById('legalActFile').files[0];
             let name = document.getElementById('document_name').value;
             let document_number = document.getElementById('document_number').value;
@@ -533,8 +537,37 @@
             section.classList.add("sidenav-link-active");
         }
 
+        let myState = {
+            pdf: null,
+            currentPage: 1,
+            zoom: 1
+        }
+
+        function render() {
+            myState.pdf.getPage(myState.currentPage).then((page) => {
+                let canvas = document.getElementById('pdf_renderer');
+                let ctx = canvas.getContext('2d');
+
+                let viewport = page.getViewport(myState.zoom);
+                page.render({
+                    canvasContext: ctx,
+                    viewport: viewport
+                });
+            });
+        }
+
         document.getElementById('materialModalBtn').addEventListener('click', createMaterial);
         document.getElementById('bcarModalBtn').addEventListener('click', createBCAR);
         document.getElementById('legalActModalBtn').addEventListener('click', CreateLegalAct);
+        document.querySelectorAll('.certificate-pdf').forEach((el) => {
+            el.addEventListener('click', function() {
+                let materialId = this.getAttribute('material');
+
+                pdfjsLib.getDocument('/api/pdf/certificate/' + materialId).then((pdf) => {
+                    myState.pdf = pdf;
+                    render();
+                });
+            });
+        });
     </script>
 {% endblock %}

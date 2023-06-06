@@ -87,6 +87,10 @@ class WorkForm(forms.Form):
         format='%d-%m-%Y',
         attrs={'type': 'date', 'class': 'form-control'}),
     )
+    number_instances = forms.CharField(label='Количество экземпляров', widget=forms.TextInput(
+        attrs={'class': 'form-control'}),
+        required=False,
+    )
 
     def clean(self):
         cleaned_data = super().clean()

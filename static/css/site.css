@@ -145,3 +145,8 @@ div.content {
     margin-top:5px;
     margin-right:5px;
 }
+
+input.empty_field {
+  border-width: 2px;
+  border-color: red;
+}

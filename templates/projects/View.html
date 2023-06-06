@@ -476,9 +476,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{% url 'work-create' project.id %}" method="post">
-                {% csrf_token %}
-
+            <form>
                 <div class="form-error" style="color:red"> {{workForm.non_field_errors}}</div>
 
                 <div id="work-form" class="modal-body">
@@ -522,10 +520,73 @@
             form.submit();
         }
 
-        function createWork() {
+        async function createWork(event) {
+            event.preventDefault();
+
             let form = document.getElementById('workModal').querySelector('form');
-            form.setAttribute('action', '/project-section/' + activeProjectSection + '/add-work');
-            form.submit();
+            form.querySelector('#id_name_hidden_works').style = "";
+            form.querySelector('#id_start_date_work').style = "";
+            form.querySelector('#id_end_date_work').style = "";
+            document.querySelector('#workModal').querySelector('.form-error').innerHTML = "";
+
+            let name = form.querySelector('#id_name_hidden_works').value;
+            let projectNumber = form.querySelector('#id_number_project_doc').value;
+            let workNumber = form.querySelector('#id_number_working_doc').value;
+            let projectName = form.querySelector('#id_name_project_doc').value
+            let workName = form.querySelector('#id_name_working_doc').value;
+            let dateStart = form.querySelector('#id_start_date_work').value;
+            let dateEnd = form.querySelector('#id_end_date_work').value;
+            let numbers = form.querySelector('#id_number_instances').value;
+
+            if (name === "") {
+                form.querySelector('#id_name_hidden_works').style = "border-width: 2px; border-color: red;";
+                return;
+            }
+
+            if (dateStart === "") {
+                form.querySelector('#id_start_date_work').style = "border-width: 2px; border-color: red;";
+                return;
+            }
+
+            if (dateEnd === "") {
+                form.querySelector('#id_end_date_work').style = "border-width: 2px; border-color: red;";
+                return;
+            }
+
+            if (dateStart > dateEnd) {
+                form.querySelector('#id_start_date_work').style = "border-width: 2px; border-color: red;";
+                form.querySelector('#id_end_date_work').style = "border-width: 2px; border-color: red;";
+                document.querySelector('#workModal').querySelector('.form-error').innerHTML = "Дата окончания должна быть позже даты начала";
+                return;
+            }
+
+            if (numbers === "") {
+                numbers = 0;
+            }
+
+            let data = JSON.stringify({
+                name_hidden_works: name,
+                number_project_doc: projectNumber,
+                number_working_doc: workNumber,
+                name_project_doc: projectName,
+                name_working_doc: workName,
+                start_date_work: dateStart,
+                end_date_work: dateEnd,
+                number_instances: numbers
+            });
+
+            await fetch("/api/works/create/" + activeProjectSection, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: data,
+              })
+            .then((response) => response.json())
+            .then((data) => {
+                createWorkTable(data);
+                form.reset();
+            });
         }
 
         async function getWorkInformation(event) {
@@ -835,7 +896,7 @@
             } else if(type == 'ИП'){
                  new_id_button_more = `button_more_ip_${id}`;
                  new_id_button_hide = `button_hide_ip_${id}`;
-            } else if(type == 'ФЛ'){
+            } else if(type === 'ФЛ'){
              new_id_button_more = `button_more_ind_${id}`;
              new_id_button_hide = `button_hide_ind_${id}`;
             }
@@ -843,11 +904,11 @@
             let more_button = document.getElementById(new_id_button_more)
             let hide_button = document.getElementById(new_id_button_hide)
 
-            if(type == 'ЮЛ'){
+            if(type === 'ЮЛ'){
                 new_id = `information_legal_${id}`;
-            } else if(type == 'ИП'){
+            } else if(type === 'ИП'){
                 new_id = `information_ip_${id}`;
-            } else if(type == 'ФЛ'){
+            } else if(type === 'ФЛ'){
                 new_id = `information_ind_${id}`;
             }
 

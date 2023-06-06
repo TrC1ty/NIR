@@ -220,20 +220,29 @@ def create_documentation(work_id):
     # добавление названия субъекта, которое осуществляло строительство
     if ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first():
         if ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().participant:
-            context['person_the_construction_name'] = \
-                ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().participant.legal_name
+            if ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().participant.legal_name:
+                context['person_the_construction_name'] = \
+                    ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().participant.legal_name
 
     # добавление названия работ
-    context['name_hidden_works'] = work.name_hidden_works
+    if work.name_hidden_works:
+        context['name_hidden_works'] = work.name_hidden_works
 
     # добавление проектной документации, по которой проведены работы
-    context['number_project_doc'] = work.number_project_doc
-    context['number_working_doc'] = work.number_working_doc
-    context['other_details_project_drawing'] = work.other_details_project_drawing
-    context['other_details_working_drawing'] = work.other_details_working_drawing
-    context['name_project_doc'] = work.name_project_doc
-    context['name_working_doc'] = work.name_working_doc
-    context['information_persons_prepare_doc'] = work.information_persons_prepare_doc
+    if work.number_project_doc:
+        context['number_project_doc'] = work.number_project_doc
+    if work.number_working_doc:
+        context['number_working_doc'] = work.number_working_doc
+    if work.other_details_project_drawing:
+        context['other_details_project_drawing'] = work.other_details_project_drawing
+    if work.other_details_working_drawing:
+        context['other_details_working_drawing'] = work.other_details_working_drawing
+    if work.name_project_doc:
+        context['name_project_doc'] = work.name_project_doc
+    if work.name_working_doc:
+        context['name_working_doc'] = work.name_working_doc
+    if work.information_persons_prepare_doc:
+        context['information_persons_prepare_doc'] = work.information_persons_prepare_doc
 
     # добавление материалов
     row = ""
@@ -266,13 +275,16 @@ def create_documentation(work_id):
         context['bcars'] = row[:-2]
 
     # добавление разрешенных работ
-    context['permitted_works'] = work.permitted_works
+    if work.permitted_works:
+        context['permitted_works'] = work.permitted_works
 
     # добавление дополнительных сведений
-    context['additional_information'] = work.additional_information
+    if work.additional_information:
+        context['additional_information'] = work.additional_information
 
     # добавление количества экземпляров
-    context['number_instances'] = work.number_instances
+    if work.number_instances:
+        context['number_instances'] = work.number_instances
 
     # добавление инициалов представителя застройщика
     context['representative_builder_name'] = \
@@ -323,7 +335,8 @@ def add_application(work, context, project_participant):
     act_person = ""
     if project_participant:
         if project_participant.participant:
-            act_person = project_participant.participant.legal_name
+            if project_participant.participant.legal_name:
+                act_person = project_participant.participant.legal_name
 
     cur_page = 4
     if len(acts) > 1:

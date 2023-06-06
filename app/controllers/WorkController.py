@@ -1,3 +1,4 @@
+import datetime
 import json
 
 from app.models.BCARModel import BCARModel, BcarSerializer
@@ -17,6 +18,31 @@ class WorkController(APIView):
     @api_view(('GET',))
     def get(request, project_section_id):
         project_section = ProjectSection.objects.get(id=project_section_id)
+        queryset = WorkModel.objects.filter(projectSection=project_section)
+        serializer_for_queryset = WorkSerializer(
+            instance=queryset,
+            many=True
+        )
+
+        return Response(serializer_for_queryset.data)
+
+    @staticmethod
+    @api_view(('POST',))
+    def create_work(request: HttpRequest, section_id):
+        form = json.loads(request.body)
+        project_section = ProjectSection.objects.get(id=section_id)
+        WorkModel.objects.create(
+            name_hidden_works=form.get("name_hidden_works", ""),
+            number_project_doc=form.get("number_project_doc", ""),
+            number_working_doc=form.get("number_working_doc", ""),
+            name_project_doc=form.get("name_project_doc", ""),
+            name_working_doc=form.get("name_working_doc", ""),
+            start_date_work=form.get("start_date_work", datetime.date.today()),
+            end_date_work=form.get("end_date_work", datetime.date.today()),
+            number_instances=int(form.get("number_instances", 0)),
+            projectSection=project_section
+        )
+
         queryset = WorkModel.objects.filter(projectSection=project_section)
         serializer_for_queryset = WorkSerializer(
             instance=queryset,

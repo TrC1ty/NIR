@@ -3,6 +3,7 @@ from django.urls import path
 from app.controllers.MaterialController import MaterialController
 from app.controllers.ProjectSectionController import ProjectSectionController
 from app.controllers.WorkController import WorkController
+from app.controllers.PDFController import PDFController
 from app.views.LegalActView import LegalActView
 from app.views.ParticipantView import ParticipantView
 from app.views.ProjectView import ProjectView
@@ -44,8 +45,10 @@ urlpatterns = [
     path('api/works/<int:project_section_id>', WorkController.get),
     path('api/works/<int:work_id>/bcar', WorkController.create_bcar),
     path('api/works/<int:work_id>/act', WorkController.create_act),
+    path('api/works/create/<int:section_id>', WorkController.create_work),
     path('api/sections/<int:project_id>', ProjectSectionController.post, name='create-section'),
     path('api/materials/<int:work_id>', MaterialController.post),
-    path('api/materials', MaterialController.get_by_filter)
+    path('api/materials', MaterialController.get_by_filter),
+    path('api/pdf/certificate/<int:material_id>', PDFController.get_certificate)
 ]
 
