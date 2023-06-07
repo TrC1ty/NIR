@@ -47,6 +47,7 @@ urlpatterns = [
     path('api/works/<int:work_id>/act', WorkController.create_act),
     path('api/works/create/<int:section_id>', WorkController.create_work),
     path('api/sections/<int:project_id>', ProjectSectionController.post, name='create-section'),
+    path('api/sections/delete/<int:section_id>', ProjectSectionController.delete, name='delete-section'),
     path('api/materials/<int:work_id>', MaterialController.post),
     path('api/materials', MaterialController.get_by_filter),
     path('api/pdf/certificate/<int:material_id>', PDFController.get_certificate)

@@ -29,6 +29,10 @@ class ProjectView(View):
         project = ProjectModel.objects.get(id=value)
         participants = ProjectParticipant.get_all_participants(project)
         sections = ProjectSection.objects.filter(project_id=project.id)
+        sections_with_work = []
+        for section in sections:
+            work_count = WorkModel.objects.filter(projectSection__id=section.id).count()
+            sections_with_work.append([section.id, section.name, work_count])
         materials = MaterialModel.objects.filter(work__projectSection__project_id=value)
         works = WorkModel.objects.filter(projectSection__project__id=value)
         work_form = WorkForm()
@@ -39,7 +43,7 @@ class ProjectView(View):
             'naturalPerson': NaturalPersonForm(),
             'legalEntity': LegalEntityForm(),
             'participantType': ParticipantTypeForm(),
-            'sections': sections,
+            'sections': sections_with_work,
             'workForm': work_form,
             'materials': materials,
             'works': works

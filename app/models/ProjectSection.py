@@ -21,3 +21,4 @@ class ProjectSectionSerializer(serializers.Serializer):
 
     id = serializers.IntegerField()
     name = serializers.CharField()
+    count = serializers.IntegerField()

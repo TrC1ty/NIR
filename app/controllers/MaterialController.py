@@ -13,7 +13,12 @@ class MaterialController(APIView):
     @api_view(('GET',))
     def get_by_filter(request):
         work_id = request.GET.get("work_id")
-        queryset = MaterialModel.objects.filter(work_id=work_id)
+        if work_id:
+            queryset = MaterialModel.objects.filter(work_id=work_id)
+        else:
+            project_id = request.GET.get("project_id")
+            queryset = MaterialModel.objects.filter(work__projectSection__project_id=project_id)
+
         serializer_for_queryset = MaterialSerializer(
             instance=queryset,
             many=True

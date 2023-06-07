@@ -262,23 +262,36 @@
                         </div>
                         <div class="list-group list-group-flush sections">
                         {% for section in sections %}
-                            <div style="display: flex;flex-direction: row;justify-content: flex-start;">
+                            <div style="display: flex;flex-direction: row; justify-content: flex-start;">
                                 <a href="#" style="border: none;width:50%" class="list-group-item list-group-item-action project-section" onclick="SelectSection(this)"
-                                   section="{{ section.id }}">{{ section.name }}
+                                   section="{{ section.0 }}">{{ section.1 }}
                                 </a>
 
-                                <div onclick="ShowWindow({{ section.id }})"> <span class="badge bg-secondary rounded-pill">
-                                <i  class="bi-three-dots-vertical"></i>
-                            </span>
-                                    <div id="{{section.id}}" style="display: none"  class="selection-window">
-                                <div class="selection-window-item"><i class="bi bi-pencil"><div class="selection-window-item-text">Редактировать</div></i></div>
-                                <!--                                    <div class="selection-window-item"><i class="bi bi-files"><div class="selection-window-item-text">Duplicate</div></i></div>-->
-                                <div class="selection-window-item"><i class="bi bi-trash"><div class="selection-window-item-text">Удалить</div></i></div>
-                            </div>
+                                <div onclick="ShowWindow({{ section.0 }})">
+                                    <span class="badge bg-secondary rounded-pill">
+                                        <i  class="bi-three-dots-vertical"></i>
+                                    </span>
+                                    <div id="{{section.0}}" style="display: none"  class="selection-window">
+                                        <div class="selection-window-item">
+                                            <i class="bi bi-pencil">
+                                                <div class="selection-window-item-text edit-section" section="{{ section.0 }}">
+                                                    Редактировать
+                                                </div>
+                                            </i>
+                                        </div>
+                                        <div class="selection-window-item">
+                                            <i class="bi bi-trash">
+                                                <div class="selection-window-item-text delete-section"
+                                                     section="{{ section.0 }}" onclick="deleteSection(this)">
+                                                    Удалить
+                                                </div>
+                                            </i>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div>
-                                    <span class="badge bg-primary rounded-pill">2</span>
+                                    <span class="badge bg-primary rounded-pill">{{ section.2 }}</span>
                                 </div>
                             </div>
 
@@ -507,7 +520,8 @@
 {% endblock %}
 
 {% block scripts %}
-<script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"></script>
+    <script>
         let participantName = '';
         let participantNumber = 0;
         let activeProjectSection = 0;
@@ -687,38 +701,72 @@
             }
         }
 
+        async function deleteSection(target) {
+            let sectionId = target.getAttribute('section');
+
+            await fetch("/api/sections/delete/" + sectionId, {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              })
+            .then((response) => response.json())
+            .then((data) => {
+                createSectionList(data);
+            });
+        }
+
         function createSectionList(data) {
             let list = document.querySelector('.sections');
             list.innerHTML = '';
-            data.forEach((row) => {
-                let a = document.createElement("a");
-                a.classList.add('list-group-item', 'list-group-item-action', 'project-section');
-                a.href = '#';
-                a.setAttribute('section', row['id']);
-                a.innerHTML = row['name'];
-                a.addEventListener('click', function (event) {
+            let tmpl = document.getElementById('sections-template').innerHTML.trim();
+            tmpl = _.template(tmpl);
+
+
+            list.innerHTML = tmpl({
+                list: data
+            });
+
+            list.querySelectorAll('.project-section').forEach(el => {
+                let sectionId = el.getAttribute('section');
+                el.addEventListener('click', function (event) {
                     document.getElementById('add-new-work').disabled = false;
                     getWorkInformation(event);
                 });
 
-                list.appendChild(a);
+                el.closest('div').querySelector('.project-section-buttons').addEventListener('click', (event) => {
+                    ShowWindow(sectionId);
+                    event.preventDefault();
+                });
+
+                {#el.closest('div').querySelector('.edit-section').addEventListener('click', (event) => {#}
+                {#    ShowWindow(sectionId);#}
+                {#    event.preventDefault();#}
+                {# });#}
+
+                el.closest('div').querySelector('.delete-section').addEventListener('click', (event) => {
+                    deleteSection(event.target)
+                });
             });
         }
 
         async function filterMaterials() {
             let workId = document.getElementById('material-filter').value;
-            if (workId !== '') {
-                await fetch("/api/materials?work_id=" + workId, {
-                    method: "GET",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                  })
-                .then((response) => response.json())
-                .then((data) => {
-                    createMaterialsTable(data);
-                });
+            let urlForFetch = "/api/materials?work_id=" + workId;
+            if (workId === '') {
+                urlForFetch = "/api/materials?project_id=" + projectId;
             }
+
+            await fetch(urlForFetch, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              })
+            .then((response) => response.json())
+            .then((data) => {
+                createMaterialsTable(data);
+            });
         }
 
         function createMaterialsTable(data) {
@@ -828,9 +876,9 @@
         document.getElementById('workModalBtn').addEventListener('click', createWork);
         document.getElementById('create-section').addEventListener('click', createSection);
         document.getElementById('btn-material-filter').addEventListener('click', filterMaterials);
+    </script>
 
-
-
+    <script>
         function ShowWindow( i ) {
             let window = document.getElementById(i);
             if (window.style.display === 'none'){
@@ -890,13 +938,13 @@
 
         function HideInformation(id, type){
 
-        if(type == 'ЮЛ'){
+        if (type == 'ЮЛ'){
              new_id_button_more = `button_more_legal_${id}`;
              new_id_button_hide = `button_hide_legal_${id}`;
-            } else if(type == 'ИП'){
+            } else if (type == 'ИП'){
                  new_id_button_more = `button_more_ip_${id}`;
                  new_id_button_hide = `button_hide_ip_${id}`;
-            } else if(type === 'ФЛ'){
+            } else if (type === 'ФЛ'){
              new_id_button_more = `button_more_ind_${id}`;
              new_id_button_hide = `button_hide_ind_${id}`;
             }
@@ -950,5 +998,41 @@
 
         }
 
-</script>
+    </script>
+
+    <script type="text/template" id="sections-template">
+        <% for(var i = 0; i < list.length; i++) { %>
+            <div style="display: flex;flex-direction: row; justify-content: flex-start;">
+                <a href="#" style="border: none;width:50%" class="list-group-item list-group-item-action project-section" onclick="SelectSection(this)"
+                   section="<%=list[i].id%>"><%=list[i].name%>
+                </a>
+
+                <div class="project-section-buttons">
+                    <span class="badge bg-secondary rounded-pill">
+                        <i  class="bi-three-dots-vertical"></i>
+                    </span>
+                    <div id="<%=list[i].id%>" style="display: none"  class="selection-window">
+                        <div class="selection-window-item">
+                            <i class="bi bi-pencil">
+                                <div class="selection-window-item-text edit-section" section="<%=list[i].id%>">
+                                    Редактировать
+                                </div>
+                            </i>
+                        </div>
+                        <div class="selection-window-item">
+                            <i class="bi bi-trash">
+                                <div class="selection-window-item-text delete-section" section="<%=list[i].id%>">
+                                    Удалить
+                                </div>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="badge bg-primary rounded-pill"><%=list[i].count%></span>
+                </div>
+            </div>
+        <% } %>
+    </script>
 {% endblock %}
