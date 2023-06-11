@@ -610,6 +610,17 @@
                 createWorkTable(data);
                 form.reset();
             });
+
+            await fetch("/api/sections/get/" + {{ project.id }}, {
+                    method: "GET",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  })
+                .then((response) => response.json())
+                .then((data) => {
+                    createSectionList(data);
+                });
         }
 
         async function getWorkInformation(event) {

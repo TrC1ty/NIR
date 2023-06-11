@@ -60,3 +60,19 @@ class ProjectSectionController(APIView):
         )
 
         return Response(serializer_for_queryset.data)
+
+    @staticmethod
+    @api_view(('GET',))
+    def get(request: HttpRequest, project_id):
+        queryset = ProjectSection.objects.filter(project_id=project_id)
+        sections = []
+        for section in queryset:
+            count = WorkModel.objects.filter(projectSection__id=section.id).count()
+            sections.append(ProjectSectionModel(section.id, section.name, count))
+
+        serializer_for_queryset = ProjectSectionSerializer(
+            instance=sections,
+            many=True
+        )
+
+        return Response(serializer_for_queryset.data)

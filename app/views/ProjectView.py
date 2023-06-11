@@ -85,25 +85,22 @@ class ProjectView(View):
         project = ProjectModel.objects.get(id=value)
 
         if request.method == 'POST':
-            form = ProjectForm(request.POST)
+            form = Project(request.POST)
             if form.is_valid():
                 project.name_project = form.cleaned_data['name_project']
                 project.name_project_documentation = form.cleaned_data['name_project_documentation']
                 project.building_address = form.cleaned_data['building_address']
-                project.number_document = form.cleaned_data['number_document']
+                project.project_code = form.cleaned_data['project_code']
                 project.save()
 
-        # works = WorkModel.objects.filter(project=project)
-        form = Project(instance=project)
+        else:
+            form = Project(instance=project)
 
-        return render(request, 'projects/EditProject.html', {'project': project,
-                                                      # 'works': works,
-                                                      'form': form})
-
+        return render(request, 'projects/EditProject.html', {'project': project, 'form': form})
 
     @staticmethod
-    def delete(request: HttpRequest, value) -> HttpResponse:
-        project = ProjectModel.objects.get(id=value)
+    def delete(request: HttpRequest, project_id) -> HttpResponse:
+        project = ProjectModel.objects.get(id=project_id)
         project.delete()
         projects = ProjectModel.objects.all()
 
