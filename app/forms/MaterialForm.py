@@ -23,8 +23,8 @@ class Material(ModelForm):
             'provider': TextInput(attrs={'class': 'form-control'}),
             'certificate_name': TextInput(attrs={'class': 'form-control'}),
             'certificate_number': TextInput(attrs={'class': 'form-control'}),
-            'date_start': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'start'}),
-            'date_end': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'end'}),
+            'date_start': DateInput(format='%Y-%m-%d', attrs={'class': 'form-control', 'type': 'date', 'id': 'start'}),
+            'date_end': DateInput(format='%Y-%m-%d', attrs={'class': 'form-control', 'type': 'date', 'id': 'end'}),
             'list_count': TextInput(attrs={'class': 'form-control'}),
         }
 
@@ -39,6 +39,18 @@ class Material(ModelForm):
             "date_end": "Дата окончания действия сертификата",
             "list_count": "Количество листов",
         }
+
+    def clean(self):
+        cleaned_data = super(Material, self).clean()
+        date_start = cleaned_data.get("date_start")
+        date_end = cleaned_data.get("date_end")
+
+        if date_start and date_end:
+            if date_start >= date_end:
+                self.add_error("date_start", "«Дата начала» должна быть меньше «Даты конца»")
+                self.add_error("date_end", "«Дата начала» должна быть меньше «Даты конца»")
+
+        return cleaned_data
 
 
 class MaterialForm(forms.Form):

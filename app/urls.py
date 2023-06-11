@@ -33,6 +33,8 @@ urlpatterns = [
 
     # for materials
     path('materials/<int:material_id>/certificate', MaterialView.view_certificate, name='view-certificate'),
+    path('materials/<int:material_id>/<int:prev_page>', MaterialView.edit_material, name='edit-material'),
+    path('materials/delete/<int:material_id>/<int:prev_page>', MaterialView.delete_material, name='delete-material'),
 
     # for legal acts
     path('legal-acts/view/<int:act_id>', LegalActView.view_act, name='view-legal-act'),

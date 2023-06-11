@@ -322,7 +322,7 @@
                     <select class="form-select form-select-sm filter" id="material-filter">
                         <option value="">все работы</option>
                         {% for work in works %}
-                        <option value="{{ work.id }}">{{ work.name_hidden_works }}</option>
+                            <option value="{{ work.id }}">{{ work.name_hidden_works }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -339,6 +339,7 @@
                         <th scope="col">Наименование</th>
                         <th scope="col">Дата окончания действия сертификата</th>
                         <th scope="col">Количество материалов</th>
+                        <th scope="col">Редактирование</th>
                     </tr>
                     </thead>
 
@@ -348,6 +349,11 @@
                         <td>{{ material.name }}</td>
                         <td>{{ material.date_end }}</td>
                         <td>{{ material.count }}  {{ material.units_of_measurement }}</td>
+                        <td>
+                            <a href="/materials/{{ material.id }}/0" class="btn p-0">
+                                <img src="/static/images/look.svg" alt="Просмотр" width="40" height="20">
+                            </a>
+                        </td>
                     </tr>
                     {% endfor %}
                     </tbody>
@@ -787,6 +793,18 @@
 
                 td = document.createElement("td");
                 td.innerText = row['count'] + " " + row['units_of_measurement'];
+                fragment.appendChild(td);
+                td = document.createElement("td");
+                let a = document.createElement('a');
+                a.href = "/materials/" + row['id'] + "/0";
+                a.classList.add(...['btn', 'p-0']);
+                let img = document.createElement('img');
+                img.src = "/static/images/look.svg";
+                img.alt = "Просмотр";
+                img.width = 40;
+                img.height = 20;
+                a.appendChild(img);
+                td.appendChild(a);
                 fragment.appendChild(td);
 
                 tr.appendChild(fragment);

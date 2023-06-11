@@ -1,0 +1,71 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block title %}{{ material.name }}{% endblock %}
+
+{% block navbar %}
+    <a class="navbar-link" href="{{ back_btn }}"><i class="bi bi-arrow-left"></i>{{ back_btn_name }}</a>
+{% endblock %}
+
+{% block pageName %} {{ material.name }} {% endblock %}
+
+{% block content %}
+    <!-- Nav tabs -->
+    <ul class="sidenav nav-tabs" id="myTab" role="tablist">
+        <li>
+            <a class="sidenav-link sidenav-link-active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button"
+               role="tab" aria-controls="profile" aria-selected="true" onclick="ChangeTheState(this)">
+                <i class="bi bi-house"></i>Материал
+            </a>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="content">
+        <div class="tab-content">
+            <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                            <p style="color: rgba(0, 0, 0, 0.54);">Материал</p>
+                        </div>
+                    <div class="col-12 col-md-6">
+                        <form method="post">
+                            {% csrf_token %}
+                            <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить этот материал?');"
+                                    class="btn btn-outline-secondary btn-sm float-end"
+                                    formaction="{% url 'delete-material' material.id prev_page %}">
+                                <img src="{% static 'images/bootstrap/trash.svg' %}" alt="Удаление" class="bi"> Удалить
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="information">
+                    <form action="{{ post_url }}" method="post" class="p-3">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group">
+                                <div class="row mb-4 align-items-center">
+                                    <div class="col-12 col-md-3">
+                                        <label class="col-form-label p-0" for={{ field.auto_id }}>
+                                            {{ field.label }}
+                                        </label>
+                                    </div>
+                                    <div class="col-12 col-md-6">
+                                        {{ field }}
+                                    </div>
+                                    {% if field.errors %}
+                                        <div class="invalid-feedback" style="display: block">
+                                            {% for error in field.errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary my-2">Сохранить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
