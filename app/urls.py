@@ -11,7 +11,6 @@ from app.views.WorkView import WorkView
 from app.views.MaterialView import MaterialView
 from app.views.ProjectSectionView import ProjectSectionView
 
-
 urlpatterns = [
     # for projects
     path('', ProjectView.index, name='project-index'),
@@ -21,7 +20,12 @@ urlpatterns = [
     path('projects/<int:value>/edit', ProjectView.edit, name='project-edit'),
 
     # for participants
-    path('projects/<int:project_id>/add/<int:participant_number>', ParticipantView.as_view(), name='participant-create'),
+    path('projects/<int:project_id>/add/<int:participant_number>',
+         ParticipantView.as_view(), name='participant-create'),
+    path('projects/<int:project_id>/delete-participant/<int:participant_id>',
+         ParticipantView.delete_participant, name='delete-participant'),
+    path('projects/<int:project_id>/edit-participant/<int:participant_id>',
+         ParticipantView.edit_participant, name='edit-participant'),
 
     # for works
     path('project-section/<int:project_section_id>/add-work', WorkView.as_view(), name='work-create'),
@@ -54,4 +58,3 @@ urlpatterns = [
     path('api/materials', MaterialController.get_by_filter),
     path('api/pdf/certificate/<int:material_id>', PDFController.get_certificate)
 ]
-

@@ -127,7 +127,10 @@
                                 {% endif %}
                             </div>
                             <div class="col-12 col-md-2">
-                                <a class="btn btn-outline-primary btn-sm" href="">Редактировать</a>
+                                <a class="btn btn-outline-primary btn-sm"
+                                   href="{% url 'edit-participant' project.id value.0.id %}">
+                                    Редактировать
+                                </a>
                             </div>
                             {% endif %}
                             <div class="col-12 col-md-1" style="cursor: pointer;" onclick="OpenInformation({{value.0.id}})">
