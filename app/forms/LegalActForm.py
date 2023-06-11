@@ -11,7 +11,7 @@ class LegalAct(ModelForm):
         widgets = {
             'name': TextInput(attrs={'class': 'form-control', 'id': 'document_name'}),
             'document_number': TextInput(attrs={'class': 'form-control', 'id': 'document_number'}),
-            'document_date': DateInput(attrs={'class': 'form-control', 'type': 'date', 'id': 'document_date'}),
+            'document_date': DateInput(format='%Y-%m-%d', attrs={'class': 'form-control', 'type': 'date', 'id': 'document_date'}),
             'list_count': TextInput(attrs={'class': 'form-control', 'id': 'document_list_count'}),
         }
 

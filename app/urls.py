@@ -43,6 +43,8 @@ urlpatterns = [
 
     # for legal acts
     path('legal-acts/view/<int:act_id>', LegalActView.view_act, name='view-legal-act'),
+    path('legal-acts/edit/<int:act_id>', LegalActView.edit_legal_act, name='edit-legal-act'),
+    path('legal-acts/delete/<int:act_id>', LegalActView.delete_legal_act, name='delete-legal-act'),
 
     # for project sections
     path('project-section/<int:project_section_id>/get-registry', ProjectSectionView.get_registry, name='get-registry'),

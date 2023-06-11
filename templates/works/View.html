@@ -128,7 +128,7 @@
                         <thead>
                             <tr>
                                 <th scope="col">Наименование</th>
-                                <th scope="col">Исполнительный документ</th>
+                                <th scope="col">Редактирование</th>
                             </tr>
                         </thead>
 
@@ -137,7 +137,7 @@
                                 <tr>
                                     <td>{{ legal_act.name }}</td>
                                     <td>
-                                        <a href="/legal-acts/view/{{ legal_act.id }}" class="btn p-0">
+                                        <a href="/legal-acts/edit/{{ legal_act.id }}" class="btn p-0">
                                             <img src="/static/images/look.svg" alt="Просмотр" width="40" height="20">
                                         </a>
                                     </td>
