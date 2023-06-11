@@ -18,6 +18,7 @@ urlpatterns = [
     path('projects/post', ProjectView.post, name='project-post'),
     path('projects/<int:value>', ProjectView.view, name='project-view'),
     path('projects/<int:value>/edit', ProjectView.edit, name='project-edit'),
+    path('projects/delete/<int:project_id>', ProjectView.delete, name='delete-project'),
 
     # for participants
     path('projects/<int:project_id>/add/<int:participant_number>',
@@ -52,6 +53,7 @@ urlpatterns = [
     path('api/works/<int:work_id>/bcar', WorkController.create_bcar),
     path('api/works/<int:work_id>/act', WorkController.create_act),
     path('api/works/create/<int:section_id>', WorkController.create_work),
+    path('api/sections/get/<int:project_id>', ProjectSectionController.get),
     path('api/sections/<int:project_id>', ProjectSectionController.post, name='create-section'),
     path('api/sections/delete/<int:section_id>', ProjectSectionController.delete, name='delete-section'),
     path('api/materials/<int:work_id>', MaterialController.post),
