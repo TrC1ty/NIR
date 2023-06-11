@@ -113,17 +113,17 @@
                             {% else %}
                             <div class="col-12 col-md-4">
                                 {% if value.0.subject_type == 'ЮЛ' %}
-                                    {% if value.0.legal_name != null %}
-                                    {{ value.0.legal_name }}
-                                    {% endif %}
+                                {% if value.0.legal_name != null %}
+                                {{ value.0.legal_name }}
+                                {% endif %}
                                 {% elif value.0.subject_type == 'ФЛ' %}
-                                    {{ value.0.surname }} {{ value.0.name }} {{ value.0.patronymic }}
+                                {{ value.0.surname }} {{ value.0.name }} {{ value.0.patronymic }}
                                 {% elif value.0.subject_type == 'ИП' %}
-                                    {% if value.0.short_name != null %}
-                                    {{ value.0.short_name }}
-                                    {% else %}
-                                    {{ value.0.legal_name }}
-                                    {% endif %}
+                                {% if value.0.short_name != null %}
+                                {{ value.0.short_name }}
+                                {% else %}
+                                {{ value.0.legal_name }}
+                                {% endif %}
                                 {% endif %}
                             </div>
                             <div class="col-12 col-md-2">
@@ -168,44 +168,44 @@
                             <button id="button_hide_legal_{{value.0.id}}" type="button" style="display:none" class="btn btn-link hide" onclick='HideInformation({{value.0.id}},"ЮЛ")'>Скрыть</button>
                         </div>
                         {% elif value.0.subject_type == 'ИП'%}
-                            <div id="information_ip_{{value.0.id}}" class="col-12 col-md-5">
-                                <div style="color: rgba(0, 0, 0, 0.54);">{{ value.0.legal_name }}</div>
-                                <div style="color: rgba(0, 0, 0, 0.54);">Статус участника: {{ value.0.subject_type }}</div>
-                                <div style="color: rgba(0, 0, 0, 0.54);">Краткое наименование: {{value.0.short_name}}</div>
-                                <div style="color: rgba(0, 0, 0, 0.54);">Адресс регистрации: {{ value.0.address }}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Факт. адрес: {{value.0.post_address}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Почта: {{value.0.mail}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Телефон: {{value.0.phone}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ИНН: {{value.0.inn}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОГРНИП: {{value.0.ogrn}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Наименование банка: {{value.0.bank_name}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">БИК: {{value.0.bic}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">К/С: {{value.0.cor_account}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Р/С: {{value.0.payment_account}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОКВЭД: {{value.0.okved}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Ситсема налогооблажения: {{value.0.taxation_system}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Наименование СРО: {{value.0.sro_name}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ИНН СРО: {{value.0.sro_inn}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОГРН СРО: {{value.0.sro_ogrn}}</div>
+                        <div id="information_ip_{{value.0.id}}" class="col-12 col-md-5">
+                            <div style="color: rgba(0, 0, 0, 0.54);">{{ value.0.legal_name }}</div>
+                            <div style="color: rgba(0, 0, 0, 0.54);">Статус участника: {{ value.0.subject_type }}</div>
+                            <div style="color: rgba(0, 0, 0, 0.54);">Краткое наименование: {{value.0.short_name}}</div>
+                            <div style="color: rgba(0, 0, 0, 0.54);">Адресс регистрации: {{ value.0.address }}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Факт. адрес: {{value.0.post_address}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Почта: {{value.0.mail}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Телефон: {{value.0.phone}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ИНН: {{value.0.inn}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОГРНИП: {{value.0.ogrn}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Наименование банка: {{value.0.bank_name}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">БИК: {{value.0.bic}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">К/С: {{value.0.cor_account}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Р/С: {{value.0.payment_account}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОКВЭД: {{value.0.okved}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Ситсема налогооблажения: {{value.0.taxation_system}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Наименование СРО: {{value.0.sro_name}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ИНН СРО: {{value.0.sro_inn}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ОГРН СРО: {{value.0.sro_ogrn}}</div>
 
-                                <button id="button_more_ip_{{value.0.id}}" type="button" style="display:inline-block" class="btn btn-link more" onclick='MoreInformation({{value.0.id}},"ИП")'>Все сведения</button>
-                                <button id="button_hide_ip_{{value.0.id}}" type="button" style="display:none" class="btn btn-link hide" onclick='HideInformation({{value.0.id}},"ИП")'>Скрыть</button>
-                            </div>
+                            <button id="button_more_ip_{{value.0.id}}" type="button" style="display:inline-block" class="btn btn-link more" onclick='MoreInformation({{value.0.id}},"ИП")'>Все сведения</button>
+                            <button id="button_hide_ip_{{value.0.id}}" type="button" style="display:none" class="btn btn-link hide" onclick='HideInformation({{value.0.id}},"ИП")'>Скрыть</button>
+                        </div>
                         {% elif value.0.subject_type == 'ФЛ'%}
-                            <div id="information_ind_{{value.0.id}}" class="col-12 col-md-5">
-                                <div style="color: rgba(0, 0, 0, 0.54);">{{ value.0.surname }}</div>
-                                <div style="color: rgba(0, 0, 0, 0.54);">Статус участника: {{ value.0.subject_type }}</div>
-                                <div style="color: rgba(0, 0, 0, 0.54);">Паспорт: {{value.0.passport_data}}</div>
-                                <div style="color: rgba(0, 0, 0, 0.54);">Адресс: {{ value.0.address }}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ИНН: {{value.0.inn}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Р/С: {{value.0.payment_account}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Должность: {{value.0.post}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Номер с соц. реестре специалситов: {{value.0.register_of_specialists}}</div>
-                                <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Реквизиты распорядительного документа: {{value.0.details_admin_doc}}</div>
+                        <div id="information_ind_{{value.0.id}}" class="col-12 col-md-5">
+                            <div style="color: rgba(0, 0, 0, 0.54);">{{ value.0.surname }}</div>
+                            <div style="color: rgba(0, 0, 0, 0.54);">Статус участника: {{ value.0.subject_type }}</div>
+                            <div style="color: rgba(0, 0, 0, 0.54);">Паспорт: {{value.0.passport_data}}</div>
+                            <div style="color: rgba(0, 0, 0, 0.54);">Адресс: {{ value.0.address }}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">ИНН: {{value.0.inn}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Р/С: {{value.0.payment_account}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Должность: {{value.0.post}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Номер с соц. реестре специалситов: {{value.0.register_of_specialists}}</div>
+                            <div hidden class="extra" style="color: rgba(0, 0, 0, 0.54);">Реквизиты распорядительного документа: {{value.0.details_admin_doc}}</div>
 
-                                <button id="button_more_ind_{{value.0.id}}" type="button" style="display:inline-block" class="btn btn-link more" onclick='MoreInformation({{value.0.id}},"ФЛ")'>Все сведения</button>
-                                <button id="button_hide_ind_{{value.0.id}}" type="button" style="display:none" class="btn btn-link hide" onclick='HideInformation({{value.0.id}},"ФЛ")'>Скрыть</button>
-                            </div>
+                            <button id="button_more_ind_{{value.0.id}}" type="button" style="display:inline-block" class="btn btn-link more" onclick='MoreInformation({{value.0.id}},"ФЛ")'>Все сведения</button>
+                            <button id="button_hide_ind_{{value.0.id}}" type="button" style="display:none" class="btn btn-link hide" onclick='HideInformation({{value.0.id}},"ФЛ")'>Скрыть</button>
+                        </div>
 
                         {% endif %}
                     </div>
@@ -257,60 +257,126 @@
                         </table>
                     </div>
                 </div>
-                <div class="col-3">
-                    <div class="col search-background">
-                        <div style="border-bottom: 1px solid;">
-                            <i style="margin-left:10px" class="bi bi-search"></i>
-                            <input style="all: unset;" class="form-control p-2" type="text" placeholder="Поиск" id="search-text" onkeyup="tableSearch()">
-                        </div>
-                        <div class="list-group list-group-flush sections">
-                        {% for section in sections %}
-                            <div style="display: flex;flex-direction: row; justify-content: flex-start;">
-                                <a href="#" style="border: none;width:50%" class="list-group-item list-group-item-action project-section" onclick="SelectSection(this)"
-                                   section="{{ section.0 }}">{{ section.1 }}
-                                </a>
+<!--                <div class="col-3">-->
+<!--                    <div class="col search-background">-->
+<!--                        <div style="border-bottom: 1px solid;">-->
+<!--                            <i style="margin-left:10px" class="bi bi-search"></i>-->
+<!--                            <input style="all: unset;" class="form-control p-2" type="text" placeholder="Поиск" id="search-text" onkeyup="tableSearch()">-->
+<!--                        </div>-->
+<!--                        <div class="list-group list-group-flush sections">-->
+<!--                            {% for section in sections %}-->
+<!--                            <div style="display: flex;flex-direction: row; justify-content: flex-start;">-->
+<!--                                <a href="#" style="border: none;width:50%" class="list-group-item list-group-item-action project-section" onclick="SelectSection(this)"-->
+<!--                                   section="{{ section.0 }}">{{ section.1 }}-->
+<!--                                </a>-->
 
-                                <div onclick="ShowWindow({{ section.0 }})">
-                                    <span class="badge bg-secondary rounded-pill">
-                                        <i  class="bi-three-dots-vertical"></i>
-                                    </span>
-                                    <div id="{{section.0}}" style="display: none"  class="selection-window">
-                                        <div class="selection-window-item">
-                                            <i class="bi bi-pencil">
-                                                <div class="selection-window-item-text edit-section" section="{{ section.0 }}">
+<!--                                <div onclick="ShowWindow({{ section.0 }})">-->
+<!--                                    <span class="badge bg-secondary rounded-pill">-->
+<!--                                        <i  class="bi-three-dots-vertical"></i>-->
+<!--                                    </span>-->
+<!--                                    <div id="{{section.0}}" style="display: none"  class="selection-window">-->
+<!--                                        <div class="selection-window-item">-->
+<!--                                            <i class="bi bi-pencil">-->
+<!--                                                <div class="selection-window-item-text edit-section" section="{{ section.0 }}">-->
+<!--                                                    Редактировать-->
+<!--                                                </div>-->
+<!--                                            </i>-->
+<!--                                        </div>-->
+<!--                                        <div class="selection-window-item">-->
+<!--                                            <i class="bi bi-trash">-->
+<!--                                                <div class="selection-window-item-text delete-section"-->
+<!--                                                     section="{{ section.0 }}" onclick="deleteSection(this)">-->
+<!--                                                    Удалить-->
+<!--                                                </div>-->
+<!--                                            </i>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+<!--                                <div>-->
+<!--                                    <span class="badge bg-primary rounded-pill">{{ section.2 }}</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                            {% endfor %}-->
+<!--                        </div>-->
+
+
+<!--                        <div>-->
+<!--                            <button style="margin-bottom:3px" id="create-section" class="btn p-0">-->
+<!--                                <i style="margin-left:10px" class="bi bi-plus-square"></i>-->
+<!--                            </button>-->
+<!--                            <input style="all: unset;" type="text" placeholder="Добавить раздел" />-->
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <div class="col-3">
+                            <div class="card search-background">
+                                <div class="card-body">
+
+                                    <div class="card-text" style="border-bottom: 1px solid;">
+                                        <i style="margin-left:10px" class="bi bi-search"></i>
+                                        <input style="all: unset;" class="form-control p-2" type="text"
+                                            placeholder="Поиск" id="search-text" onkeyup="tableSearch()">
+                                    </div>
+
+                                </div>
+                                <ul class="list-group list-group-flush sections">
+                                    {% for section in sections %}
+                                    <li style="display:flex;align-items: center;position: relative;"
+                                        class="list-group-item">
+                                        <a href="#" style="border:none;width:75%;"
+                                            class="list-group-item list-group-item-action project-section"
+                                            onclick="SelectSection(this)" section="{{ section.0 }}">{{ section.1 }}
+                                        </a>
+                                        <span style="height: 27px;width: 27px;" class="badge bg-secondary rounded-pill"
+                                            onclick="ShowWindow({{ section.0 }})">
+                                            <i style="padding-top: 2px;position: relative;top:3px;right: 0;"
+                                                class="bi-three-dots-vertical"></i>
+                                        </span>
+                                        <div id="{{section.0}}"
+                                            style="display: none;position: absolute;z-index: 1;top:45px;left:100px;justify-content: space-between;"
+                                            class="selection-window">
+                                            <div class="selection-window-item">
+                                                <i class="bi bi-pencil">
+                                                </i>
+                                                <div style="display: inline-block;cursor:pointer;" class="selection-window-item-text edit-section"
+                                                    section="{{ section.0 }}">
                                                     Редактировать
                                                 </div>
-                                            </i>
-                                        </div>
-                                        <div class="selection-window-item">
-                                            <i class="bi bi-trash">
-                                                <div class="selection-window-item-text delete-section"
-                                                     section="{{ section.0 }}" onclick="deleteSection(this)">
+                                            </div>
+                                            <div class="selection-window-item">
+                                                <i class="bi bi-trash">
+
+                                                </i>
+                                                <div style="display: inline-block;cursor:pointer;" class="selection-window-item-text delete-section"
+                                                    section="{{ section.0 }}" onclick="deleteSection(this)">
                                                     Удалить
                                                 </div>
-                                            </i>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
 
-                                <div>
-                                    <span class="badge bg-primary rounded-pill">{{ section.2 }}</span>
+
+                                        <span style="height: 27px;width: 27px;" class="badge bg-primary rounded-pill">
+                                            <i style="padding-top: 2px;position: relative;top:3px;right: 0;">{{ section.2 }}</i>
+                                        </span>
+                                    </li>
+                                    {% endfor %}
+
+                                </ul>
+
+                                <div class="card-body">
+                                    <button style="margin-bottom:3px" id="create-section" class="btn p-0">
+                                        <i style="margin-left:10px" class="bi bi-plus-square"></i>
+                                    </button>
+                                    <input style="all: unset;border-bottom: 1px solid;" type="text"
+                                        placeholder="Добавить раздел">
                                 </div>
                             </div>
 
-                        {% endfor %}
-                    </div>
-
-
-                    <div>
-                        <button style="margin-bottom:3px" id="create-section" class="btn p-0">
-                            <i style="margin-left:10px" class="bi bi-plus-square"></i>
-                        </button>
-                        <input style="all: unset;" type="text" placeholder="Добавить раздел" />
-
-                    </div>
-                </div>
-                </div>
+                        </div>
             </div>
         </div>
 
@@ -325,7 +391,7 @@
                     <select class="form-select form-select-sm filter" id="material-filter">
                         <option value="">все работы</option>
                         {% for work in works %}
-                            <option value="{{ work.id }}">{{ work.name_hidden_works }}</option>
+                        <option value="{{ work.id }}">{{ work.name_hidden_works }}</option>
                         {% endfor %}
                     </select>
                 </div>
@@ -529,8 +595,8 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"></script>
-    <script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.3.0/lodash.js"></script>
+<script>
         let participantName = '';
         let participantNumber = 0;
         let activeProjectSection = 0;
@@ -668,15 +734,15 @@
 
         function tableSearch() {
             let phrase = document.getElementById('search-text');
-            let sectionsList = phrase.parentElement.querySelector('.list-group');
+            let sectionsList = phrase.parentElement.parentElement.parentElement.querySelector('.list-group');
             let regPhrase = new RegExp(phrase.value, 'i');
             let flag = false;
 
             for (let i = 0; i < sectionsList.children.length; i++) {
                 flag = regPhrase.test(sectionsList.children[i].innerHTML);
-
+                console.log(sectionsList.children[i]);
                 if (flag) {
-                    sectionsList.children[i].style.display = "";
+                    sectionsList.children[i].style.display = "flex";
                 } else {
                     sectionsList.children[i].style.display = "none";
                 }
@@ -899,7 +965,7 @@
         document.getElementById('btn-material-filter').addEventListener('click', filterMaterials);
     </script>
 
-    <script>
+<script>
         function ShowWindow( i ) {
             let window = document.getElementById(i);
             if (window.style.display === 'none'){
@@ -1008,7 +1074,7 @@
 
         function SelectSection(section){
             sections = document.querySelectorAll('a.active');
-
+            console.log(sections)
             for (let i = 0, length = sections.length; i<length; i++){
               sections[i].classList.remove("active");
               sections[i].classList.remove("bg-success");
@@ -1021,39 +1087,44 @@
 
     </script>
 
-    <script type="text/template" id="sections-template">
-        <% for(var i = 0; i < list.length; i++) { %>
-            <div style="display: flex;flex-direction: row; justify-content: flex-start;">
-                <a href="#" style="border: none;width:50%" class="list-group-item list-group-item-action project-section" onclick="SelectSection(this)"
-                   section="<%=list[i].id%>"><%=list[i].name%>
-                </a>
+<script type="text/template" id="sections-template">
+    <% for(var i = 0; i < list.length; i++) { %>
+    <li style="display:flex;align-items: center;position: relative;"
+                                        class="list-group-item">
+        <a href="#" style="border: none;width:75%" class="list-group-item list-group-item-action project-section" onclick="SelectSection(this)"
+           section="<%=list[i].id%>"><%=list[i].name%>
+        </a>
 
-                <div class="project-section-buttons">
-                    <span class="badge bg-secondary rounded-pill">
-                        <i  class="bi-three-dots-vertical"></i>
-                    </span>
-                    <div id="<%=list[i].id%>" style="display: none"  class="selection-window">
-                        <div class="selection-window-item">
-                            <i class="bi bi-pencil">
-                                <div style="cursor:pointer" class="selection-window-item-text edit-section" section="<%=list[i].id%>">
-                                    Редактировать
-                                </div>
-                            </i>
-                        </div>
-                        <div class="selection-window-item">
-                            <i class="bi bi-trash">
-                                <div style="cursor:pointer" class="selection-window-item-text delete-section" section="<%=list[i].id%>">
-                                    Удалить
-                                </div>
-                            </i>
-                        </div>
+        <div style="display:flex;align-items: center;" class="project-section-buttons">
+            <span style="height: 27px;width: 27px;" class="badge bg-secondary rounded-pill" onclick="ShowWindow(<%=list[i].id%>)">
+                 <i style="padding-top: 2px;position: relative;top:3px;right: 0;"
+                    class="bi-three-dots-vertical"></i>
+            </span>
+            <div id="<%=list[i].id%>" style="display: none;position: absolute;z-index: 1;top:45px;left:100px;justify-content: space-between;"  class="selection-window">
+                <div class="selection-window-item">
+                    <i class="bi bi-pencil">
+                    </i>
+                    <div style="display: inline-block;cursor:pointer" class="selection-window-item-text edit-section"
+                         section="<%=list[i].id%>">
+                        Редактировать
                     </div>
                 </div>
+                <div class="selection-window-item">
+                    <i class="bi bi-trash">
 
-                <div>
-                    <span class="badge bg-primary rounded-pill"><%=list[i].count%></span>
+                    </i>
+                    <div style="display: inline-block;cursor:pointer" class="selection-window-item-text delete-section"
+                         section="<%=list[i].id%>" onclick="deleteSection(this)">
+                        Удалить
+                    </div>
                 </div>
             </div>
-        <% } %>
-    </script>
+        </div>
+
+        <span style="height: 27px;width: 27px;" class="badge bg-primary rounded-pill">
+            <i style="padding-top: 2px;position: relative;top:3px;right: 0;"><%=list[i].count%></i>
+        </span>
+    </li>
+    <% } %>
+</script>
 {% endblock %}
