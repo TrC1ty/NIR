@@ -219,7 +219,7 @@
 {% block customModals %}
     <div class="modal fade" id="materialModal" tabindex="-1" role="dialog" aria-labelledby="materialModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
+            <div class="modal-content"  style="overflow-y: auto;">
                 <div class="modal-header">
                 <h5 class="modal-title" id="materialModalLabel">Создание материала</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
@@ -284,7 +284,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
-                <div class="row">
+                <div style="height:100vh"  class="row">
                     <div class="col">
                         <form id="legal-act-form" method="post">
                             <div class="modal-body">
@@ -371,7 +371,7 @@
     <div class="modal fade" id="showingPdf" tabindex="-1" aria-labelledby="showingPdfLabel"
          aria-modal="true" role="dialog">
         <div class="modal-dialog modal-fullscreen">
-            <div class="modal-content">
+            <div class="modal-content" >
                 <div class="modal-header">
                     <h5 class="modal-title h4" id="showingPdfLabel">Full screen modal</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -393,6 +393,7 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js">
     </script>
+
 
     <script>
         let currentPdfId = -1;
