@@ -14,15 +14,15 @@ class Material(ModelForm):
 
     class Meta:
         model = MaterialModel
-        fields = ['name', 'count', 'units_of_measurement', 'provider', 'certificate_name',
-                  'certificate_number', 'date_start', 'date_end', 'list_count']
+        fields = ['name', 'count', 'units_of_measurement', 'certificate_name',
+                  'certificate_number', 'provider', 'date_start', 'date_end', 'list_count']
         widgets = {
             'name': TextInput(attrs={'class': 'form-control'}),
             'count': TextInput(attrs={'class': 'form-control'}),
             'units_of_measurement': TextInput(attrs={'class': 'form-control'}),
-            'provider': TextInput(attrs={'class': 'form-control'}),
             'certificate_name': TextInput(attrs={'class': 'form-control'}),
             'certificate_number': TextInput(attrs={'class': 'form-control'}),
+            'provider': TextInput(attrs={'class': 'form-control'}),
             'date_start': DateInput(format='%Y-%m-%d', attrs={'class': 'form-control', 'type': 'date', 'id': 'start'}),
             'date_end': DateInput(format='%Y-%m-%d', attrs={'class': 'form-control', 'type': 'date', 'id': 'end'}),
             'list_count': TextInput(attrs={'class': 'form-control'}),
@@ -32,9 +32,9 @@ class Material(ModelForm):
             "name": "Наименование материала",
             "count": "Количество материалов",
             "units_of_measurement": "Единицы измерения",
-            "provider": "Сертификат выдан",
             "certificate_name": "Наименование сертификата",
             "certificate_number": "Номер сертификата",
+            "provider": "Сертификат выдан",
             "date_start": "Дата выдачи сертификата",
             "date_end": "Дата окончания действия сертификата",
             "list_count": "Количество листов",

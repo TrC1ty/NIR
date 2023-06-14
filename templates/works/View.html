@@ -188,99 +188,116 @@
 
 {% block customModals %}
     <div class="modal fade" id="materialModal" tabindex="-1" role="dialog" aria-labelledby="materialModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
                 <h5 class="modal-title" id="materialModalLabel">Создание материала</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
-                <form id="material-form">
-                    <div class="form-error" style="color:red"> {{material_form.non_field_errors}}</div>
 
-                    <div class="modal-body">
-                        {% for field in material_form.visible_fields %}
-                            <div class="form-group">
-                                {{ field.errors }}
-                                <div class="row mb-4 align-items-center">
-                                    <div class="col-12 col-md-3">
-                                        <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                <div class="row">
+                    <div class="col">
+                        <form id="material-form">
+                            <div class="form-error" style="color:red"> {{material_form.non_field_errors}}</div>
+
+                            <div class="modal-body">
+                                {% for field in material_form.visible_fields %}
+                                    <div class="form-group">
+                                        {{ field.errors }}
+                                        <div class="row mb-4 align-items-center">
+                                            <div class="col-12 col-md-3">
+                                                <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                {{ field }}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-12 col-md-6">
-                                        {{ field }}
+                                {% endfor %}
+
+                                <div class="form-group">
+                                    <div class="row mb-4 align-items-center">
+                                        <div class="col-12 col-md-3">
+                                            <label class="col-form-label p-0" for="materialFile">Выберите сертификат</label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <input type="file" class="form-control" id="materialFile"
+                                                   accept="application/pdf">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        {% endfor %}
 
-                        <div class="form-group">
-                            <div class="row mb-4 align-items-center">
-                                <div class="col-12 col-md-3">
-                                    <label class="col-form-label p-0" for="materialFile">Выберите сертификат</label>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <input type="file" class="form-control-file" id="materialFile">
+                            <div class="modal-footer">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button type="button" id="materialModalBtn" class="btn btn-primary my-2 close"
+                                            data-bs-dismiss="modal" aria-label="Close">Сохранить</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
 
-                    <div class="modal-footer">
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button type="button" id="materialModalBtn" class="btn btn-primary my-2 close"
-                                    data-bs-dismiss="modal" aria-label="Close">Сохранить</button>
-                        </div>
+                    <div class="col">
+                        <embed src="" type="application/pdf" width="100%" height="100%">
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="modal fade" id="legalActModal" tabindex="-1" role="dialog" aria-labelledby="legalActLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header">
                 <h5 class="modal-title" id="legalActModalLabel">Создание исполнительного документа</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
-                <form id="legal-act-form" method="post">
-                    <div class="modal-body">
-                        {% for field in legal_act_form.visible_fields %}
-                            <div class="form-group">
-                                {{ field.errors }}
-                                <div class="row mb-4 align-items-center">
-                                    <div class="col-12 col-md-3">
-                                        <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                <div class="row">
+                    <div class="col">
+                        <form id="legal-act-form" method="post">
+                            <div class="modal-body">
+                                {% for field in legal_act_form.visible_fields %}
+                                    <div class="form-group">
+                                        {{ field.errors }}
+                                        <div class="row mb-4 align-items-center">
+                                            <div class="col-12 col-md-3">
+                                                <label class="col-form-label p-0" for={{field.auto_id}}>{{ field.label }}</label>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                {{ field }}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-12 col-md-6">
-                                        {{ field }}
+                                {% endfor %}
+
+                                <div class="form-group">
+                                    <div class="row mb-4 align-items-center">
+                                        <div class="col-12 col-md-3">
+                                            <label class="col-form-label p-0" for="legalActFile">Выберите документ</label>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <input class="form-control" type="file" id="legalActFile"
+                                                   accept="application/pdf">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        {% endfor %}
 
-                        <div class="form-group">
-                            <div class="row mb-4 align-items-center">
-                                <div class="col-12 col-md-3">
-                                    <label class="col-form-label p-0" for="legalActFile">Выберите документ</label>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <input type="file" class="form-control-file" id="legalActFile">
+                            <div class="modal-footer">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button id="legalActModalBtn" class="btn btn-primary my-2 close"
+                                            data-bs-dismiss="modal" aria-label="Close">Сохранить</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
 
-                    <div class="modal-footer">
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <button id="legalActModalBtn" class="btn btn-primary my-2 close"
-                                    data-bs-dismiss="modal" aria-label="Close">Сохранить</button>
-                        </div>
+                    <div class="col">
+                        <embed src="" type="application/pdf" width="100%" height="100%">
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -290,8 +307,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                 <h5 class="modal-title" id="bcarModalLabel">Создание СНИПа</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
                 <form id="bcar-form" method="post">
@@ -329,17 +345,17 @@
     </script>
 
     <script>
-        // for date in form
-        let start = $("#start")[0].getAttribute("value");
-        let end = $("#end")[0].getAttribute("value");
-        let dateStart = start.split(".")
-        let dateEnd = end.split(".")
-        document.getElementById('start').valueAsDate = new Date(dateStart[2] + "-" + dateStart[1] + "-" + dateStart[0]);
-        document.getElementById('end').valueAsDate = new Date(dateEnd[2] + "-" + dateEnd[1] + "-" + dateEnd[0]);
-    </script>
+        let currentPdfId = -1;
 
-    <script>
-        function createMaterial() {
+        async function createMaterial() {
+            if (currentPdfId !== -1) {
+                await fetch("/api/pdf/delete/" + currentPdfId, {
+                    method: "DELETE",
+                });
+
+                currentPdfId = -1;
+            }
+
             let certificate = document.getElementById('materialFile').files[0];
             let file_name = certificate['name'];
             let mimeType = certificate['type'];
@@ -528,7 +544,7 @@
         }
 
         function ChangeTheState(section){
-            sections = document.getElementsByClassName('sidenav-link-active');
+            let sections = document.getElementsByClassName('sidenav-link-active');
 
             for (let i = 0, length = sections.length; i<length; i++){
               sections[i].classList.remove("sidenav-link-active");
@@ -537,27 +553,62 @@
             section.classList.add("sidenav-link-active");
         }
 
-        let myState = {
-            pdf: null,
-            currentPage: 1,
-            zoom: 1
+        async function ShowPdf(event) {
+            if (currentPdfId !== -1) {
+                await fetch("/api/pdf/delete/" + currentPdfId, {
+                    method: "DELETE",
+                });
+
+                currentPdfId = -1;
+            }
+
+            let pdf = event.target.files[0];
+            let embed = event.target.closest('.modal').querySelector('embed');
+            let mimeType = pdf['type'];
+            let fileReader = new FileReader();
+
+            if (fileReader && pdf) {
+                fileReader.readAsArrayBuffer(pdf);
+                fileReader.onload = async function () {
+                    let fileData = fileReader.result;
+                    let data = JSON.stringify({
+                        file_type: mimeType,
+                        file_data: Array.from(new Uint8Array(fileData))
+                    });
+
+                    await fetch("/api/pdf/save", {
+                        method: "POST",
+                        headers: {
+                          "Content-Type": "application/json",
+                        },
+                        body: data,
+                      })
+                    .then((response) => response.json())
+                    .then((data) => {
+                        currentPdfId = data['id'];
+                        embed.src = data['src'];
+                    });
+                }
+            }
         }
 
-        function render() {
-            myState.pdf.getPage(myState.currentPage).then((page) => {
-                let canvas = document.getElementById('pdf_renderer');
-                let ctx = canvas.getContext('2d');
-
-                let viewport = page.getViewport(myState.zoom);
-                page.render({
-                    canvasContext: ctx,
-                    viewport: viewport
+        async function HideModal(event) {
+            if (currentPdfId !== -1) {
+                await fetch("/api/pdf/delete/" + currentPdfId, {
+                    method: "DELETE",
                 });
-            });
+
+                currentPdfId = -1;
+            }
         }
 
         document.getElementById('materialModalBtn').addEventListener('click', createMaterial);
         document.getElementById('bcarModalBtn').addEventListener('click', createBCAR);
         document.getElementById('legalActModalBtn').addEventListener('click', CreateLegalAct);
+        document.getElementById('materialFile').addEventListener('change', ShowPdf);
+        document.getElementById('legalActFile').addEventListener('change', ShowPdf);
+        document.querySelectorAll('.modal').forEach((modal) => {
+            modal.addEventListener('hide.bs.modal', HideModal);
+        });
     </script>
 {% endblock %}
