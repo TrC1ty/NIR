@@ -3,6 +3,7 @@ import json
 from rest_framework.response import Response
 
 from app.models.MaterialModel import MaterialModel
+from app.models.LegalActModel import LegalActModel
 
 from django.http import FileResponse
 
@@ -21,6 +22,16 @@ class PDFController(APIView):
 
         response = FileResponse(material.file_data)
         response['Content-Type'] = material.file_type
+
+        return response
+
+    @staticmethod
+    @api_view(('GET',))
+    def get_act(request, act_id):
+        act = LegalActModel.objects.get(id=act_id)
+
+        response = FileResponse(act.file_data)
+        response['Content-Type'] = act.file_type
 
         return response
 

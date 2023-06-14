@@ -37,11 +37,23 @@
         <div class="tab-content">
             <div class="tab-pane active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <p style="color: rgba(0, 0, 0, 0.54);">Паспорт работы</p>
-                <form method="post">
-                    {% csrf_token %}
-                    <a href="{% url 'work-create-doc' work.id %}" class="btn btn-outline-primary btn-sm">Создать акт</a>
-                    <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить эту работу?');" class="btn btn-outline-secondary btn-sm float-end" formaction="{% url 'delete-work' work.id %}"><img src="{% static 'images/bootstrap/trash.svg' %}" class="bi"> Удалить </button>
-                </form>
+                <div class="row g-3 p-1">
+                    <div class="col-auto text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z" /></svg>
+                    </div>
+
+                    <div class="col">
+                        <form method="post">
+                            {% csrf_token %}
+                            <a href="{% url 'work-create-doc' work.id %}" class="btn btn-outline-primary btn-sm">Создать акт</a>
+                            <button type="submit" onclick="return confirm('Вы уверены, что хотите удалить эту работу?');"
+                                    class="btn btn-outline-secondary btn-sm float-end"
+                                    formaction="{% url 'delete-work' work.id %}">
+                                <img src="{% static 'images/bootstrap/trash.svg' %}" alt="trash" class="bi"> Удалить </button>
+                        </form>
+                    </div>
+                </div>
+
                 <div class="information">
                     <form action="{% url 'edit-work' work.id %}" method="post" class="p-3">
                         {% csrf_token %}
@@ -66,13 +78,17 @@
             </div>
 
             <div class="tab-pane" id="materials" role="tabpanel" aria-labelledby="materials-tab">
-                <div class="row">
-                    <div class="col-1">
-                        <p style="color: rgba(0, 0, 0, 0.54);">Материалы</p>
+                <div class="col-1">
+                    <p style="color: rgba(0, 0, 0, 0.54);">Материалы</p>
+                </div>
+
+                <div class="row g-3 p-1">
+                    <div class="col-auto text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3h9.05zM4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8h2.05zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1h9.05z" /></svg>
                     </div>
 
                     <div class="col">
-                        <button id="add-new-material" class="btn btn-primary" data-bs-toggle="modal"
+                        <button id="add-new-material" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
                                 data-bs-target="#materialModal">Добавить материал</button>
                     </div>
                 </div>
@@ -85,6 +101,7 @@
                                 <th scope="col">Дата окончания действия сертификата</th>
                                 <th scope="col">Количество материалов</th>
                                 <th scope="col">Редактирование</th>
+                                <th scope="col">Pdf</th>
                             </tr>
                         </thead>
 
@@ -98,6 +115,12 @@
                                         <a href="/materials/{{ material.id }}/1" class="btn p-0">
                                             <img src="/static/images/look.svg" alt="Просмотр" width="40" height="20">
                                         </a>
+                                    </td>
+                                    <td>
+                                        <button class="btn p-0 showPdf material" data-bs-toggle="modal"
+                                                data-bs-target="#showingPdf" pdf="{{ material.id }}">
+                                            <img src="/static/images/pdf.svg" alt="Просмотр" width="100%" height="20">
+                                        </button>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -129,6 +152,7 @@
                             <tr>
                                 <th scope="col">Наименование</th>
                                 <th scope="col">Редактирование</th>
+                                <th scope="col">Pdf</th>
                             </tr>
                         </thead>
 
@@ -140,6 +164,12 @@
                                         <a href="/legal-acts/edit/{{ legal_act.id }}" class="btn p-0">
                                             <img src="/static/images/look.svg" alt="Просмотр" width="40" height="20">
                                         </a>
+                                    </td>
+                                    <td>
+                                        <button class="btn p-0 showPdf act" data-bs-toggle="modal"
+                                                data-bs-target="#showingPdf" pdf="{{ legal_act.id }}">
+                                            <img src="/static/images/pdf.svg" alt="Просмотр" width="100%" height="20">
+                                        </button>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -334,6 +364,26 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="showingPdf" tabindex="-1" aria-labelledby="showingPdfLabel"
+         aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title h4" id="showingPdfLabel">Full screen modal</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+                    <embed src="" type="application/pdf" width="100%" height="100%">
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -602,6 +652,23 @@
             }
         }
 
+        async function ViewPdfForRecord(event) {
+            let btn = event.target.closest('button');
+            let id = btn.getAttribute('pdf');
+            let apiUrl = "";
+            if (btn.classList.contains('material')) {
+                apiUrl = "/api/pdf/certificate/" + id;
+            }
+            else {
+                apiUrl = "/api/pdf/act/" + id;
+            }
+
+            let name = btn.closest('tr').querySelector('td').innerText;
+            let modal = document.getElementById('showingPdf');
+            modal.querySelector('.modal-title').innerHTML = name;
+            modal.querySelector('embed').src = apiUrl;
+        }
+
         document.getElementById('materialModalBtn').addEventListener('click', createMaterial);
         document.getElementById('bcarModalBtn').addEventListener('click', createBCAR);
         document.getElementById('legalActModalBtn').addEventListener('click', CreateLegalAct);
@@ -609,6 +676,10 @@
         document.getElementById('legalActFile').addEventListener('change', ShowPdf);
         document.querySelectorAll('.modal').forEach((modal) => {
             modal.addEventListener('hide.bs.modal', HideModal);
+        });
+
+        document.querySelectorAll('.showPdf').forEach((btn) => {
+            btn.addEventListener('click', ViewPdfForRecord);
         });
     </script>
 {% endblock %}

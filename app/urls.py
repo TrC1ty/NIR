@@ -61,6 +61,7 @@ urlpatterns = [
     path('api/materials/<int:work_id>', MaterialController.post),
     path('api/materials', MaterialController.get_by_filter),
     path('api/pdf/certificate/<int:material_id>', PDFController.get_certificate),
+    path('api/pdf/act/<int:act_id>', PDFController.get_act),
     path('api/pdf/save', PDFController.save_pdf),
     path('api/pdf/view/<int:pdf_id>', PDFController.view_pdf),
     path('api/pdf/delete/<int:pdf_id>', PDFController.delete_pdf),
