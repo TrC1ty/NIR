@@ -1,5 +1,6 @@
 import datetime
 import io
+import json
 import os
 import zipfile
 from pathlib import Path
@@ -8,6 +9,7 @@ from django.http import HttpResponseRedirect, HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.utils.encoding import escape_uri_path
 from django.views import View
+from django.db.models import Q
 from docxtpl import DocxTemplate
 
 from app.models.BCARModel import BCARModel
@@ -76,7 +78,6 @@ class WorkView(View):
                 work.information_persons_prepare_doc = form.cleaned_data["information_persons_prepare_doc"]
                 work.start_date_work = form.cleaned_data["start_date_work"]
                 work.end_date_work = form.cleaned_data["end_date_work"]
-                work.permitted_works = form.cleaned_data["permitted_works"]
                 work.additional_information = form.cleaned_data["additional_information"]
                 work.number_instances = form.cleaned_data["number_instances"]
 
@@ -86,6 +87,7 @@ class WorkView(View):
         material_form = MaterialForm()
         bcar_form = BCARForm()
         legal_act_form = LegalActForm()
+        works = WorkModel.objects.filter(projectSection__id=work.projectSection.id).filter(~Q(id=work.id))
         data = {
             'work': work,
             'form': form,
@@ -95,6 +97,7 @@ class WorkView(View):
             'bcars': bcars,
             'legal_acts': legal_acts,
             'legal_act_form': legal_act_form,
+            'works': works,
         }
 
         return render(request, 'works/View.html', data)
@@ -105,6 +108,8 @@ class WorkView(View):
 
         if request.method == 'POST':
             form = Work(request.POST)
+            body = request.POST.dict()
+            next_work_id = body.get('next-work', None)
 
             if form.is_valid():
                 work.name_hidden_works = form.cleaned_data.get("name_hidden_works", "")
@@ -117,9 +122,11 @@ class WorkView(View):
                 work.information_persons_prepare_doc = form.cleaned_data.get("information_persons_prepare_doc", "")
                 work.start_date_work = form.cleaned_data["start_date_work"]
                 work.end_date_work = form.cleaned_data["end_date_work"]
-                work.permitted_works = form.cleaned_data.get("permitted_works", "")
                 work.additional_information = form.cleaned_data.get("additional_information", "")
                 work.number_instances = form.cleaned_data.get("number_instances", 0)
+                if next_work_id:
+                    next_work = WorkModel.objects.get(id=next_work_id)
+                    work.next_work = next_work
 
                 work.save()
 
@@ -199,7 +206,6 @@ def create_documentation(work_id):
         'person_performing_work':
             get_performer(ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first()),
         'number': work.id,
-        'name_project': project.name_project,
         'date_day': datetime.date.today().day,
         'date_month': months[str(datetime.date.today().month)],
         'date_year': datetime.date.today().year,
@@ -220,9 +226,11 @@ def create_documentation(work_id):
     # добавление названия субъекта, которое осуществляло строительство
     if ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first():
         if ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().participant:
-            if ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().participant.legal_name:
+            if ProjectParticipant.objects.filter(project=project).filter(
+                    participant_type=4).first().participant.legal_name:
                 context['person_the_construction_name'] = \
-                    ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first().participant.legal_name
+                    ProjectParticipant.objects.filter(project=project).filter(
+                        participant_type=4).first().participant.legal_name
 
     # добавление названия работ
     if work.name_hidden_works:
@@ -275,8 +283,8 @@ def create_documentation(work_id):
         context['bcars'] = row[:-2]
 
     # добавление разрешенных работ
-    if work.permitted_works:
-        context['permitted_works'] = work.permitted_works
+    if work.next_work:
+        context['permitted_works'] = work.next_work.name_hidden_works
 
     # добавление дополнительных сведений
     if work.additional_information:
@@ -311,7 +319,8 @@ def create_documentation(work_id):
         get_participant_name(ProjectParticipant.objects.filter(project=project).filter(participant_type=10).first())
 
     # добавление приложения
-    add_application(work, context, ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first())
+    add_application(work, context,
+                    ProjectParticipant.objects.filter(project=project).filter(participant_type=4).first())
 
     doc.render(context)
     file_stream = io.BytesIO()
@@ -400,16 +409,71 @@ def get_performer(project_participant):
             attributes = []
             match participant.subject_type:
                 case "ЮЛ":
-                    attributes = [participant.legal_name, participant.ogrn, participant.inn, participant.address,
-                                  participant.phone]
-                case "ФЛ":
-                    attributes = [participant.surname, participant.name, participant.patronymic, participant.passport_data,
-                                  participant.address, participant.phone]
-                case "ИП":
-                    attributes = [participant.surname, participant.name, participant.patronymic, participant.address,
-                                  participant.ogrn, participant.inn]
+                    if participant.legal_name:
+                        attributes.append(participant.legal_name)
 
-            attributes.extend([participant.sro_name, participant.sro_inn, participant.sro_ogrn])
+                    if participant.ogrn:
+                        attributes.append(f"ОГРН: {participant.ogrn}")
+
+                    if participant.inn:
+                        attributes.append(f"ИНН: {participant.inn}")
+
+                    if participant.address:
+                        attributes.append(f"Адрес: {participant.address}")
+
+                    if participant.phone:
+                        attributes.append(f"Телефон: {participant.phone}")
+
+                case "ФЛ":
+                    if participant.post:
+                        attributes.append(participant.post)
+
+                    if participant.surname:
+                        attributes.append(participant.surname)
+
+                    if participant.name:
+                        attributes.append(f"{participant.name[0]}.")
+
+                    if participant.patronymic:
+                        attributes.append(f"{participant.patronymic[0]}.")
+
+                    if participant.register_of_specialists:
+                        attributes.append(participant.register_of_specialists)
+
+                    if participant.details_admin_doc:
+                        attributes.append(participant.details_admin_doc)
+
+                    if participant.inn:
+                        attributes.append(f"ИНН: {participant.inn}")
+
+                case "ИП":
+                    if participant.surname:
+                        attributes.append(participant.surname)
+
+                    if participant.name:
+                        attributes.append(f"{participant.name[0]}.")
+
+                    if participant.patronymic:
+                        attributes.append(f"{participant.patronymic[0]}.")
+
+                    if participant.address:
+                        attributes.append(participant.address)
+
+                    if participant.ogrn:
+                        attributes.append(f"ОГРН: {participant.ogrn}")
+
+                    if participant.inn:
+                        attributes.append(f"ИНН: {participant.inn}")
+
+            if participant.sro_name:
+                attributes.extend(f"СРО: {participant.sro_name}")
+
+            if participant.sro_inn:
+                attributes.append(f"СРО ИНН: {participant.sro_inn}")
+
+            if participant.sro_ogrn:
+                attributes.append(f"СРО ОГРН: {participant.sro_ogrn}")
+
             attributes = list(filter(None, attributes))
             row = " ".join(attributes)
 
@@ -428,6 +492,6 @@ def get_representative(representative):
 
 def calculate_the_number_of_pages(list_count, cur_page):
     if list_count > 1:
-        return f"{cur_page}-{cur_page+list_count-1}"
+        return f"{cur_page}-{cur_page + list_count - 1}"
     else:
         return f"{cur_page}"

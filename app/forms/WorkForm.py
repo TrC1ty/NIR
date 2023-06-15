@@ -15,7 +15,6 @@ class Work(ModelForm):
         self.fields['name_project_doc'].required = False
         self.fields['name_working_doc'].required = False
         self.fields['information_persons_prepare_doc'].required = False
-        self.fields['permitted_works'].required = False
         self.fields['additional_information'].required = False
         self.fields['number_instances'].required = False
 
@@ -24,7 +23,7 @@ class Work(ModelForm):
         fields = ['name_hidden_works', 'number_project_doc', 'number_working_doc', 'other_details_project_drawing',
                   'other_details_working_drawing', 'name_project_doc', 'name_working_doc',
                   'information_persons_prepare_doc', 'start_date_work', 'end_date_work',
-                  'permitted_works', 'additional_information', 'number_instances']
+                  'additional_information', 'number_instances']
         widgets = {
             'name_hidden_works': TextInput(attrs={'class': 'form-control'}),
             'number_project_doc': TextInput(attrs={'class': 'form-control'}),
@@ -36,7 +35,6 @@ class Work(ModelForm):
             'information_persons_prepare_doc': TextInput(attrs={'class': 'form-control'}),
             'start_date_work': DateInput(format='%Y-%m-%d', attrs={'class': 'form-control', 'type': 'date', 'id': 'start'}),
             'end_date_work': DateInput(format='%Y-%m-%d', attrs={'class': 'form-control', 'type': 'date', 'id': 'end'}),
-            'permitted_works': TextInput(attrs={'class': 'form-control'}),
             'additional_information': TextInput(attrs={'class': 'form-control'}),
             'number_instances': NumberInput(attrs={'class': 'form-control'}),
         }
@@ -52,7 +50,6 @@ class Work(ModelForm):
             'information_persons_prepare_doc': 'Сведения о лицах, осуществляющих подготовку раздела документации',
             'start_date_work': 'Дата начала работ',
             'end_date_work': 'Дата окончания работ',
-            'permitted_works': 'Разрешенные работы',
             'additional_information': 'Дополнительная информация',
             'number_instances': 'Количество экземпляров',
         }

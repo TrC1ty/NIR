@@ -71,6 +71,28 @@
                             </div>
                         </div>
                         {% endfor %}
+                        <div class="form-group">
+                            <div class="form-error">
+                                <span class="text-danger"> </span>
+                            </div>
+                            <div class="row mb-4 align-items-center">
+                                <div class="col-12 col-md-3">
+                                    <label class="col-form-label p-0" for="next-work">Последующая работа</label>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <select name="next-work" class="form-select" id="next_work" aria-label="Default select example">
+                                        <option value=""></option>
+                                        {% for next_work in works %}
+                                            {% if next_work.id == work.next_work.id %}
+                                                <option value="{{ next_work.id }}" selected>{{ next_work.name_hidden_works }}</option>
+                                            {% else %}
+                                                <option value="{{ next_work.id }}">{{ next_work.name_hidden_works }}</option>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
 
                         <button type="submit" class="btn btn-primary my-2">Сохранить</button>
                     </form>

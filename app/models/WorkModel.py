@@ -20,6 +20,7 @@ class WorkModel(models.Model):
     number_instances = models.IntegerField(default=0, null=True)
 
     projectSection = models.ForeignKey(ProjectSection, on_delete=models.CASCADE)
+    next_work = models.ForeignKey('self', on_delete=models.SET_NULL, default=None, null=True)
 
     class Meta:
         db_table = "Works"
